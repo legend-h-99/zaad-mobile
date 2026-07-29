@@ -133,10 +133,7 @@ export default function RecipesScreen() {
     queryKey: ['recipes', conditionKeys, isDemoMode, demoUserId],
     queryFn: async () => {
       if (isDemoMode) return DEMO_RECIPES
-      let q = supabase.from('recipes').select('*').order('name_ar')
-      if (conditionKeys.length > 0) {
-        q = q.overlaps('suitable_for', conditionKeys)
-      }
+      const q = supabase.from('recipes').select('*').order('name_ar')
       const { data } = await q.limit(100)
       const databaseRecipes = (data ?? []).map(row => mapDatabaseRecipe(row as Record<string, unknown>))
       return databaseRecipes.length > 0 ? databaseRecipes : DEMO_RECIPES

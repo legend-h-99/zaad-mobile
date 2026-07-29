@@ -43,6 +43,11 @@ The migration at `src/lib/supabase/nutrition-reference-migration.sql` adds:
 - `recipe_ingredients`
 - `food_standards`
 
+The seed at `src/lib/supabase/saudi-recipes-seed.sql` adds the first recipe
+library from the PDFs supplied in the conversation. It uses short adapted
+instructions, source tracking, and `external_id` upserts so the seed can be run
+again safely.
+
 These tables are public read-only through RLS policies. Writes should be done
 through Supabase SQL/admin tools or a private backend job, not directly from the
 client app.

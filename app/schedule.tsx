@@ -32,7 +32,9 @@ import { supabase } from '../src/lib/supabase/client'
 type ScheduleMode = 'daily' | 'weekly' | 'monthly'
 type MealSlot = 'breakfast' | 'lunch' | 'dinner' | 'snack'
 interface LiveMeal {
-  name_ar: string
+  nameAr?: string
+  nameEn?: string
+  name_ar?: string
   calories: number
 }
 interface LivePlan {
@@ -64,7 +66,8 @@ function dateKey(date: Date) {
 }
 
 function liveMealName(plan: DayPlan, livePlan: LivePlan | undefined, slot: MealSlot) {
-  return livePlan?.meals?.[slot]?.name_ar ?? recipeName(plan, slot)
+  const meal = livePlan?.meals?.[slot]
+  return meal?.nameAr ?? meal?.name_ar ?? recipeName(plan, slot)
 }
 
 function planCalories(plan: DayPlan, livePlan?: LivePlan) {

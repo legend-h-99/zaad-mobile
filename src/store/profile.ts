@@ -36,7 +36,7 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
           .from('health_profiles')
           .select('*')
           .eq('user_id', userId)
-          .single(),
+          .maybeSingle(),
         supabase
           .from('medical_conditions')
           .select('*')
@@ -45,7 +45,7 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
           .from('food_preferences')
           .select('*')
           .eq('user_id', userId)
-          .single(),
+          .maybeSingle(),
         supabase
           .from('medications')
           .select('*')

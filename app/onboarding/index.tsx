@@ -7,7 +7,7 @@
  * Step 3: Lab report upload (optional)
  * Step 4: Food preferences (cuisines, allergies)
  */
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   View,
   Text,
@@ -28,8 +28,10 @@ import { Feather } from '@expo/vector-icons'
 
 import { useSession } from '../../src/hooks/useSession'
 import { useAuthStore } from '../../src/store/auth'
-import { API_ROUTES, apiFetch } from '../../src/lib/api/config'
+import { useProfileStore } from '../../src/store/profile'
+import { API_ROUTES, HAS_REMOTE_API, apiFetch } from '../../src/lib/api/config'
 import { uploadAndAnalyzeReport } from '../../src/lib/api/reports'
+import { supabase } from '../../src/lib/supabase/client'
 import { calculateDailyTargets } from '../../src/lib/nutrition/targets'
 import { ZaadButton } from '../../src/components/ui/ZaadButton'
 import { PageIntroCard } from '../../src/components/zaad/ContentBlocks'
@@ -49,12 +51,29 @@ const TOTAL_STEPS = 5
 
 type ConditionValue = typeof ONBOARDING_CONDITIONS[number]['value']
 type GoalValue      = typeof HEALTH_GOALS[number]['value']
+const HEALTH_GOAL_VALUES = HEALTH_GOALS.map(item => item.value) as readonly string[]
+
+function isGoalValue(value: unknown): value is GoalValue {
+  return typeof value === 'string' && HEALTH_GOAL_VALUES.includes(value)
+}
+
+function displayNameFromUser(user: NonNullable<ReturnType<typeof useSession>['user']>) {
+  const metadata = user.user_metadata as Record<string, unknown> | undefined
+  const fullName = metadata?.full_name ?? metadata?.name
+
+  if (typeof fullName === 'string' && fullName.trim()) {
+    return fullName.trim()
+  }
+
+  return user.email?.split('@')[0] || 'مستخدم زاد'
+}
 
 export default function OnboardingScreen() {
   const router  = useRouter()
   const insets  = useSafeAreaInsets()
   const { user, accessToken } = useSession()
   const isDemoMode = useAuthStore(s => s.isDemoMode)
+  const { profile, isLoading: profileLoading, loadProfile } = useProfileStore()
 
   const [step, setStep]     = useState<1|2|3|4|5>(1)
   const [loading, setLoading] = useState(false)
@@ -92,6 +111,17 @@ export default function OnboardingScreen() {
       activityLevel: 'light',
     })
   }, [age, gender, goal, height, weight])
+
+  useEffect(() => {
+    if (!user?.id || profileLoading || !profile) return
+
+    setGender(profile.gender ?? '')
+    setAge(profile.age ? String(profile.age) : '')
+    setHeight(profile.heightCm ? String(profile.heightCm) : '')
+    setWeight(profile.weightKg ? String(profile.weightKg) : '')
+    setCity(profile.city ?? '')
+    setGoal(isGoalValue(profile.goal) ? profile.goal : '')
+  }, [profile, profileLoading, user?.id])
 
   // Navigation
   function goNext() {
@@ -161,30 +191,118 @@ export default function OnboardingScreen() {
   }
 
   // Submit
+  async function saveOnboardingToSupabase() {
+    if (!user?.id) throw new Error('سجّل الدخول مرة أخرى لحفظ ملفك الصحي.')
+
+    const now = new Date().toISOString()
+    const fullName = displayNameFromUser(user)
+    const profileRow = {
+      user_id: user.id,
+      full_name: fullName,
+      age: parseInt(age),
+      gender,
+      height_cm: parseFloat(height),
+      weight_kg: parseFloat(weight),
+      city: city.trim() || null,
+      goal,
+      activity_level: 'light',
+      updated_at: now,
+    }
+
+    const { data: existingProfile, error: profileSelectError } = await supabase
+      .from('health_profiles')
+      .select('id')
+      .eq('user_id', user.id)
+      .maybeSingle()
+    if (profileSelectError) throw profileSelectError
+
+    if (existingProfile?.id) {
+      const { error } = await supabase
+        .from('health_profiles')
+        .update(profileRow)
+        .eq('id', existingProfile.id)
+      if (error) throw error
+    } else {
+      const { error } = await supabase
+        .from('health_profiles')
+        .insert({ ...profileRow, created_at: now })
+      if (error) throw error
+    }
+
+    const { error: deleteConditionsError } = await supabase
+      .from('medical_conditions')
+      .delete()
+      .eq('user_id', user.id)
+    if (deleteConditionsError) throw deleteConditionsError
+
+    if (conditions.length > 0) {
+      const { error } = await supabase
+        .from('medical_conditions')
+        .insert(conditions.map(condition => ({
+          user_id: user.id,
+          condition,
+          severity: 'mild',
+        })))
+      if (error) throw error
+    }
+
+    const preferencesRow = {
+      user_id: user.id,
+      cuisine_types: cuisines,
+      allergies,
+      updated_at: now,
+    }
+
+    const { data: existingPrefs, error: prefsSelectError } = await supabase
+      .from('food_preferences')
+      .select('id')
+      .eq('user_id', user.id)
+      .maybeSingle()
+    if (prefsSelectError) throw prefsSelectError
+
+    if (existingPrefs?.id) {
+      const { error } = await supabase
+        .from('food_preferences')
+        .update(preferencesRow)
+        .eq('id', existingPrefs.id)
+      if (error) throw error
+    } else {
+      const { error } = await supabase
+        .from('food_preferences')
+        .insert(preferencesRow)
+      if (error) throw error
+    }
+  }
+
   async function handleComplete() {
-    if (!accessToken) return
+    if (!accessToken || !user?.id) return
     setLoading(true)
     setError(null)
     try {
-      await apiFetch(
-        API_ROUTES.profileSetup,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            profile: {
-              age:       parseInt(age),
-              gender,
-              height_cm: parseFloat(height),
-              weight_kg: parseFloat(weight),
-              city:      city.trim() || undefined,
-              goal,
-            },
-            conditions,
-            preferences: { cuisine_types: cuisines, allergies },
-          }),
-        },
-        accessToken,
-      )
+      if (HAS_REMOTE_API) {
+        await apiFetch(
+          API_ROUTES.profileSetup,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              profile: {
+                age:       parseInt(age),
+                gender,
+                height_cm: parseFloat(height),
+                weight_kg: parseFloat(weight),
+                city:      city.trim() || undefined,
+                goal,
+              },
+              conditions,
+              preferences: { cuisine_types: cuisines, allergies },
+            }),
+          },
+          accessToken,
+        )
+      } else {
+        await saveOnboardingToSupabase()
+      }
+      await loadProfile(user.id)
       router.replace('/(tabs)')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'حدث خطأ، الرجاء المحاولة مجدداً')

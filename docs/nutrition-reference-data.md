@@ -48,6 +48,11 @@ library from the PDFs supplied in the conversation. It uses short adapted
 instructions, source tracking, and `external_id` upserts so the seed can be run
 again safely.
 
+The supplement at `src/lib/supabase/saudi-recipes-supplement-seed.sql` adds a
+second curated batch from the Markdown extractions. It expands the library with
+additional main dishes, soups, snacks, and drinks while keeping the same source
+tracking and upsert behavior.
+
 These tables are public read-only through RLS policies. Writes should be done
 through Supabase SQL/admin tools or a private backend job, not directly from the
 client app.

@@ -60,7 +60,7 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   session: null,
   user: null,
-  isLoading: false,
+  isLoading: true,
   isDemoMode: false,
   demoUserId: DEFAULT_DEMO_USER_ID,
 

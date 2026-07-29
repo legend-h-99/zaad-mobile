@@ -19,18 +19,30 @@ import { Feather } from '@expo/vector-icons'
 import { supabase } from '../../src/lib/supabase/client'
 import { ZaadButton } from '../../src/components/ui/ZaadButton'
 import { AppleSignInButton } from '../../src/components/auth/AppleSignInButton'
+import { GoogleSignInButton } from '../../src/components/auth/GoogleSignInButton'
 import { ZAAD_PAGE_CONTENT } from '../../src/constants/zaadContent'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
+import { useAuthStore } from '../../src/store/auth'
+
+function getEmailRedirectTo() {
+  if (Platform.OS === 'web' && typeof window !== 'undefined') {
+    return `${window.location.origin}/onboarding`
+  }
+
+  return undefined
+}
 
 export default function RegisterScreen() {
   const router  = useRouter()
   const insets  = useSafeAreaInsets()
+  const setSession = useAuthStore(state => state.setSession)
 
   const [name, setName]         = useState('')
   const [email, setEmail]       = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState<string | null>(null)
+  const [success, setSuccess]   = useState<string | null>(null)
 
   async function handleRegister() {
     if (!name.trim() || !email.trim() || !password) {
@@ -43,12 +55,14 @@ export default function RegisterScreen() {
     }
     setLoading(true)
     setError(null)
+    setSuccess(null)
 
-    const { error: authError } = await supabase.auth.signUp({
+    const { data, error: authError } = await supabase.auth.signUp({
       email: email.trim().toLowerCase(),
       password,
       options: {
         data: { full_name: name.trim() },
+        emailRedirectTo: getEmailRedirectTo(),
       },
     })
 
@@ -62,8 +76,14 @@ export default function RegisterScreen() {
       return
     }
 
-    // Redirect to onboarding to complete health profile
-    router.replace('/onboarding')
+    if (data.session) {
+      setSession(data.session)
+      router.replace('/onboarding')
+      return
+    }
+
+    setSuccess('تم إنشاء الحساب. افتح بريدك الإلكتروني واضغط رابط التأكيد، ثم سجّل الدخول لإكمال ملفك الصحي.')
+    setLoading(false)
   }
 
   return (
@@ -107,6 +127,11 @@ export default function RegisterScreen() {
           {error && (
             <View style={styles.errorBanner}>
               <Text style={styles.errorText}>{error}</Text>
+            </View>
+          )}
+          {success && (
+            <View style={styles.successBanner}>
+              <Text style={styles.successText}>{success}</Text>
             </View>
           )}
 
@@ -171,6 +196,11 @@ export default function RegisterScreen() {
             <Text style={styles.dividerText}>أو</Text>
             <View style={styles.dividerLine} />
           </View>
+
+          <GoogleSignInButton
+            mode="signUp"
+            onError={message => setError(message || null)}
+          />
 
           <AppleSignInButton
             mode="signUp"
@@ -308,6 +338,20 @@ const styles = StyleSheet.create({
     fontSize: Typography.size.sm,
     fontFamily: 'IBMPlexArabic-Regular',
     textAlign: 'right',
+  },
+  successBanner: {
+    backgroundColor: Colors.safe.bg,
+    borderWidth: 1,
+    borderColor: Colors.safe.border,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+  },
+  successText: {
+    color: Colors.safe.text,
+    fontSize: Typography.size.sm,
+    fontFamily: 'IBMPlexArabic-Regular',
+    textAlign: 'right',
+    lineHeight: Typography.size.sm * 1.6,
   },
   fieldGroup: { gap: 6 },
   fieldLabel: {

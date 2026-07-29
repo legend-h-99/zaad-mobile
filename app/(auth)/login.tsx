@@ -15,6 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { ZaadButton } from '../../src/components/ui/ZaadButton'
 import { AppleSignInButton } from '../../src/components/auth/AppleSignInButton'
+import { GoogleSignInButton } from '../../src/components/auth/GoogleSignInButton'
 import { supabase } from '../../src/lib/supabase/client'
 import { Colors, Radius, Spacing, Typography } from '../../src/constants/theme'
 import { useAuthStore } from '../../src/store/auth'
@@ -185,6 +186,8 @@ export default function LoginScreen() {
             <Text style={styles.dividerText}>أو</Text>
             <View style={styles.dividerLine} />
           </View>
+
+          <GoogleSignInButton onError={message => setError(message || null)} />
 
           <AppleSignInButton onError={message => setError(message || null)} />
         </View>

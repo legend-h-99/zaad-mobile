@@ -4,7 +4,7 @@
 
 create extension if not exists "uuid-ossp";
 
-create table if not exists nutrition_data_sources (
+create table if not exists nutrition_sources (
   id              uuid primary key default uuid_generate_v4(),
   slug            text not null unique,
   name_ar         text not null,
@@ -21,7 +21,7 @@ create table if not exists nutrition_data_sources (
 
 create table if not exists food_items (
   id                uuid primary key default uuid_generate_v4(),
-  source_id         uuid references nutrition_data_sources(id) on delete set null,
+  source_id         uuid references nutrition_sources(id) on delete set null,
   external_id       text,
   name_ar           text not null,
   name_en           text,
@@ -53,7 +53,7 @@ create table if not exists food_items (
 
 create table if not exists branded_foods (
   id                uuid primary key default uuid_generate_v4(),
-  source_id         uuid references nutrition_data_sources(id) on delete set null,
+  source_id         uuid references nutrition_sources(id) on delete set null,
   barcode           text unique,
   brand             text,
   product_name_ar   text,
@@ -94,7 +94,7 @@ create table if not exists recipe_ingredients (
 
 create table if not exists food_standards (
   id              uuid primary key default uuid_generate_v4(),
-  source_id       uuid references nutrition_data_sources(id) on delete set null,
+  source_id       uuid references nutrition_sources(id) on delete set null,
   standard_code   text,
   title_ar        text not null,
   title_en        text,
@@ -108,15 +108,15 @@ create table if not exists food_standards (
   unique(source_id, standard_code)
 );
 
-alter table nutrition_data_sources enable row level security;
+alter table nutrition_sources      enable row level security;
 alter table food_items             enable row level security;
 alter table branded_foods          enable row level security;
 alter table recipe_ingredients     enable row level security;
 alter table food_standards         enable row level security;
 
-drop policy if exists "nutrition sources public read" on nutrition_data_sources;
+drop policy if exists "nutrition sources public read" on nutrition_sources;
 create policy "nutrition sources public read"
-  on nutrition_data_sources for select using (true);
+  on nutrition_sources for select using (true);
 
 drop policy if exists "food items public read" on food_items;
 create policy "food items public read"
@@ -134,8 +134,8 @@ drop policy if exists "food standards public read" on food_standards;
 create policy "food standards public read"
   on food_standards for select using (true);
 
-create index if not exists nutrition_data_sources_scope_priority_idx
-  on nutrition_data_sources(scope, priority, slug);
+create index if not exists nutrition_sources_scope_priority_idx
+  on nutrition_sources(scope, priority, slug);
 create index if not exists food_items_name_ar_idx on food_items(name_ar);
 create index if not exists food_items_category_country_idx on food_items(category, country_code);
 create index if not exists food_items_source_idx on food_items(source_id);
@@ -147,7 +147,7 @@ create index if not exists recipe_ingredients_recipe_sort_idx on recipe_ingredie
 create index if not exists recipe_ingredients_food_item_idx on recipe_ingredients(food_item_id);
 create index if not exists food_standards_topic_scope_idx on food_standards(topic, scope);
 
-insert into nutrition_data_sources
+insert into nutrition_sources
   (slug, name_ar, name_en, scope, source_type, authority, url, license_note, priority, notes_ar)
 values
   ('sfda-saudi-food-composition', 'قاعدة/جداول تراكيب الأغذية السعودية', 'Saudi Food Composition Tables', 'saudi', 'composition', 'SFDA / FAO INFOODS', 'https://www.fao.org/food-composition/tables-and-databases/detail/saudi-arabia--2025%29-saudi-food-composition-tables/en', 'تحقق من شروط المصدر قبل الاستيراد التجاري الكامل.', 1, 'المصدر الأساسي المقترح للأغذية والأطباق السعودية.'),
@@ -171,7 +171,7 @@ on conflict (slug) do update set
   notes_ar = excluded.notes_ar;
 
 with sfda as (
-  select id from nutrition_data_sources where slug = 'sfda-saudi-food-composition'
+  select id from nutrition_sources where slug = 'sfda-saudi-food-composition'
 )
 insert into food_items
   (source_id, external_id, name_ar, name_en, canonical_name_ar, category, cuisine, country_code, calories_kcal, protein_g, carbs_g, fat_g, fiber_g, sodium_mg, confidence, metadata)
@@ -220,9 +220,9 @@ on conflict (source_id, external_id) do update set
   updated_at = now();
 
 with gso as (
-  select id from nutrition_data_sources where slug = 'gso-standards'
+  select id from nutrition_sources where slug = 'gso-standards'
 ), codex as (
-  select id from nutrition_data_sources where slug = 'codex-alimentarius'
+  select id from nutrition_sources where slug = 'codex-alimentarius'
 )
 insert into food_standards
   (source_id, standard_code, title_ar, title_en, scope, topic, applies_to, rule_summary_ar, url)

@@ -226,19 +226,24 @@ export default function HomeScreen() {
       setLivePlan(null)
       return
     }
+    const userId = user.id
 
-    supabase
-      .from('meal_plans')
-      .select('plan_date, calories_target, protein_g, carbs_g, fat_g, meals, ai_notes')
-      .eq('user_id', user.id)
-      .eq('plan_date', selectedDateKey)
-      .maybeSingle()
-      .then(({ data }) => {
+    async function loadLivePlan() {
+      try {
+        const { data } = await supabase
+          .from('meal_plans')
+          .select('plan_date, calories_target, protein_g, carbs_g, fat_g, meals, ai_notes')
+          .eq('user_id', userId)
+          .eq('plan_date', selectedDateKey)
+          .maybeSingle()
+
         if (active) setLivePlan(data as LiveMealPlan | null)
-      })
-      .catch(() => {
+      } catch {
         if (active) setLivePlan(null)
-      })
+      }
+    }
+
+    void loadLivePlan()
 
     return () => {
       active = false

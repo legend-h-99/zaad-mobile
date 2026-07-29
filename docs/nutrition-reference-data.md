@@ -37,7 +37,7 @@ Saudi-first, then Gulf/Arab, then global fallback data.
 
 The migration at `src/lib/supabase/nutrition-reference-migration.sql` adds:
 
-- `nutrition_data_sources`
+- `nutrition_sources`
 - `food_items`
 - `branded_foods`
 - `recipe_ingredients`
@@ -73,6 +73,7 @@ Use a staged import instead of adding every public source at once:
 ## Next Integration Point
 
 The current static GitHub Pages build already generates diet plans locally when
-no backend exists. The next code change should make
-`src/lib/meals/localPlan.ts` read candidate recipes/ingredients from Supabase
-when these reference tables exist, with the current demo data as fallback.
+no backend exists. `src/lib/meals/localPlan.ts` now tries to build meals from
+Supabase `food_items` first through `src/lib/nutrition/referenceFoods.ts`, then
+falls back to the bundled demo recipes when the migration has not been applied
+or the reference rows are incomplete.

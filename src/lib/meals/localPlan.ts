@@ -1,6 +1,7 @@
 import { DEMO_RECIPES } from '../../constants/demoData'
 import { getPlanForDate } from '../../constants/mealSchedule'
 import { DIET_TYPES, type DietType } from '../../constants/diets'
+import { buildReferenceMealPlanMeals, loadReferenceFoodItems } from '../nutrition/referenceFoods'
 import { calculateDailyTargets } from '../nutrition/targets'
 import { supabase } from '../supabase/client'
 import type { HealthProfile, MealItem, MealPlanMeals, Recipe } from '../../types'
@@ -41,6 +42,7 @@ export function buildLocalMealPlan(
   date: string,
   dietType: DietType,
   profile: Partial<HealthProfile> = {},
+  referenceMeals?: MealPlanMeals | null,
 ): {
   meals: MealPlanMeals
   caloriesTarget: number
@@ -54,22 +56,37 @@ export function buildLocalMealPlan(
   const targets = calculateDailyTargets(profile)
   const dietLabel = DIET_TYPES.find(diet => diet.id === dietType)?.label ?? 'متوازن'
   const recipes = MEAL_SLOTS.map(slot => recipeById(dayPlan[slot]))
-  const sodiumMg = recipes.reduce((sum, recipe) => sum + (recipe.sodiumMg ?? 0), 0)
+  const meals = referenceMeals ?? {
+    breakfast: mealFromRecipe(recipeById(dayPlan.breakfast)),
+    lunch: mealFromRecipe(recipeById(dayPlan.lunch)),
+    dinner: mealFromRecipe(recipeById(dayPlan.dinner)),
+    snack: mealFromRecipe(recipeById(dayPlan.snack)),
+    notes: `${dayPlan.noteAr} تم اعتماد نمط ${dietLabel} لهذه الخطة.`,
+  }
+  const sodiumMg = referenceMeals
+    ? MEAL_SLOTS.reduce((sum, slot) => sum + meals[slot].sodiumMg, 0)
+    : recipes.reduce((sum, recipe) => sum + (recipe.sodiumMg ?? 0), 0)
 
   return {
-    meals: {
-      breakfast: mealFromRecipe(recipeById(dayPlan.breakfast)),
-      lunch: mealFromRecipe(recipeById(dayPlan.lunch)),
-      dinner: mealFromRecipe(recipeById(dayPlan.dinner)),
-      snack: mealFromRecipe(recipeById(dayPlan.snack)),
-      notes: `${dayPlan.noteAr} تم اعتماد نمط ${dietLabel} لهذه الخطة.`,
-    },
+    meals,
     caloriesTarget: targets.calories,
     proteinG: targets.protein,
     carbsG: targets.carbs,
     fatG: targets.fat,
     sodiumMg,
-    aiNotes: `خطة محلية مبنية من وصفات زاد وفق نمط ${dietLabel}.`,
+    aiNotes: referenceMeals
+      ? `خطة محلية مبنية من food_items السعودية وفق نمط ${dietLabel}.`
+      : `خطة محلية مبنية من وصفات زاد وفق نمط ${dietLabel}.`,
+  }
+}
+
+async function tryBuildReferenceMeals(dietType: DietType, profile?: Partial<HealthProfile> | null) {
+  try {
+    const rows = await loadReferenceFoodItems()
+    const dietLabel = DIET_TYPES.find(diet => diet.id === dietType)?.label ?? 'متوازن'
+    return buildReferenceMealPlanMeals({ rows, profile, dietLabel })
+  } catch {
+    return null
   }
 }
 
@@ -148,7 +165,8 @@ export async function saveDietAndGenerateLocalPlan({
   dietType: DietType
   profile?: Partial<HealthProfile> | null
 }) {
-  const plan = buildLocalMealPlan(date, dietType, profile ?? {})
+  const referenceMeals = await tryBuildReferenceMeals(dietType, profile)
+  const plan = buildLocalMealPlan(date, dietType, profile ?? {}, referenceMeals)
   await saveDietPreference(userId, dietType)
   await saveMealPlan(userId, date, plan)
   return plan

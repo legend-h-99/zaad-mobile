@@ -24,10 +24,22 @@ import { DEMO_RECIPES, getDemoProfile, getDemoUser } from '../../src/constants/d
 import { getPlanForDate, type DayPlan } from '../../src/constants/mealSchedule'
 import { Colors, Radius, Spacing, Typography } from '../../src/constants/theme'
 import { calculateDailyTargets } from '../../src/lib/nutrition/targets'
+import { supabase } from '../../src/lib/supabase/client'
 import { useAuthStore } from '../../src/store/auth'
 import { useProfileStore } from '../../src/store/profile'
+import type { MealItem, MealPlanMeals } from '../../src/types'
 
 type MealSlot = 'breakfast' | 'lunch' | 'dinner' | 'snack'
+
+interface LiveMealPlan {
+  plan_date: string
+  calories_target?: number | null
+  protein_g?: number | null
+  carbs_g?: number | null
+  fat_g?: number | null
+  meals: MealPlanMeals
+  ai_notes?: string | null
+}
 
 const MEAL_SLOTS: MealSlot[] = ['breakfast', 'lunch', 'dinner', 'snack']
 const MEAL_LABELS: Record<MealSlot, string> = {
@@ -108,15 +120,24 @@ function ScoreRing({ score }: { score: number }) {
 function MealRow({
   slot,
   plan,
+  liveMeal,
   expanded,
   onPress,
 }: {
   slot: MealSlot
   plan: DayPlan
+  liveMeal?: MealItem
   expanded: boolean
   onPress: () => void
 }) {
   const recipe = DEMO_RECIPES.find(item => item.id === plan[slot]) ?? DEMO_RECIPES[0]
+  const nameAr = liveMeal?.nameAr ?? recipe.nameAr
+  const calories = liveMeal?.calories ?? recipe.calories
+  const proteinG = liveMeal?.proteinG ?? recipe.proteinG
+  const carbsG = liveMeal?.carbsG ?? recipe.carbsG
+  const fatG = liveMeal?.fatG ?? recipe.fatG
+  const detail = liveMeal?.ingredientsAr?.slice(0, 3).join('، ')
+    ?? recipe.ingredientsAr?.slice(0, 3).join('، ')
 
   return (
     <Pressable
@@ -124,24 +145,24 @@ function MealRow({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityState={{ expanded }}
-      accessibilityLabel={`${MEAL_LABELS[slot]}، ${recipe.nameAr}`}
+      accessibilityLabel={`${MEAL_LABELS[slot]}، ${nameAr}`}
     >
       <Image source={MEAL_IMAGES[slot]} style={styles.mealImage} />
       <View style={styles.mealCopy}>
         <Text style={styles.mealMeta}>{MEAL_LABELS[slot]}</Text>
-        <Text style={styles.mealName} numberOfLines={2}>{recipe.nameAr}</Text>
+        <Text style={styles.mealName} numberOfLines={2}>{nameAr}</Text>
         <View style={styles.mealNumbers}>
-          <Text style={styles.mealCal}>{toArabic(recipe.calories)} سعرة</Text>
+          <Text style={styles.mealCal}>{toArabic(calories)} سعرة</Text>
           <Text style={styles.proteinDot}>P</Text>
-          <Text style={styles.mealNutrient}>{toArabic(recipe.proteinG)}</Text>
+          <Text style={styles.mealNutrient}>{toArabic(proteinG)}</Text>
           <Text style={styles.carbDot}>C</Text>
-          <Text style={styles.mealNutrient}>{toArabic(recipe.carbsG)}</Text>
+          <Text style={styles.mealNutrient}>{toArabic(carbsG)}</Text>
           <Text style={styles.fatDot}>F</Text>
-          <Text style={styles.mealNutrient}>{toArabic(recipe.fatG)}</Text>
+          <Text style={styles.mealNutrient}>{toArabic(fatG)}</Text>
         </View>
         {expanded && (
           <Text style={styles.mealDetail}>
-            {recipe.ingredientsAr?.slice(0, 3).join('، ')}
+            {detail}
           </Text>
         )}
       </View>
@@ -159,9 +180,11 @@ export default function HomeScreen() {
   const router = useRouter()
   const demoUserId = useAuthStore(state => state.demoUserId)
   const isDemoMode = useAuthStore(state => state.isDemoMode)
+  const user = useAuthStore(state => state.user)
   const profile = useProfileStore(state => state.profile)
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [expandedMeal, setExpandedMeal] = useState<MealSlot | null>(null)
+  const [livePlan, setLivePlan] = useState<LiveMealPlan | null>(null)
   const enter = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
@@ -173,6 +196,10 @@ export default function HomeScreen() {
   }, [enter])
 
   const plan = useMemo(() => getPlanForDate(selectedDate), [selectedDate])
+  const selectedDateKey = useMemo(
+    () => format(selectedDate, 'yyyy-MM-dd'),
+    [selectedDate],
+  )
   const weekStart = useMemo(
     () => startOfWeek(selectedDate, { weekStartsOn: 0 }),
     [selectedDate],
@@ -185,7 +212,38 @@ export default function HomeScreen() {
   const activeProfile = isDemoMode ? getDemoProfile(demoUserId) : profile
   const firstName = activeProfile?.fullName?.split(' ')[0] ?? demoUser.nameAr
   const dailyTargets = calculateDailyTargets(activeProfile ?? {})
-  const score = Math.min(96, 54 + Math.round((plan.proteinG / dailyTargets.protein) * 34))
+  const displayTotals = {
+    calories: livePlan?.calories_target ?? plan.totalCalories,
+    protein: livePlan?.protein_g ?? plan.proteinG,
+    carbs: livePlan?.carbs_g ?? plan.carbsG,
+    fat: livePlan?.fat_g ?? plan.fatG,
+  }
+  const score = Math.min(96, 54 + Math.round((displayTotals.protein / dailyTargets.protein) * 34))
+
+  useEffect(() => {
+    let active = true
+    if (!user?.id || isDemoMode) {
+      setLivePlan(null)
+      return
+    }
+
+    supabase
+      .from('meal_plans')
+      .select('plan_date, calories_target, protein_g, carbs_g, fat_g, meals, ai_notes')
+      .eq('user_id', user.id)
+      .eq('plan_date', selectedDateKey)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (active) setLivePlan(data as LiveMealPlan | null)
+      })
+      .catch(() => {
+        if (active) setLivePlan(null)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [isDemoMode, selectedDateKey, user?.id])
 
   function toggleMeal(slot: MealSlot) {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
@@ -267,10 +325,10 @@ export default function HomeScreen() {
           </View>
 
           <View style={styles.macrosRow}>
-            <MacroOrb value={plan.totalCalories} target={dailyTargets.calories} label="سعرة" color="#F0F0ED" />
-            <MacroOrb value={plan.proteinG} target={dailyTargets.protein} label="بروتين" color="#F8A17F" />
-            <MacroOrb value={plan.carbsG} target={dailyTargets.carbs} label="كارب" color={Colors.lime} />
-            <MacroOrb value={plan.fatG} target={dailyTargets.fat} label="دهون" color="#F3CC4A" />
+            <MacroOrb value={displayTotals.calories} target={dailyTargets.calories} label="سعرة" color="#F0F0ED" />
+            <MacroOrb value={displayTotals.protein} target={dailyTargets.protein} label="بروتين" color="#F8A17F" />
+            <MacroOrb value={displayTotals.carbs} target={dailyTargets.carbs} label="كارب" color={Colors.lime} />
+            <MacroOrb value={displayTotals.fat} target={dailyTargets.fat} label="دهون" color="#F3CC4A" />
           </View>
         </View>
 
@@ -314,6 +372,7 @@ export default function HomeScreen() {
               key={slot}
               slot={slot}
               plan={plan}
+              liveMeal={livePlan?.meals?.[slot]}
               expanded={expandedMeal === slot}
               onPress={() => toggleMeal(slot)}
             />

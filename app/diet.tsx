@@ -15,7 +15,8 @@ import { AppHeader } from '../src/components/ui/AppHeader'
 import { ZaadButton } from '../src/components/ui/ZaadButton'
 import { DIET_TYPES, type DietType } from '../src/constants/diets'
 import { Colors, Radius, Spacing, Typography } from '../src/constants/theme'
-import { API_ROUTES, apiFetch } from '../src/lib/api/config'
+import { API_ROUTES, HAS_REMOTE_API, apiFetch } from '../src/lib/api/config'
+import { saveDietAndGenerateLocalPlan } from '../src/lib/meals/localPlan'
 import { supabase } from '../src/lib/supabase/client'
 import { useAuthStore } from '../src/store/auth'
 import { useProfileStore } from '../src/store/profile'
@@ -35,6 +36,7 @@ export default function DietScreen() {
   const user = useAuthStore(state => state.user)
   const setSession = useAuthStore(state => state.setSession)
   const preferences = useProfileStore(state => state.preferences)
+  const profile = useProfileStore(state => state.profile)
   const loadProfile = useProfileStore(state => state.loadProfile)
   const [selected, setSelected] = useState<DietType>(
     (preferences?.dietType as DietType | undefined) ?? 'balanced',
@@ -60,22 +62,32 @@ export default function DietScreen() {
       setSession(refreshed.session)
       const accessToken = refreshed.session.access_token
 
-      await apiFetch(
-        API_ROUTES.preferencesDiet,
-        {
-          method: 'PUT',
-          body: JSON.stringify({ diet_type: selected }),
-        },
-        accessToken,
-      )
-      await apiFetch(
-        API_ROUTES.mealsGenerate,
-        {
-          method: 'POST',
-          body: JSON.stringify({ date: todayDate(), diet_type: selected }),
-        },
-        accessToken,
-      )
+      const date = todayDate()
+      if (HAS_REMOTE_API) {
+        await apiFetch(
+          API_ROUTES.preferencesDiet,
+          {
+            method: 'PUT',
+            body: JSON.stringify({ diet_type: selected }),
+          },
+          accessToken,
+        )
+        await apiFetch(
+          API_ROUTES.mealsGenerate,
+          {
+            method: 'POST',
+            body: JSON.stringify({ date, diet_type: selected }),
+          },
+          accessToken,
+        )
+      } else {
+        await saveDietAndGenerateLocalPlan({
+          userId: user.id,
+          date,
+          dietType: selected,
+          profile,
+        })
+      }
       await loadProfile(user.id)
       router.replace('/schedule' as Href)
     } catch (error) {

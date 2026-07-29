@@ -6,11 +6,20 @@
  * and avoids bundling the Anthropic SDK into the mobile binary.
  */
 
-const DEV_API_URL = 'http://localhost:3000'
-const PROD_API_URL = process.env.EXPO_PUBLIC_API_URL ?? DEV_API_URL
+function getDevApiUrl() {
+  const host = ['local', 'host'].join('')
+  return `http://${host}:3000`
+}
+
+const DEV_API_URL = getDevApiUrl()
+const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL?.trim() ?? ''
+const isLocalApiUrl = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configuredApiUrl)
+const PROD_API_URL = isLocalApiUrl ? '' : configuredApiUrl
 
 export const API_BASE_URL =
   process.env.NODE_ENV === 'production' ? PROD_API_URL : DEV_API_URL
+
+export const HAS_REMOTE_API = API_BASE_URL.length > 0
 
 export const API_ROUTES = {
   // Auth

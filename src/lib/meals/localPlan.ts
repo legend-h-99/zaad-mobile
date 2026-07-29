@@ -2,6 +2,7 @@ import { DEMO_RECIPES } from '../../constants/demoData'
 import { getPlanForDate } from '../../constants/mealSchedule'
 import { DIET_TYPES, type DietType } from '../../constants/diets'
 import { buildReferenceMealPlanMeals, loadReferenceFoodItems } from '../nutrition/referenceFoods'
+import { buildRecipeMealPlanMeals, loadReferenceRecipes } from '../nutrition/referenceRecipes'
 import { calculateDailyTargets } from '../nutrition/targets'
 import { supabase } from '../supabase/client'
 import type { HealthProfile, MealItem, MealPlanMeals, Recipe } from '../../types'
@@ -75,8 +76,23 @@ export function buildLocalMealPlan(
     fatG: targets.fat,
     sodiumMg,
     aiNotes: referenceMeals
-      ? `خطة محلية مبنية من food_items السعودية وفق نمط ${dietLabel}.`
+      ? `خطة محلية مبنية من بيانات Supabase الغذائية وفق نمط ${dietLabel}.`
       : `خطة محلية مبنية من وصفات زاد وفق نمط ${dietLabel}.`,
+  }
+}
+
+async function tryBuildRecipeMeals(dietType: DietType) {
+  try {
+    const dietLabel = DIET_TYPES.find(diet => diet.id === dietType)?.label ?? 'متوازن'
+    let rows = await loadReferenceRecipes(dietType)
+
+    if (rows.length < 4 && dietType !== 'balanced') {
+      rows = await loadReferenceRecipes('balanced')
+    }
+
+    return buildRecipeMealPlanMeals({ rows, dietType, dietLabel })
+  } catch {
+    return null
   }
 }
 
@@ -165,7 +181,8 @@ export async function saveDietAndGenerateLocalPlan({
   dietType: DietType
   profile?: Partial<HealthProfile> | null
 }) {
-  const referenceMeals = await tryBuildReferenceMeals(dietType, profile)
+  const referenceMeals = await tryBuildRecipeMeals(dietType)
+    ?? await tryBuildReferenceMeals(dietType, profile)
   const plan = buildLocalMealPlan(date, dietType, profile ?? {}, referenceMeals)
   await saveDietPreference(userId, dietType)
   await saveMealPlan(userId, date, plan)

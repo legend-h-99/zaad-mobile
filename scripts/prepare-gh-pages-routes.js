@@ -23,6 +23,7 @@ if (!fs.existsSync(indexPath)) {
 }
 
 fs.copyFileSync(indexPath, path.join(distDir, '404.html'))
+fs.writeFileSync(path.join(distDir, '.nojekyll'), '')
 
 for (const route of routes) {
   const routeDir = path.join(distDir, route)

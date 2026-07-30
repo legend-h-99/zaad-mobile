@@ -19,6 +19,7 @@ import { StatusBar } from 'expo-status-bar'
 
 import { useSession } from '../src/hooks/useSession'
 import { Colors } from '../src/constants/theme'
+import { useThemeStore } from '../src/store/theme'
 
 // Force RTL at the OS level for Arabic layout
 if (!I18nManager.isRTL) {
@@ -76,6 +77,8 @@ function RootLayoutNav() {
 }
 
 export default function RootLayout() {
+  const themeMode = useThemeStore(s => s.mode)
+  const initializeTheme = useThemeStore(s => s.initialize)
   const [fontsLoaded] = useFonts({
     // IBM Plex Arabic — place OTF files in assets/fonts/
     // Download from: https://github.com/IBM/plex/tree/master/packages/ibm-plex-arabic
@@ -90,12 +93,16 @@ export default function RootLayout() {
     if (fontsLoaded) SplashScreen.hideAsync()
   }, [fontsLoaded])
 
+  useEffect(() => {
+    initializeTheme()
+  }, [initializeTheme])
+
   return (
     <GestureHandlerRootView style={styles.root}>
       <SafeAreaProvider>
         <View style={styles.appShell}>
           <QueryClientProvider client={queryClient}>
-            <StatusBar style="dark" />
+            <StatusBar style={themeMode === 'dark' ? 'light' : 'dark'} />
             <RootLayoutNav />
           </QueryClientProvider>
         </View>

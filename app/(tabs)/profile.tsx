@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Alert,
   Platform,
+  Switch,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Feather } from '@expo/vector-icons'
@@ -20,6 +21,7 @@ import { useSession } from '../../src/hooks/useSession'
 import { AppHeader } from '../../src/components/ui/AppHeader'
 import { useAuthStore } from '../../src/store/auth'
 import { useProfileStore } from '../../src/store/profile'
+import { useThemeStore } from '../../src/store/theme'
 import { ZaadCard } from '../../src/components/ui/ZaadCard'
 import { GuidanceCard } from '../../src/components/zaad/ContentBlocks'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
@@ -60,12 +62,43 @@ function SettingsRow({ icon, labelAr, onPress, danger, subtitle }: SettingsRowPr
   )
 }
 
+interface SettingsSwitchRowProps {
+  icon: React.ComponentProps<typeof Feather>['name']
+  labelAr: string
+  subtitle?: string
+  value: boolean
+  onValueChange: (value: boolean) => void
+}
+
+function SettingsSwitchRow({ icon, labelAr, subtitle, value, onValueChange }: SettingsSwitchRowProps) {
+  return (
+    <View style={styles.settingsRow}>
+      <Switch
+        value={value}
+        onValueChange={onValueChange}
+        trackColor={{ false: Colors.border, true: Colors.primaryBorder }}
+        thumbColor={value ? Colors.lime : Colors.surface}
+        ios_backgroundColor={Colors.border}
+      />
+      <View style={styles.settingsContent}>
+        <Text style={styles.settingsLabel}>{labelAr}</Text>
+        {subtitle && <Text style={styles.settingsSubtitle}>{subtitle}</Text>}
+      </View>
+      <View style={styles.settingsIcon}>
+        <Feather name={icon} size={18} color={Colors.primary} />
+      </View>
+    </View>
+  )
+}
+
 export default function ProfileScreen() {
   const insets = useSafeAreaInsets()
   const { user, signOut } = useSession()
   const isDemoMode = useAuthStore(s => s.isDemoMode)
   const demoUserId = useAuthStore(s => s.demoUserId)
   const enterDemoMode = useAuthStore(s => s.enterDemoMode)
+  const themeMode = useThemeStore(s => s.mode)
+  const setThemeMode = useThemeStore(s => s.setMode)
   const { profile: liveProfile, conditions: liveConditions, medications } = useProfileStore()
   const router = useRouter()
 
@@ -308,6 +341,14 @@ export default function ProfileScreen() {
           labelAr="إدارة الهدف اليومي"
           subtitle="السعرات والبروتين والماكروز"
           onPress={() => router.push('/goals')}
+        />
+        <View style={styles.rowDivider} />
+        <SettingsSwitchRow
+          icon="moon"
+          labelAr="الوضع الليلي"
+          subtitle="راحة أكثر في الإضاءة المنخفضة"
+          value={themeMode === 'dark'}
+          onValueChange={value => setThemeMode(value ? 'dark' : 'light')}
         />
         <View style={styles.rowDivider} />
         <SettingsRow

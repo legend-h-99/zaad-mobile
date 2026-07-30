@@ -1,11 +1,12 @@
+import { Platform } from 'react-native'
+
 /**
  * زاد — Design Tokens
  * RTL-first Arabic therapeutic nutrition app
  * Brand: medical-green primary, warm-amber accent
  */
 
-export const Colors = {
-  // Primary — deep botanical green with Alma's bright nutrition accent.
+export const LightThemeVars = {
   primary: '#385C2E',
   primaryLight: '#F1F6ED',
   primaryBorder: '#D9E6D2',
@@ -13,8 +14,6 @@ export const Colors = {
   lime: '#B8EE31',
   limeSoft: '#EFF8D2',
   burgundy: '#351A18',
-
-  // Accent — warm food cue, restrained so it complements the medical palette
   amber: '#EDB92E',
   amberLight: '#FFF8D9',
   amberBorder: '#F1DEA0',
@@ -22,44 +21,157 @@ export const Colors = {
   sky: '#5E9898',
   skyLight: '#ECF7F6',
   mint: '#E8F1E1',
-
-  // Status colors — always paired with icon/text, never sole indicator
-  safe: {
-    bg: '#EEF7F3',
-    border: '#CFE5DC',
-    text: '#167A58',
-  },
-  watch: {
-    bg: '#FFF6EC',
-    border: '#F3D7B7',
-    text: '#B96720',
-  },
-  risk: {
-    bg: '#FFF1F0',
-    border: '#F6C8C2',
-    text: '#C94033',
-  },
-
-  // Neutral surface palette
+  safeBg: '#EEF7F3',
+  safeBorder: '#CFE5DC',
+  safeText: '#167A58',
+  watchBg: '#FFF6EC',
+  watchBorder: '#F3D7B7',
+  watchText: '#B96720',
+  riskBg: '#FFF1F0',
+  riskBorder: '#F6C8C2',
+  riskText: '#C94033',
   background: '#F8F5EE',
   surface: '#FFFDFC',
   surfaceAlt: '#F7F5EF',
   border: '#E7E1D8',
   borderLight: '#EFEAE2',
-
-  // Text hierarchy
   textPrimary: '#351A18',
   textSecondary: '#50443E',
   textMuted: '#7D756F',
   textSubtle: '#A6A09A',
   textDisabled: '#CEC9C2',
+  calorieBg: '#F2F1ED',
+  calorieBorder: '#E3E0D9',
+  calorieText: '#351A18',
+  proteinBg: '#FFF0EA',
+  proteinBorder: '#F6C6B7',
+  proteinText: '#D75E3C',
+  carbsBg: '#F1F8D4',
+  carbsBorder: '#DDEB9B',
+  carbsText: '#718A13',
+  fatBg: '#FFF7D5',
+  fatBorder: '#F1D989',
+  fatText: '#A97C00',
+  sodiumBg: '#fef2f2',
+  sodiumBorder: '#FECACA',
+  sodiumText: '#991B1B',
+} as const
+
+export const DarkThemeVars: Record<keyof typeof LightThemeVars, string> = {
+  primary: '#8BCF7D',
+  primaryLight: '#17301E',
+  primaryBorder: '#315039',
+  primaryDark: '#B7E7AC',
+  lime: '#B8EE31',
+  limeSoft: '#223318',
+  burgundy: '#F4E6DE',
+  amber: '#F1C860',
+  amberLight: '#372E18',
+  amberBorder: '#665528',
+  coral: '#FF9A78',
+  sky: '#8BCACA',
+  skyLight: '#173233',
+  mint: '#203529',
+  safeBg: '#102A22',
+  safeBorder: '#245947',
+  safeText: '#6FDCB2',
+  watchBg: '#332616',
+  watchBorder: '#67461E',
+  watchText: '#F1B66F',
+  riskBg: '#351817',
+  riskBorder: '#74332E',
+  riskText: '#FF8D82',
+  background: '#101411',
+  surface: '#171D18',
+  surfaceAlt: '#20271F',
+  border: '#30392F',
+  borderLight: '#293229',
+  textPrimary: '#F5EFE8',
+  textSecondary: '#D6CEC5',
+  textMuted: '#B3A99F',
+  textSubtle: '#8C8278',
+  textDisabled: '#675F57',
+  calorieBg: '#262720',
+  calorieBorder: '#3A3B31',
+  calorieText: '#F5EFE8',
+  proteinBg: '#39211C',
+  proteinBorder: '#6D3C31',
+  proteinText: '#FF9A78',
+  carbsBg: '#253318',
+  carbsBorder: '#4A6124',
+  carbsText: '#C8E772',
+  fatBg: '#372D14',
+  fatBorder: '#66511B',
+  fatText: '#F4CB57',
+  sodiumBg: '#351817',
+  sodiumBorder: '#74332E',
+  sodiumText: '#FF8D82',
+}
+
+export type ThemeMode = 'light' | 'dark'
+export type ThemeToken = keyof typeof LightThemeVars
+
+export function themeToken(name: ThemeToken) {
+  const fallback = LightThemeVars[name]
+  return Platform.OS === 'web' ? `var(--zaad-${name}, ${fallback})` : fallback
+}
+
+export const Colors = {
+  // Primary — deep botanical green with Alma's bright nutrition accent.
+  primary: themeToken('primary'),
+  primaryLight: themeToken('primaryLight'),
+  primaryBorder: themeToken('primaryBorder'),
+  primaryDark: themeToken('primaryDark'),
+  lime: themeToken('lime'),
+  limeSoft: themeToken('limeSoft'),
+  burgundy: themeToken('burgundy'),
+
+  // Accent — warm food cue, restrained so it complements the medical palette
+  amber: themeToken('amber'),
+  amberLight: themeToken('amberLight'),
+  amberBorder: themeToken('amberBorder'),
+  coral: themeToken('coral'),
+  sky: themeToken('sky'),
+  skyLight: themeToken('skyLight'),
+  mint: themeToken('mint'),
+
+  // Status colors — always paired with icon/text, never sole indicator
+  safe: {
+    bg: themeToken('safeBg'),
+    border: themeToken('safeBorder'),
+    text: themeToken('safeText'),
+  },
+  watch: {
+    bg: themeToken('watchBg'),
+    border: themeToken('watchBorder'),
+    text: themeToken('watchText'),
+  },
+  risk: {
+    bg: themeToken('riskBg'),
+    border: themeToken('riskBorder'),
+    text: themeToken('riskText'),
+  },
+
+  // Neutral surface palette
+  background: themeToken('background'),
+  surface: themeToken('surface'),
+  surfaceAlt: themeToken('surfaceAlt'),
+  border: themeToken('border'),
+  borderLight: themeToken('borderLight'),
+
+  // Text hierarchy
+  textPrimary: themeToken('textPrimary'),
+  textSecondary: themeToken('textSecondary'),
+  textMuted: themeToken('textMuted'),
+  textSubtle: themeToken('textSubtle'),
+  textDisabled: themeToken('textDisabled'),
 
   // Macro chip colors
-  calorie: { bg: '#F2F1ED', border: '#E3E0D9', text: '#351A18' },
-  protein: { bg: '#FFF0EA', border: '#F6C6B7', text: '#D75E3C' },
-  carbs:   { bg: '#F1F8D4', border: '#DDEB9B', text: '#718A13' },
-  fat:     { bg: '#FFF7D5', border: '#F1D989', text: '#A97C00' },
-  sodium:  { bg: '#fef2f2', border: '#FECACA', text: '#991B1B' },
+  calorie: { bg: themeToken('calorieBg'), border: themeToken('calorieBorder'), text: themeToken('calorieText') },
+  protein: { bg: themeToken('proteinBg'), border: themeToken('proteinBorder'), text: themeToken('proteinText') },
+  carbs:   { bg: themeToken('carbsBg'), border: themeToken('carbsBorder'), text: themeToken('carbsText') },
+  fat:     { bg: themeToken('fatBg'), border: themeToken('fatBorder'), text: themeToken('fatText') },
+  sodium:  { bg: themeToken('sodiumBg'), border: themeToken('sodiumBorder'), text: themeToken('sodiumText') },
 } as const
 
 export const Typography = {

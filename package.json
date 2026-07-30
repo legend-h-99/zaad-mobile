@@ -50,7 +50,7 @@
     "web": "expo start --web",
     "prebuild": "find . -path './node_modules' -prune -o -name '._*' -type f -delete",
     "build": "EXPO_PUBLIC_API_URL= expo export --clear --platform web --output-dir dist",
-    "postbuild": "cp dist/index.html dist/404.html && find dist -name '._*' -type f -delete",
+    "postbuild": "node scripts/prepare-gh-pages-routes.js && find dist -name '._*' -type f -delete",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch"
   },

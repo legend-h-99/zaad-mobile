@@ -48,6 +48,7 @@ export default function LoginScreen() {
   const router = useRouter()
   const insets = useSafeAreaInsets()
   const setSession = useAuthStore(state => state.setSession)
+  const clearDemoMode = useAuthStore(state => state.clearDemoMode)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -78,6 +79,7 @@ export default function LoginScreen() {
       if (authError) {
         setError('تعذر تسجيل الدخول. تأكد من البريد وكلمة المرور.')
       } else if (data.session) {
+        await clearDemoMode()
         setSession(data.session)
         router.replace('/(tabs)')
       }
@@ -235,7 +237,10 @@ export default function LoginScreen() {
 
         <Pressable
           style={styles.signup}
-          onPress={() => router.push('/(auth)/register')}
+          onPress={async () => {
+            await clearDemoMode()
+            router.push('/(auth)/register')
+          }}
         >
           <Text style={styles.signupText}>
             جديد في زاد؟ <Text style={styles.signupLink}>أنشئ حسابك</Text>

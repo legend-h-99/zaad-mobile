@@ -41,7 +41,7 @@ const queryClient = new QueryClient({
 })
 
 function RootLayoutNav() {
-  const { isAuthenticated, isLoading } = useSession()
+  const { session, isAuthenticated, isDemoMode, isLoading } = useSession()
   const segments = useSegments()
   const router = useRouter()
 
@@ -54,11 +54,11 @@ function RootLayoutNav() {
     if (!isAuthenticated && !inAuthGroup) {
       // Not signed in — redirect to login
       router.replace('/(auth)/login')
-    } else if (isAuthenticated && inAuthGroup) {
+    } else if (session && !isDemoMode && isAuthenticated && inAuthGroup) {
       // Signed in but on auth screen — redirect to app
       router.replace('/(tabs)')
     }
-  }, [isAuthenticated, isLoading, segments])
+  }, [session, isAuthenticated, isDemoMode, isLoading, segments])
 
   return (
     <Stack screenOptions={{ headerShown: false }}>

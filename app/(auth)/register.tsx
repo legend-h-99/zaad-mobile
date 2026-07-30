@@ -24,6 +24,8 @@ import { ZAAD_PAGE_CONTENT } from '../../src/constants/zaadContent'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
 import { useAuthStore } from '../../src/store/auth'
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 function getEmailRedirectTo() {
   if (Platform.OS === 'web' && typeof window !== 'undefined') {
     return `${window.location.origin}/onboarding`
@@ -32,10 +34,47 @@ function getEmailRedirectTo() {
   return undefined
 }
 
+function getRegisterErrorMessage(authError: unknown) {
+  if (!authError || typeof authError !== 'object') {
+    return 'حدث خطأ في إنشاء الحساب، يرجى المحاولة مجدداً'
+  }
+
+  const error = authError as { code?: string; message?: string; status?: number }
+  const code = error.code?.toLowerCase() ?? ''
+  const message = error.message?.toLowerCase() ?? ''
+
+  if (code === 'validation_failed' || (message.includes('validate email') || message.includes('invalid format'))) {
+    return 'البريد الإلكتروني غير صالح. استخدم بريدًا صحيحًا مثل name@example.com.'
+  }
+
+  if (message.includes('already registered') || message.includes('user already registered')) {
+    return 'هذا البريد الإلكتروني مسجل مسبقاً. سجّل الدخول أو استخدم استعادة كلمة المرور.'
+  }
+
+  if (message.includes('email rate limit') || message.includes('rate limit')) {
+    return 'تم تجاوز حد إرسال رسائل التسجيل مؤقتًا. انتظر قليلًا ثم حاول مرة أخرى.'
+  }
+
+  if (message.includes('signup is disabled') || message.includes('signups not allowed')) {
+    return 'إنشاء الحسابات غير مفعل حاليًا في إعدادات Supabase Auth.'
+  }
+
+  if (message.includes('provider') && (message.includes('disabled') || message.includes('not enabled'))) {
+    return 'مزود التسجيل غير مفعل في Supabase. راجع إعدادات Auth Providers.'
+  }
+
+  if (error.status === 400) {
+    return 'تعذر قبول بيانات التسجيل. تحقق من البريد وكلمة المرور ثم حاول مرة أخرى.'
+  }
+
+  return 'حدث خطأ في إنشاء الحساب، يرجى المحاولة مجدداً'
+}
+
 export default function RegisterScreen() {
   const router  = useRouter()
   const insets  = useSafeAreaInsets()
   const setSession = useAuthStore(state => state.setSession)
+  const clearDemoMode = useAuthStore(state => state.clearDemoMode)
 
   const [name, setName]         = useState('')
   const [email, setEmail]       = useState('')
@@ -49,6 +88,10 @@ export default function RegisterScreen() {
       setError('الرجاء تعبئة جميع الحقول')
       return
     }
+    if (!EMAIL_PATTERN.test(email.trim())) {
+      setError('البريد الإلكتروني غير صالح. استخدم بريدًا صحيحًا مثل name@example.com.')
+      return
+    }
     if (password.length < 8) {
       setError('كلمة المرور يجب أن تكون 8 أحرف على الأقل')
       return
@@ -57,33 +100,36 @@ export default function RegisterScreen() {
     setError(null)
     setSuccess(null)
 
-    const { data, error: authError } = await supabase.auth.signUp({
-      email: email.trim().toLowerCase(),
-      password,
-      options: {
-        data: { full_name: name.trim() },
-        emailRedirectTo: getEmailRedirectTo(),
-      },
-    })
+    try {
+      await clearDemoMode()
 
-    if (authError) {
-      setError(
-        authError.message.includes('already registered')
-          ? 'هذا البريد الإلكتروني مسجل مسبقاً'
-          : 'حدث خطأ في إنشاء الحساب، يرجى المحاولة مجدداً'
-      )
+      const { data, error: authError } = await supabase.auth.signUp({
+        email: email.trim().toLowerCase(),
+        password,
+        options: {
+          data: { full_name: name.trim() },
+          emailRedirectTo: getEmailRedirectTo(),
+        },
+      })
+
+      if (authError) {
+        setError(getRegisterErrorMessage(authError))
+        setLoading(false)
+        return
+      }
+
+      if (data.session) {
+        setSession(data.session)
+        router.replace('/onboarding')
+        return
+      }
+
+      setSuccess('تم إنشاء الحساب. افتح بريدك الإلكتروني واضغط رابط التأكيد، ثم سجّل الدخول لإكمال ملفك الصحي.')
+    } catch {
+      setError('تعذر الاتصال الآن. تحقق من الشبكة وإعدادات Supabase.')
+    } finally {
       setLoading(false)
-      return
     }
-
-    if (data.session) {
-      setSession(data.session)
-      router.replace('/onboarding')
-      return
-    }
-
-    setSuccess('تم إنشاء الحساب. افتح بريدك الإلكتروني واضغط رابط التأكيد، ثم سجّل الدخول لإكمال ملفك الصحي.')
-    setLoading(false)
   }
 
   return (

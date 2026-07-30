@@ -29,6 +29,7 @@ export function useSession() {
     session,
     user,
     isLoading,
+    isDemoMode,
     isAuthenticated: !!session || isDemoMode,
     accessToken: session?.access_token,
     signOut,

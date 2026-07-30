@@ -53,6 +53,7 @@ interface AuthState {
 
   setSession: (session: Session | null) => void
   enterDemoMode: (demoUserId?: string) => void
+  clearDemoMode: () => Promise<void>
   signOut: () => Promise<void>
   initialize: () => () => void
 }
@@ -73,10 +74,15 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ isDemoMode: true, demoUserId, isLoading: false })
   },
 
-  signOut: async () => {
-    await supabase.auth.signOut().catch(() => {})
+  clearDemoMode: async () => {
     await demoStorage.removeItem(DEMO_KEY).catch(() => {})
     await demoStorage.removeItem(DEMO_USER_KEY).catch(() => {})
+    set({ isDemoMode: false, demoUserId: DEFAULT_DEMO_USER_ID, isLoading: false })
+  },
+
+  signOut: async () => {
+    await supabase.auth.signOut().catch(() => {})
+    await useAuthStore.getState().clearDemoMode()
     _initialized = false
     set({ session: null, user: null, isDemoMode: false, demoUserId: DEFAULT_DEMO_USER_ID })
   },

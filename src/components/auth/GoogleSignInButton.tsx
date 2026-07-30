@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons'
 
 import { supabase } from '../../lib/supabase/client'
 import { Colors, Radius, Spacing, Typography } from '../../constants/theme'
+import { useAuthStore } from '../../store/auth'
 
 type GoogleSignInButtonProps = {
   mode?: 'signIn' | 'signUp'
@@ -22,6 +23,7 @@ function getRedirectTo(mode: GoogleSignInButtonProps['mode']) {
 
 export function GoogleSignInButton({ mode = 'signIn', onError }: GoogleSignInButtonProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const clearDemoMode = useAuthStore(state => state.clearDemoMode)
 
   async function handleGoogleSignIn() {
     if (isLoading) return
@@ -35,6 +37,7 @@ export function GoogleSignInButton({ mode = 'signIn', onError }: GoogleSignInBut
     onError?.('')
 
     try {
+      await clearDemoMode()
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -47,7 +50,12 @@ export function GoogleSignInButton({ mode = 'signIn', onError }: GoogleSignInBut
       })
 
       if (error) {
-        onError?.('تعذر بدء تسجيل الدخول عبر Google. تأكد من تفعيل Google في Supabase.')
+        const message = error.message.toLowerCase()
+        onError?.(
+          message.includes('provider') || message.includes('disabled') || message.includes('not enabled')
+            ? 'Google غير مفعل في Supabase Auth Providers.'
+            : 'تعذر بدء تسجيل الدخول عبر Google. تأكد من إعداد Google OAuth والروابط المسموحة.'
+        )
         setIsLoading(false)
       }
     } catch {

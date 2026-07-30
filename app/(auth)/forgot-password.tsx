@@ -32,8 +32,8 @@ export default function ForgotPasswordScreen() {
     setLoading(true)
     setError('')
     const redirectTo = Platform.OS === 'web'
-      ? `${globalThis.location?.origin ?? ''}/login`
-      : 'zaad://login'
+      ? `${globalThis.location?.origin ?? ''}/reset-password`
+      : 'zaad://reset-password'
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(
       email.trim().toLowerCase(),
       { redirectTo },

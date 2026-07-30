@@ -7,6 +7,7 @@ const indexPath = path.join(distDir, 'index.html')
 const routes = [
   'login',
   'register',
+  'reset-password',
   'profile',
   'onboarding',
   'goals',

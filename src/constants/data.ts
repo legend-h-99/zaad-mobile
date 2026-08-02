@@ -33,6 +33,7 @@ export const ONBOARDING_CONDITIONS = [
   { value: 'high_cholesterol', labelAr: 'ارتفاع الكوليسترول',    icon: 'activity'},
   { value: 'obesity',          labelAr: 'السمنة / زيادة الوزن',  icon: 'scale'   },
   { value: 'fatty_liver',      labelAr: 'الكبد الدهني',          icon: 'zap'     },
+  { value: 'ibs',              labelAr: 'القولون العصبي',        icon: 'activity'},
 ] as const
 
 export const HEALTH_GOALS = [

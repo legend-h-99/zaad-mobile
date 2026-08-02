@@ -8,6 +8,7 @@ export const DIET_TYPES = [
   { id: 'vegan', label: 'نباتي صرف', description: 'مصادر نباتية بالكامل' },
   { id: 'keto', label: 'كيتو', description: 'كربوهيدرات شديدة الانخفاض ودهون صحية' },
   { id: 'gluten_free', label: 'خالٍ من الغلوتين', description: 'بدون القمح والشعير ومشتقاتهما' },
+  { id: 'low_fodmap', label: 'قليل FODMAP', description: 'اختيارات أقل بالمكونات التي قد تهيّج القولون' },
   { id: 'diabetes_friendly', label: 'مناسب لضبط السكر', description: 'ألياف أعلى وكربوهيدرات موزعة' },
 ] as const
 

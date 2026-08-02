@@ -11,6 +11,50 @@ type MealSlot = 'breakfast' | 'lunch' | 'dinner' | 'snack'
 
 const MEAL_SLOTS: MealSlot[] = ['breakfast', 'lunch', 'dinner', 'snack']
 
+const LOW_FODMAP_MEALS: MealPlanMeals = {
+  breakfast: {
+    nameAr: 'بيض مخفوق بالسبانخ وخبز خالٍ من الغلوتين',
+    nameEn: 'Spinach eggs with gluten-free toast',
+    calories: 340, proteinG: 22, carbsG: 26, fatG: 16, sodiumMg: 280,
+    ingredientsAr: ['بيض', 'سبانخ', 'خبز خالٍ من الغلوتين', 'زيت زيتون'],
+    instructionsAr: 'حضّر البيض مع السبانخ بزيت الزيتون وقدّمه مع الخبز الخالي من الغلوتين.',
+    safetyScore: 'suitable',
+    safetyReasonAr: 'وجبة مختارة لحمية قليل FODMAP، دون بصل أو ثوم أو ألبان عادية.',
+    alternatives: [],
+  },
+  lunch: {
+    nameAr: 'دجاج مشوي مع الأرز والكوسا',
+    nameEn: 'Grilled chicken with rice and zucchini',
+    calories: 520, proteinG: 44, carbsG: 54, fatG: 15, sodiumMg: 320,
+    ingredientsAr: ['صدر دجاج', 'أرز بسمتي', 'كوسا', 'جزر', 'ليمون', 'زيت زيتون'],
+    instructionsAr: 'اشوِ الدجاج وتبّله بالليمون والأعشاب، وقدّمه مع الأرز والخضار دون بصل أو ثوم.',
+    safetyScore: 'suitable',
+    safetyReasonAr: 'وجبة مختارة لحمية قليل FODMAP.',
+    alternatives: [],
+  },
+  dinner: {
+    nameAr: 'سمك مشوي مع الكينوا والفاصوليا الخضراء',
+    nameEn: 'Grilled fish with quinoa and green beans',
+    calories: 430, proteinG: 40, carbsG: 34, fatG: 18, sodiumMg: 290,
+    ingredientsAr: ['سمك أبيض', 'كينوا', 'فاصوليا خضراء', 'ليمون', 'زيت زيتون'],
+    instructionsAr: 'اشوِ السمك بالليمون وقدّمه مع الكينوا والفاصوليا الخضراء.',
+    safetyScore: 'suitable',
+    safetyReasonAr: 'وجبة مختارة لحمية قليل FODMAP.',
+    alternatives: [],
+  },
+  snack: {
+    nameAr: 'فراولة مع جوز',
+    nameEn: 'Strawberries with walnuts',
+    calories: 200, proteinG: 5, carbsG: 16, fatG: 14, sodiumMg: 5,
+    ingredientsAr: ['فراولة', 'جوز'],
+    instructionsAr: 'قدّم الفراولة مع حفنة صغيرة من الجوز.',
+    safetyScore: 'suitable',
+    safetyReasonAr: 'سناك مختار لحمية قليل FODMAP.',
+    alternatives: [],
+  },
+  notes: 'خطة قليل FODMAP تتجنب البصل والثوم والبقول والحليب العادي والمحليات السكرية عالية الفودماب. المرحلة التقييدية مؤقتة وتُراجع مع أخصائي تغذية.',
+}
+
 function parseDate(date: string) {
   const [year, month, day] = date.split('-').map(Number)
   return new Date(year, (month ?? 1) - 1, day ?? 1)
@@ -181,8 +225,9 @@ export async function saveDietAndGenerateLocalPlan({
   dietType: DietType
   profile?: Partial<HealthProfile> | null
 }) {
-  const referenceMeals = await tryBuildRecipeMeals(dietType)
-    ?? await tryBuildReferenceMeals(dietType, profile)
+  const referenceMeals = dietType === 'low_fodmap'
+    ? LOW_FODMAP_MEALS
+    : await tryBuildRecipeMeals(dietType) ?? await tryBuildReferenceMeals(dietType, profile)
   const plan = buildLocalMealPlan(date, dietType, profile ?? {}, referenceMeals)
   await saveDietPreference(userId, dietType)
   await saveMealPlan(userId, date, plan)

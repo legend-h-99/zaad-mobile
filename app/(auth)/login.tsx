@@ -20,34 +20,18 @@ import { supabase } from '../../src/lib/supabase/client'
 import { Colors, Radius, Spacing, Typography } from '../../src/constants/theme'
 import { useAuthStore } from '../../src/store/auth'
 
-const DEMO_PASSWORD = 'ZaadDemo123!'
 const DEMO_ACCOUNTS = [
-  ['محمد', 'mohammed.demo@zaad.app', 'زيادة النشاط'],
-  ['نورة', 'noura.demo@zaad.app', 'توازن السكر'],
-  ['سلمان', 'salman.demo@zaad.app', 'بناء العضلات'],
-  ['ريم', 'reem.demo@zaad.app', 'نمط صحي'],
-  ['فيصل', 'faisal.demo@zaad.app', 'خفض الكوليسترول'],
-  ['هناء', 'hana.demo@zaad.app', 'الحفاظ على الوزن'],
-  ['عبدالله', 'abdullah.demo@zaad.app', 'صحة القلب'],
-  ['سارة', 'sara.demo@zaad.app', 'نزول الوزن'],
-  ['خالد', 'khalid.demo@zaad.app', 'تحسين اللياقة'],
-  ['مريم', 'mariam.demo@zaad.app', 'تغذية متوازنة'],
-  ['تركي', 'turki.demo@zaad.app', 'زيادة الوزن'],
-  ['لمى', 'lama.demo@zaad.app', 'الطاقة اليومية'],
-  ['عمر', 'omar.demo@zaad.app', 'التحكم بالضغط'],
-  ['أسماء', 'asma.demo@zaad.app', 'نمط صحي'],
-  ['يوسف', 'yousef.demo@zaad.app', 'بناء العضلات'],
-  ['شهد', 'shahad.demo@zaad.app', 'صحة عامة'],
-  ['بدر', 'badr.demo@zaad.app', 'خفض الدهون'],
-  ['غادة', 'ghada.demo@zaad.app', 'الحفاظ على الوزن'],
-  ['راكان', 'rakan.demo@zaad.app', 'تحسين اللياقة'],
-  ['جود', 'jood.demo@zaad.app', 'توازن غذائي'],
+  { id: 'demo-hussam-2026', name: 'حسام', goal: 'صحة القلب' },
+  { id: 'demo-noura-2026', name: 'نورة', goal: 'توازن السكر' },
+  { id: 'demo-fahad-2026', name: 'فهد', goal: 'بناء العضلات' },
+  { id: 'demo-layla-2026', name: 'ليلى', goal: 'نمط صحي' },
 ] as const
 
 export default function LoginScreen() {
   const router = useRouter()
   const insets = useSafeAreaInsets()
   const setSession = useAuthStore(state => state.setSession)
+  const enterDemoMode = useAuthStore(state => state.enterDemoMode)
   const clearDemoMode = useAuthStore(state => state.clearDemoMode)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -55,10 +39,9 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  function selectDemo(emailAddress: string) {
-    setEmail(emailAddress)
-    setPassword(DEMO_PASSWORD)
-    setError(null)
+  function startDemo(demoUserId: string) {
+    enterDemoMode(demoUserId)
+    router.replace('/(tabs)')
   }
 
   async function handleLogin() {
@@ -200,8 +183,8 @@ export default function LoginScreen() {
               <Feather name="users" size={18} color={Colors.primary} />
             </View>
             <View style={styles.demoHeaderCopy}>
-              <Text style={styles.demoTitle}>جرّب أحد الحسابات</Text>
-              <Text style={styles.demoSubtitle}>٢٠ حساباً بأهداف وحالات مختلفة</Text>
+              <Text style={styles.demoTitle}>جرّب التطبيق</Text>
+              <Text style={styles.demoSubtitle}>اختر ملفاً تجريبياً للدخول مباشرة</Text>
             </View>
           </View>
 
@@ -210,18 +193,17 @@ export default function LoginScreen() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.demoList}
           >
-            {DEMO_ACCOUNTS.map(([name, accountEmail, goal], index) => {
-              const selected = email === accountEmail
+            {DEMO_ACCOUNTS.map(({ id, name, goal }, index) => {
               return (
                 <Pressable
-                  key={accountEmail}
-                  style={[styles.demoCard, selected && styles.demoCardSelected]}
-                  onPress={() => selectDemo(accountEmail)}
+                  key={id}
+                  style={styles.demoCard}
+                  onPress={() => startDemo(id)}
                   accessibilityRole="button"
                   accessibilityLabel={`اختيار حساب ${name}`}
                 >
-                  <View style={[styles.avatar, selected && styles.avatarSelected]}>
-                    <Text style={[styles.avatarText, selected && styles.avatarTextSelected]}>
+                  <View style={styles.avatar}>
+                    <Text style={styles.avatarText}>
                       {name[0]}
                     </Text>
                   </View>
@@ -232,7 +214,6 @@ export default function LoginScreen() {
               )
             })}
           </ScrollView>
-          <Text style={styles.passwordHint}>كلمة المرور لجميع الحسابات: {DEMO_PASSWORD}</Text>
         </View>
 
         <Pressable

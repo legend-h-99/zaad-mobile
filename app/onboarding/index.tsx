@@ -402,6 +402,21 @@ export default function OnboardingScreen() {
               )
             })}
 
+            {conditions.includes('ibs') && (
+              <View style={styles.fodmapNote} accessibilityRole="summary">
+                <Feather name="info" size={18} color={Colors.primary} />
+                <View style={styles.fodmapCopy}>
+                  <Text style={styles.fodmapTitle}>ما هو FODMAP؟</Text>
+                  <Text style={styles.fodmapText}>
+                    FODMAP stands for Fermentable Oligosaccharides, Disaccharides,
+                    Monosaccharides, and Polyols. They are short-chain carbohydrates
+                    and sugar alcohols that the small intestine absorbs poorly. When
+                    fermented by gut bacteria, they can cause bloating, gas, and pain.
+                  </Text>
+                </View>
+              </View>
+            )}
+
             <ZaadButton
               labelAr={conditions.length === 0 ? 'تخطّي' : 'التالي'}
               onPress={goNext}
@@ -799,6 +814,31 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   conditionLabelSelected: { color: Colors.primary },
+
+  fodmapNote: {
+    flexDirection: 'row-reverse',
+    alignItems: 'flex-start',
+    gap: Spacing.sm,
+    padding: Spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.primaryLight,
+  },
+  fodmapCopy: { flex: 1, gap: 4 },
+  fodmapTitle: {
+    color: Colors.textPrimary,
+    fontSize: Typography.size.sm,
+    fontFamily: 'IBMPlexArabic-Bold',
+    textAlign: 'right',
+  },
+  fodmapText: {
+    color: Colors.textSecondary,
+    fontSize: Typography.size.xs,
+    lineHeight: 20,
+    fontFamily: 'IBMPlexArabic-Regular',
+    textAlign: 'right',
+  },
 
   fieldGroup: { gap: 6 },
   fieldLabel: {

@@ -19,30 +19,6 @@ import { supabase } from '../../src/lib/supabase/client'
 import { Colors, Radius, Spacing, Typography } from '../../src/constants/theme'
 import { useAuthStore } from '../../src/store/auth'
 
-const DEMO_PASSWORD = 'ZaadDemo123!'
-const DEMO_ACCOUNTS = [
-  ['محمد', 'mohammed.demo@zaad.app', 'زيادة النشاط'],
-  ['نورة', 'noura.demo@zaad.app', 'توازن السكر'],
-  ['سلمان', 'salman.demo@zaad.app', 'بناء العضلات'],
-  ['ريم', 'reem.demo@zaad.app', 'نمط صحي'],
-  ['فيصل', 'faisal.demo@zaad.app', 'خفض الكوليسترول'],
-  ['هناء', 'hana.demo@zaad.app', 'الحفاظ على الوزن'],
-  ['عبدالله', 'abdullah.demo@zaad.app', 'صحة القلب'],
-  ['سارة', 'sara.demo@zaad.app', 'نزول الوزن'],
-  ['خالد', 'khalid.demo@zaad.app', 'تحسين اللياقة'],
-  ['مريم', 'mariam.demo@zaad.app', 'تغذية متوازنة'],
-  ['تركي', 'turki.demo@zaad.app', 'زيادة الوزن'],
-  ['لمى', 'lama.demo@zaad.app', 'الطاقة اليومية'],
-  ['عمر', 'omar.demo@zaad.app', 'التحكم بالضغط'],
-  ['أسماء', 'asma.demo@zaad.app', 'نمط صحي'],
-  ['يوسف', 'yousef.demo@zaad.app', 'بناء العضلات'],
-  ['شهد', 'shahad.demo@zaad.app', 'صحة عامة'],
-  ['بدر', 'badr.demo@zaad.app', 'خفض الدهون'],
-  ['غادة', 'ghada.demo@zaad.app', 'الحفاظ على الوزن'],
-  ['راكان', 'rakan.demo@zaad.app', 'تحسين اللياقة'],
-  ['جود', 'jood.demo@zaad.app', 'توازن غذائي'],
-] as const
-
 export default function LoginScreen() {
   const router = useRouter()
   const insets = useSafeAreaInsets()
@@ -53,11 +29,6 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  function selectDemo(emailAddress: string) {
-    setEmail(emailAddress)
-    setPassword(DEMO_PASSWORD)
-    setError(null)
-  }
 
   async function handleLogin() {
     if (!email.trim() || !password) {
@@ -189,46 +160,6 @@ export default function LoginScreen() {
           <AppleSignInButton onError={message => setError(message || null)} />
         </View>
 
-        <View style={styles.demoSection}>
-          <View style={styles.demoHeader}>
-            <View style={styles.demoIcon}>
-              <Feather name="users" size={18} color={Colors.primary} />
-            </View>
-            <View style={styles.demoHeaderCopy}>
-              <Text style={styles.demoTitle}>جرّب أحد الحسابات</Text>
-              <Text style={styles.demoSubtitle}>٢٠ حساباً بأهداف وحالات مختلفة</Text>
-            </View>
-          </View>
-
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.demoList}
-          >
-            {DEMO_ACCOUNTS.map(([name, accountEmail, goal], index) => {
-              const selected = email === accountEmail
-              return (
-                <Pressable
-                  key={accountEmail}
-                  style={[styles.demoCard, selected && styles.demoCardSelected]}
-                  onPress={() => selectDemo(accountEmail)}
-                  accessibilityRole="button"
-                  accessibilityLabel={`اختيار حساب ${name}`}
-                >
-                  <View style={[styles.avatar, selected && styles.avatarSelected]}>
-                    <Text style={[styles.avatarText, selected && styles.avatarTextSelected]}>
-                      {name[0]}
-                    </Text>
-                  </View>
-                  <Text style={styles.demoName}>{name}</Text>
-                  <Text style={styles.demoGoal}>{goal}</Text>
-                  <Text style={styles.demoNumber}>{(index + 1).toLocaleString('ar-SA')}</Text>
-                </Pressable>
-              )
-            })}
-          </ScrollView>
-          <Text style={styles.passwordHint}>كلمة المرور لجميع الحسابات: {DEMO_PASSWORD}</Text>
-        </View>
 
         <Pressable
           style={styles.signup}
@@ -381,97 +312,6 @@ const styles = StyleSheet.create({
     color: Colors.textMuted,
     fontSize: Typography.size.xs,
     fontFamily: Typography.fontFamily.medium,
-  },
-  demoSection: {
-    width: '100%',
-    marginTop: Spacing.xl,
-  },
-  demoHeader: {
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    gap: Spacing.sm,
-    paddingHorizontal: 4,
-  },
-  demoIcon: {
-    width: 38,
-    height: 38,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.primaryLight,
-  },
-  demoHeaderCopy: { flex: 1, alignItems: 'flex-end' },
-  demoTitle: {
-    color: Colors.burgundy,
-    fontSize: Typography.size.base,
-    fontFamily: Typography.fontFamily.bold,
-  },
-  demoSubtitle: {
-    color: Colors.textMuted,
-    fontSize: Typography.size.xs,
-    fontFamily: Typography.fontFamily.regular,
-  },
-  demoList: {
-    flexDirection: 'row-reverse',
-    gap: Spacing.sm,
-    paddingVertical: Spacing.md,
-    paddingHorizontal: 2,
-  },
-  demoCard: {
-    width: 126,
-    minHeight: 154,
-    alignItems: 'center',
-    padding: Spacing.md,
-    borderWidth: 1,
-    borderColor: 'rgba(53,26,24,0.05)',
-    borderRadius: Radius.lg,
-    backgroundColor: Colors.surface,
-  },
-  demoCardSelected: {
-    borderColor: Colors.primary,
-    backgroundColor: Colors.primaryLight,
-  },
-  avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.limeSoft,
-  },
-  avatarSelected: { backgroundColor: Colors.primary },
-  avatarText: {
-    color: Colors.primary,
-    fontSize: Typography.size.xl,
-    fontFamily: Typography.fontFamily.bold,
-  },
-  avatarTextSelected: { color: Colors.lime },
-  demoName: {
-    marginTop: Spacing.sm,
-    color: Colors.burgundy,
-    fontSize: Typography.size.sm,
-    fontFamily: Typography.fontFamily.bold,
-  },
-  demoGoal: {
-    marginTop: 1,
-    color: Colors.textMuted,
-    fontSize: Typography.size.xs,
-    fontFamily: Typography.fontFamily.regular,
-    textAlign: 'center',
-  },
-  demoNumber: {
-    position: 'absolute',
-    top: 8,
-    left: 9,
-    color: Colors.textSubtle,
-    fontSize: 11,
-    fontFamily: Typography.fontFamily.medium,
-  },
-  passwordHint: {
-    color: Colors.textMuted,
-    fontSize: Typography.size.xs,
-    fontFamily: Typography.fontFamily.regular,
-    textAlign: 'center',
   },
   signup: {
     minHeight: 52,

@@ -1,0 +1,512 @@
+{
+  "deck_metadata": {
+    "deck_type": "company_profile",
+    "client_or_subject": "Zaadk / Zaad",
+    "audience": "All-audience working package: users, families, healthcare collaborators, strategic partners, investors, and internal team",
+    "objective": "Create a bilingual Arabic and English all-audience pitch package for Zaadk that can be adapted into investor, partner, customer, and internal discussion decks.",
+    "prepared_date": "2026-08-04",
+    "source_confidence": "medium",
+    "template_or_style_source": "Local Zaad mobile app repo and app icon; no external market sources provided",
+    "non_destructive_mode": true
+  },
+  "md_storyline": {
+    "recommended_action": "Use this master storyboard to align Zaadk's narrative, pick the target audience for the next version, add sourced traction and financial evidence, then convert the relevant branch into a native pitch deck.",
+    "why_now": "Zaadk already has a concrete Arabic-first product shape around meal planning, lab-report interpretation, recipe guidance, tracking, family sharing, consultations, privacy, and Supabase-backed health data; the next value-creation step is to make the promise sharper and prove usage, outcomes, and economics.",
+    "proof_pillars": [
+      "Arabic-first therapeutic nutrition experience built around real health contexts",
+      "Integrated flows across onboarding, meal planning, recipes, measurements, lab reports, family sharing, and consultations",
+      "Privacy and health-data posture supported by RLS, ownership controls, and encryption planning",
+      "Persuasion sequence starts from user anxiety and daily friction before introducing Zaadk as the bridge",
+      "Investor and public-market style content remains screen-grade until traction, financials, market data, and valuation support are provided"
+    ],
+    "key_risks_or_objections": [
+      "No verified user traction, retention, revenue, CAC, clinical outcomes, or market sizing were provided",
+      "Health claims must be carefully caveated and should not imply medical diagnosis or replacement of clinicians",
+      "Public-equity long/short pitch is not applicable unless Zaadk is a listed security or tied to a public-company trade expression",
+      "External circulation needs source tie-out and deck QC"
+    ],
+    "next_steps": [
+      "Choose the priority deck branch: investor, partner, consumer, healthcare collaborator, or internal strategy",
+      "Add app screenshots, KPI history, financial model, market sizing, competitor map, and evidence of user outcomes",
+      "Build a native editable deck when presentation tooling is available",
+      "Run ib-deck-qc before external circulation"
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "S1",
+      "name": "app.json",
+      "type": "user_provided",
+      "document_date": "unknown",
+      "accessed_date": "2026-08-04",
+      "supports": [
+        "App name Zaad",
+        "Expo app configuration",
+        "Bundle/package identifier",
+        "Camera/photo/document/security permissions"
+      ],
+      "freshness": "current",
+      "confidence": "high"
+    },
+    {
+      "source_id": "S2",
+      "name": "docs/UX-FLOWS-AR.md",
+      "type": "user_provided",
+      "document_date": "unknown",
+      "accessed_date": "2026-08-04",
+      "supports": [
+        "Arabic UX flows",
+        "Meal plan, lab reports, recipes, tracking, profile, family sharing, consultation, privacy"
+      ],
+      "freshness": "current",
+      "confidence": "high"
+    },
+    {
+      "source_id": "S3",
+      "name": "src/constants/zaadContent.ts",
+      "type": "user_provided",
+      "document_date": "unknown",
+      "accessed_date": "2026-08-04",
+      "supports": [
+        "Product positioning copy",
+        "Meals, reports, recipes, tracking, profile, onboarding, family, consultation"
+      ],
+      "freshness": "current",
+      "confidence": "high"
+    },
+    {
+      "source_id": "S4",
+      "name": "src/types/index.ts and src/constants/data.ts",
+      "type": "user_provided",
+      "document_date": "unknown",
+      "accessed_date": "2026-08-04",
+      "supports": [
+        "Health profiles",
+        "conditions",
+        "lab values",
+        "meal plans",
+        "recipes",
+        "progress logs",
+        "family/caregiver/dietitian roles"
+      ],
+      "freshness": "current",
+      "confidence": "high"
+    },
+    {
+      "source_id": "S5",
+      "name": "docs/database-security.md",
+      "type": "user_provided",
+      "document_date": "unknown",
+      "accessed_date": "2026-08-04",
+      "supports": [
+        "Supabase/Postgres health-data security posture",
+        "RLS and encryption planning"
+      ],
+      "freshness": "current",
+      "confidence": "medium"
+    },
+    {
+      "source_id": "A1",
+      "name": "Working assumptions pending Zaadk business source packet",
+      "type": "assumption",
+      "document_date": "unknown",
+      "accessed_date": "2026-08-04",
+      "supports": [
+        "Investor, partner, and public-equity screen-grade framing",
+        "Open data requests"
+      ],
+      "freshness": "unknown",
+      "confidence": "low"
+    }
+  ],
+  "slides": [
+    {
+      "slide_number": 1,
+      "section": "Opening",
+      "slide_title": "Zaadk turns health data into daily nutrition decisions | زادك يحول البيانات الصحية إلى قرارات غذائية يومية",
+      "slide_purpose": "Open with the master thesis and all-audience promise.",
+      "key_message": "Zaadk should be introduced as an Arabic-first health nutrition companion that makes meal planning, lab insights, tracking, and family support easier to act on.",
+      "recommended_visual": "App icon plus phone-screen montage showing meals, lab reports, recipes, and tracking.",
+      "content_blocks": [
+        "English: Zaadk helps users move from confusing health information to practical meals, measurements, and follow-up routines.",
+        "Arabic: زادك يساعد المستخدم على الانتقال من معلومات صحية مشتتة إلى وجبات عملية وقياسات ومتابعة واضحة.",
+        "Decision ask: choose the priority audience and approve source-backed deck build."
+      ],
+      "metrics": [],
+      "speaker_notes": "Start with the human anxiety and daily friction, not with a feature list.",
+      "footnotes": [
+        "Product features supported by local app configuration and UX documentation; traction and outcomes not provided."
+      ],
+      "open_items": [
+        "Provide current product screenshots and preferred brand spelling: Zaad, Zaadk, or زاد."
+      ],
+      "evidence_status": "supported",
+      "downstream_skills": [
+        "ib-deck-qc"
+      ]
+    },
+    {
+      "slide_number": 2,
+      "section": "Audience Psychology",
+      "slide_title": "The pitch should begin with the user's world: food is daily, health data is confusing | يجب أن يبدأ العرض من عالم المستخدم: الطعام يومي والبيانات الصحية مربكة",
+      "slide_purpose": "Apply desire-then-solution sequencing before explaining Zaadk.",
+      "key_message": "Users and decision makers become more receptive when the deck first names the pressure: managing health through meals is constant, personal, and easy to abandon.",
+      "recommended_visual": "Current-state journey: report, goal, meal, family, measurement, follow-up.",
+      "content_blocks": [
+        "English: The problem is not lack of advice; it is turning advice into a safe meal today and a routine tomorrow.",
+        "Arabic: المشكلة ليست نقص النصائح؛ بل تحويل النصيحة إلى وجبة آمنة اليوم وروتين قابل للاستمرار غدا."
+      ],
+      "metrics": [],
+      "speaker_notes": "This is the pitch-psychologist anchor: build desire and contrast before introducing the product.",
+      "footnotes": [
+        "Psychological sequencing is a narrative recommendation, not a medical or clinical claim."
+      ],
+      "open_items": [
+        "Add user interview quotes or onboarding drop-off data."
+      ],
+      "evidence_status": "assumption",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 3,
+      "section": "Product",
+      "slide_title": "Zaadk connects the daily loop: profile, plan, meal, measurement, report, and family | زادك يربط الحلقة اليومية: الملف، الخطة، الوجبة، القياس، التحليل، والعائلة",
+      "slide_purpose": "Show the integrated product architecture.",
+      "key_message": "Zaadk is strongest when framed as a loop rather than a set of isolated screens.",
+      "recommended_visual": "Circular loop diagram with six product nodes.",
+      "content_blocks": [
+        "English: Onboarding captures health context; meal plans and recipes translate it; tracking and reports update the plan; family sharing and consultation support adherence.",
+        "Arabic: الإعداد الأولي يجمع السياق الصحي؛ خطط الوجبات والوصفات تترجمه؛ التتبع والتحاليل يحدثان الخطة؛ مشاركة العائلة والاستشارة تدعمان الالتزام."
+      ],
+      "metrics": [],
+      "speaker_notes": "Use this page to make the product feel coherent and defensible.",
+      "footnotes": [
+        "Supported by UX flows and typed app data structures."
+      ],
+      "open_items": [
+        "Confirm live versus planned features."
+      ],
+      "evidence_status": "supported",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 4,
+      "section": "User Value",
+      "slide_title": "Zaadk's user promise is practical safety, not perfect dieting | وعد زادك للمستخدم هو السلامة العملية وليس الحمية المثالية",
+      "slide_purpose": "Clarify consumer-facing positioning.",
+      "key_message": "The strongest consumer message is that Zaadk reduces daily uncertainty for people managing weight, blood sugar, pressure, cholesterol, digestive issues, and related nutrition needs.",
+      "recommended_visual": "Before/after contrast: generic diet advice versus condition-aware meal routine.",
+      "content_blocks": [
+        "English: Plan around calories, protein, sodium, timing, preferences, allergies, and lab markers.",
+        "Arabic: التخطيط حول السعرات والبروتين والصوديوم والتوقيت والتفضيلات والحساسيات ومؤشرات التحاليل."
+      ],
+      "metrics": [],
+      "speaker_notes": "Avoid implying diagnosis or treatment. Keep the promise around organization, decision support, and follow-up.",
+      "footnotes": [
+        "Medical disclaimer required: Zaadk does not replace clinicians."
+      ],
+      "open_items": [
+        "Add legal/clinical review of consumer claims."
+      ],
+      "evidence_status": "supported",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 5,
+      "section": "Health Data",
+      "slide_title": "Lab reports become nutrition-relevant guidance only when the source and limits stay visible | تصبح التحاليل مفيدة غذائيا عندما تبقى المصادر والحدود واضحة",
+      "slide_purpose": "Make health-data capability credible and cautious.",
+      "key_message": "Zaadk can explain nutrition-relevant markers such as glucose, lipids, kidney function, inflammation, electrolytes, vitamin D, and uric acid while preserving the original report context.",
+      "recommended_visual": "Lab-report upload flow with markers grouped by nutrition relevance.",
+      "content_blocks": [
+        "English: The app supports camera, photo-library, and PDF upload flows for lab reports.",
+        "Arabic: يدعم التطبيق رفع التحاليل بالكاميرا أو الصور أو ملفات PDF."
+      ],
+      "metrics": [],
+      "speaker_notes": "This is high-trust territory. Lead with boundaries and privacy as much as capability.",
+      "footnotes": [
+        "Supported by app.json permissions, UX flows, and lab-report types; extraction performance not provided."
+      ],
+      "open_items": [
+        "Add extraction accuracy, supported report formats, clinician review posture, and error handling."
+      ],
+      "evidence_status": "supported",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 6,
+      "section": "Family And Care",
+      "slide_title": "Family sharing can turn individual plans into household adherence | مشاركة العائلة يمكن أن تحول الخطة الفردية إلى التزام منزلي",
+      "slide_purpose": "Show the family/caregiver angle.",
+      "key_message": "Zaadk's family value is practical: give the person who cooks or supports the user the right meal context without exposing the full health file.",
+      "recommended_visual": "Care circle: user, family cook, caregiver, dietitian.",
+      "content_blocks": [
+        "English: Family sharing, caregiver/dietitian roles, and consultation flows can make the product more useful than a solo tracker.",
+        "Arabic: مشاركة العائلة وأدوار مقدم الرعاية وأخصائي التغذية وتدفقات الاستشارة تجعل المنتج أكثر فائدة من مجرد متتبع فردي."
+      ],
+      "metrics": [],
+      "speaker_notes": "For partners, this slide can become the bridge to clinics, employers, insurers, and wellness programs.",
+      "footnotes": [
+        "Supported by profile membership types, family UX flow, and consultation screen flow."
+      ],
+      "open_items": [
+        "Confirm sharing permissions, privacy model, partner workflow, and consultation operating model."
+      ],
+      "evidence_status": "supported",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 7,
+      "section": "Trust",
+      "slide_title": "Trust is a product feature when health data, meals, and family access sit together | الثقة ميزة أساسية عندما تجتمع البيانات الصحية والوجبات ووصول العائلة",
+      "slide_purpose": "Elevate security and privacy into the commercial story.",
+      "key_message": "Zaadk's trust case should highlight user-owned data, row-level access controls, limited anonymous access, server-only sensitive keys, and planned encryption of sensitive report fields.",
+      "recommended_visual": "Security posture table: data type, access rule, protection, next hardening step.",
+      "content_blocks": [
+        "English: Privacy is not a compliance appendix; it is central to adoption in health-adjacent products.",
+        "Arabic: الخصوصية ليست ملحقا تنظيميا؛ بل أساس القبول في المنتجات المرتبطة بالصحة."
+      ],
+      "metrics": [],
+      "speaker_notes": "State only what the repo supports; avoid overclaiming compliance certifications.",
+      "footnotes": [
+        "Supported by database-security.md; certification/compliance status not provided."
+      ],
+      "open_items": [
+        "Add privacy policy status, regulatory review, encryption implementation status, and security audit results."
+      ],
+      "evidence_status": "supported",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 8,
+      "section": "Partner Pitch",
+      "slide_title": "Partners get a context-rich path to healthier food decisions, not just another app placement | يحصل الشركاء على مسار غني بالسياق لقرارات غذائية أفضل وليس مجرد ظهور داخل تطبيق",
+      "slide_purpose": "Adapt the pitch for healthcare, food, employer, insurer, clinic, and wellness partners.",
+      "key_message": "Zaadk can be positioned to partners as a behavior layer that connects nutrition intent with meals, recipes, monitoring, and referral or consultation paths.",
+      "recommended_visual": "Partner value map: clinics, dietitians, employers, food providers, labs, family caregivers.",
+      "content_blocks": [
+        "English: Partner value comes from relevant context, better adherence support, and measurable follow-up loops.",
+        "Arabic: قيمة الشراكة تأتي من السياق المناسب ودعم الالتزام وحلقات متابعة قابلة للقياس."
+      ],
+      "metrics": [
+        {
+          "metric": "Partner pipeline",
+          "value": "needs_source",
+          "period": "current",
+          "unit": "partners",
+          "source_id": "A1",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "Do not promise outcomes without evidence. Make partner pilots the near-term proof step.",
+      "footnotes": [
+        "Partner economics and pipeline not provided."
+      ],
+      "open_items": [
+        "Add named partner segments, signed partners, pilot design, and commercial terms."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 9,
+      "section": "Investor Pitch",
+      "slide_title": "The investor case depends on proving repeat use, trusted data, and scalable nutrition economics | تعتمد قصة المستثمر على إثبات الاستخدام المتكرر والثقة واقتصاديات التغذية القابلة للتوسع",
+      "slide_purpose": "Frame investment logic without inventing traction or valuation.",
+      "key_message": "Zaadk becomes investable when it shows that users return, plans improve decision quality, partners can distribute or monetize the product, and sensitive data is handled credibly.",
+      "recommended_visual": "Investment proof ladder: product proof, retention, partner proof, economics, expansion.",
+      "content_blocks": [
+        "English: The investor deck should lead with retention and health-context engagement before valuation.",
+        "Arabic: يجب أن يبدأ عرض المستثمرين بالاحتفاظ والتفاعل المرتبط بالسياق الصحي قبل التقييم."
+      ],
+      "metrics": [
+        {
+          "metric": "Monthly active users",
+          "value": "needs_source",
+          "period": "latest month",
+          "unit": "users",
+          "source_id": "A1",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        },
+        {
+          "metric": "Revenue",
+          "value": "needs_source",
+          "period": "latest period",
+          "unit": "currency",
+          "source_id": "A1",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "This slide is the investor gate. Keep the pitch screen-grade until metrics exist.",
+      "footnotes": [
+        "No user, revenue, retention, or funding data provided."
+      ],
+      "open_items": [
+        "Add KPI history, retention cohorts, revenue model, CAC, gross margin, funding ask, use of proceeds, and runway."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": [
+        "financials-normalizer",
+        "scenario-sensitivity-generator"
+      ]
+    },
+    {
+      "slide_number": 10,
+      "section": "Public Equity Boundary",
+      "slide_title": "Public-equity pitch mode is watchlist-only unless Zaadk maps to a listed security | وضع الأسهم العامة يبقى للمراقبة فقط ما لم يرتبط زادك بورقة مالية مدرجة",
+      "slide_purpose": "Honor the public-equity long/short skill without implying a trade recommendation.",
+      "key_message": "Because no ticker, listed issuer, price, liquidity, market data, borrow, or valuation anchor was provided, Zaadk is not an actionable long/short pitch; it can only produce a screen-grade investability checklist.",
+      "recommended_visual": "Implementation gate table: ticker, price, liquidity, valuation, catalyst, disconfirmers, risk rules.",
+      "content_blocks": [
+        "English: Actionability: watchlist / not actionable as a public-equity trade. Upgrade only if a listed issuer or trade expression is provided.",
+        "Arabic: قابلية التنفيذ: قائمة مراقبة / غير قابل للتنفيذ كصفقة أسهم عامة. يترقى فقط عند توفير شركة مدرجة أو أداة تداول واضحة."
+      ],
+      "metrics": [
+        {
+          "metric": "Ticker",
+          "value": "not provided",
+          "period": "2026-08-04",
+          "unit": "ticker",
+          "source_id": "A1",
+          "evidence_label": "unknown",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "Do not provide account-specific investment advice or invent a public market expression.",
+      "footnotes": [
+        "Public-equity long/short skill is not fully applicable without listed-security context."
+      ],
+      "open_items": [
+        "Provide ticker, side, horizon, valuation anchor, catalyst, liquidity, borrow/carry if short, and risk budget if a public-equity pitch is required."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 11,
+      "section": "Business Model",
+      "slide_title": "Revenue should follow trust: subscription, care programs, partners, and consultations only work after habit forms | يجب أن يتبع الإيراد الثقة: الاشتراك والبرامج والشراكات والاستشارات تنجح بعد تكوين العادة",
+      "slide_purpose": "Translate product engagement into monetization paths.",
+      "key_message": "The business model should be staged: first retention and trust, then paid plans, professional consultations, employer or clinic programs, partner distribution, and premium family/care features.",
+      "recommended_visual": "Revenue roadmap with proof threshold for each lane.",
+      "content_blocks": [
+        "English: Treat monetization as sequenced proof, not a menu of disconnected revenue ideas.",
+        "Arabic: التعامل مع الإيراد كسلسلة إثبات متدرجة وليس قائمة أفكار منفصلة."
+      ],
+      "metrics": [
+        {
+          "metric": "Current revenue model",
+          "value": "needs_source",
+          "period": "current",
+          "unit": "model",
+          "source_id": "A1",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "Use this page for investors and strategic partners; keep consumer-facing decks simpler.",
+      "footnotes": [
+        "Revenue model and pricing not provided."
+      ],
+      "open_items": [
+        "Confirm pricing, subscription status, consultation economics, partner model, payment flows, and gross margin."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 12,
+      "section": "Go-To-Market",
+      "slide_title": "The go-to-market path should start where trust and daily urgency are highest | يجب أن يبدأ التوسع حيث تكون الثقة والحاجة اليومية أعلى",
+      "slide_purpose": "Define GTM logic for all audiences.",
+      "key_message": "Zaadk should prioritize segments with repeated nutrition decisions: chronic-condition users, family caregivers, dietitian workflows, employer wellness, clinics, labs, and culturally familiar meal-planning communities.",
+      "recommended_visual": "GTM segmentation matrix by urgency and trust requirement.",
+      "content_blocks": [
+        "English: Start with high-need, high-frequency use cases before expanding into general wellness.",
+        "Arabic: البدء بحالات عالية الحاجة وعالية التكرار قبل التوسع إلى الصحة العامة."
+      ],
+      "metrics": [
+        {
+          "metric": "Customer acquisition cost",
+          "value": "needs_source",
+          "period": "latest quarter",
+          "unit": "currency/user",
+          "source_id": "A1",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "This is where pitch psychology and business discipline meet: urgency, trust, and frequency should control the first wedge.",
+      "footnotes": [
+        "No acquisition or channel data provided."
+      ],
+      "open_items": [
+        "Add channel mix, CAC, conversion funnel, referral loops, target cities, and launch cohorts."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 13,
+      "section": "Proof Roadmap",
+      "slide_title": "The next 90 days should convert Zaadk from promising product into evidence-backed story | يجب أن تحول الأيام التسعون القادمة زادك من منتج واعد إلى قصة مدعومة بالأدلة",
+      "slide_purpose": "Close with a practical workplan.",
+      "key_message": "Zaadk needs a source pack, KPI baseline, product screenshots, market map, financial model, claim review, and deck QC before external fundraising or partner circulation.",
+      "recommended_visual": "90-day workplan by workstream and deliverable.",
+      "content_blocks": [
+        "English: Build proof in this order: product truth, user truth, clinical/claim boundaries, business economics, partner evidence, investor story.",
+        "Arabic: بناء الإثبات بهذا الترتيب: حقيقة المنتج، حقيقة المستخدم، حدود الادعاءات الصحية، الاقتصاديات، أدلة الشراكات، قصة المستثمر."
+      ],
+      "metrics": [
+        {
+          "metric": "External circulation readiness",
+          "value": "not ready",
+          "period": "2026-08-04",
+          "unit": "status",
+          "source_id": "A1",
+          "evidence_label": "banker_judgment",
+          "canonical_evidence_category": "inference"
+        }
+      ],
+      "speaker_notes": "End with remembered clarity: Zaadk is strong as a product narrative, but must earn evidence before external circulation.",
+      "footnotes": [
+        "Readiness judgment reflects missing source and model support."
+      ],
+      "open_items": [
+        "Run ib-deck-qc after citations, model support, and native deck rendering are complete."
+      ],
+      "evidence_status": "assumption",
+      "downstream_skills": [
+        "ib-deck-qc"
+      ]
+    }
+  ],
+  "appendix": [
+    {
+      "slide_title": "Audience-specific pitch variants | نسخ العرض حسب الجمهور",
+      "purpose": "Create branches for consumer, investor, partner, healthcare collaborator, and internal team.",
+      "evidence_status": "assumption"
+    },
+    {
+      "slide_title": "Source request checklist | قائمة المصادر المطلوبة",
+      "purpose": "Collect screenshots, KPIs, financials, market evidence, claims review, and security status.",
+      "evidence_status": "needs_source"
+    },
+    {
+      "slide_title": "Public equity implementation gate | بوابة تنفيذ الأسهم العامة",
+      "purpose": "Only activate if Zaadk maps to a listed security or public-company trade expression.",
+      "evidence_status": "needs_source"
+    }
+  ],
+  "qa": {
+    "all_material_numbers_sourced": false,
+    "template_preserved": true,
+    "generic_titles_removed": true,
+    "conflicts_disclosed": true,
+    "assumptions_labeled": true,
+    "ready_for_ib_deck_qc": false
+  }
+}

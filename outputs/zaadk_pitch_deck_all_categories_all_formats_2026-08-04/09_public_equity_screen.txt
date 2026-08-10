@@ -1,0 +1,43 @@
+ فحص الأسهم العامة / Public Equity Screen
+
+Prepared: 2026-08-04
+Audience: مدراء محافظ الأسهم العامة / Public equity PMs
+
+Arabic objective: توضيح أن زادك ليس فكرة تداول قابلة للتنفيذ إلا إذا ارتبط بورقة مالية مدرجة.
+English objective: Clarify that Zaadk is not an actionable trade unless mapped to a listed security.
+
+ Persuasion Sequence
+PMs need actionability first: verdict, missing gate, what would change the stance.
+
+ Slide Structure
+
+ 1. الحكم / Verdict
+Screen-grade only; watchlist; no actionable public-equity trade.
+Screen-grade only; watchlist; no actionable public-equity trade.
+
+ 2. بوابة التنفيذ / Implementation gate
+Ticker، سعر، سيولة، تقييم، محفز، مخاطر.
+Ticker, price, liquidity, valuation, catalyst, risk.
+
+ 3. ما الذي يغير الموقف؟ / What changes the stance?
+توفير issuer مدرج أو أداة تداول واضحة.
+Provide a listed issuer or clear trade expression.
+
+ 4. قواعد المتابعة / Monitoring rules
+راقب الشراكات، التفاعل، الإيراد، وربطها بشركة عامة إن وجدت.
+Monitor partnerships, engagement, revenue, and any listed-company linkage.
+
+ Evidence Needed Before External Use
+
+- ticker
+- market data
+- valuation anchor
+- catalyst
+- liquidity
+- risk budget
+
+ Readiness
+- Zaadk only: yes.
+- Source posture: product-grounded, metrics need source.
+- External readiness: working draft only.
+- Public equity actionability: not actionable without ticker.

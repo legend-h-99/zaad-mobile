@@ -1,0 +1,54 @@
+{
+  "prepared_date": "2026-08-04",
+  "sources": [
+    {
+      "source_id": "S1",
+      "name": "app.json",
+      "supports": [
+        "Zaad app identity",
+        "Expo configuration",
+        "permissions"
+      ],
+      "confidence": "high"
+    },
+    {
+      "source_id": "S2",
+      "name": "docs/UX-FLOWS-AR.md",
+      "supports": [
+        "Arabic UX flows",
+        "meal plans",
+        "reports",
+        "family",
+        "consultation"
+      ],
+      "confidence": "high"
+    },
+    {
+      "source_id": "S3",
+      "name": "src/constants/zaadContent.ts",
+      "supports": [
+        "product positioning"
+      ],
+      "confidence": "high"
+    },
+    {
+      "source_id": "S4",
+      "name": "src/types/index.ts and src/constants/data.ts",
+      "supports": [
+        "health profile",
+        "lab values",
+        "meal plans",
+        "recipes"
+      ],
+      "confidence": "high"
+    },
+    {
+      "source_id": "A1",
+      "name": "Working assumptions",
+      "supports": [
+        "investor, partner, market, public-equity screen framing"
+      ],
+      "confidence": "low"
+    }
+  ]
+}

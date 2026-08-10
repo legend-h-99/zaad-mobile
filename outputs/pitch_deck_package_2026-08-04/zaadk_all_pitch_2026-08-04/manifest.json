@@ -1,0 +1,67 @@
+{
+  "manifest_version": "1.0",
+  "skill": "pitch-deck-builder + pitch-psychologist + long-short-pitch boundary check",
+  "artifact_mode": "html_report",
+  "output_dir": "/Users/hossam/Documents/zaad/mobile/outputs/zaadk_all_pitch_2026-08-04",
+  "first_read": {
+    "path": "/Users/hossam/Documents/zaad/mobile/outputs/zaadk_all_pitch_2026-08-04/zaadk_all_audience_pitch.html",
+    "role": "primary human deliverable",
+    "why": "Open this first because it is the bilingual all-audience master pitch and storyboard."
+  },
+  "primary_human_deliverable": "/Users/hossam/Documents/zaad/mobile/outputs/zaadk_all_pitch_2026-08-04/zaadk_all_audience_pitch.html",
+  "human_deliverables": [
+    {
+      "path": "/Users/hossam/Documents/zaad/mobile/outputs/zaadk_all_pitch_2026-08-04/zaadk_all_audience_pitch.html",
+      "role": "human_deliverable",
+      "artifact_type": "html",
+      "description": "Bilingual Arabic and English all-audience pitch storyboard for Zaadk / Zaad.",
+      "user_visible_default": true,
+      "contains_new_analysis": true
+    }
+  ],
+  "companion_deliverables": [],
+  "support_artifacts": [
+    {
+      "path": "/Users/hossam/Documents/zaad/mobile/outputs/zaadk_all_pitch_2026-08-04/support/deck_plan.json",
+      "role": "support_artifact",
+      "artifact_type": "json",
+      "description": "Structured deck plan/control layer with metadata, storyline, source register, slide plan, open items, and QA status.",
+      "user_visible_default": false,
+      "contains_new_analysis": true,
+      "support_reason": "Used for validation, downstream deck construction, and QC handoff.",
+      "user_requested_machine_readable": false
+    },
+    {
+      "path": "/Users/hossam/Documents/zaad/mobile/outputs/zaadk_all_pitch_2026-08-04/support/zaadk_pitch_screenshot.png",
+      "role": "support_artifact",
+      "artifact_type": "png",
+      "description": "Headless Chrome screenshot used for visual inspection of the first rendered viewport.",
+      "user_visible_default": false,
+      "contains_new_analysis": false,
+      "support_reason": "Documents visual QA for the HTML pitch opening viewport.",
+      "user_requested_machine_readable": false
+    }
+  ],
+  "agent_artifacts": [],
+  "support_artifacts_user_visible_default": false,
+  "blocked_or_partial_status": {
+    "status": "partial",
+    "reason": "The package is a working draft because market, traction, financial, clinical/legal, public-equity, native deck, and final QC evidence are incomplete.",
+    "missing_inputs": [
+      "Current screenshots and feature status",
+      "User KPI and retention data",
+      "Financial model and funding ask",
+      "Market sizing and competitor evidence",
+      "Healthcare/legal claim review",
+      "Security/privacy implementation proof",
+      "Ticker and trade expression if public-equity pitch is required",
+      "Native deck build and rendered QA",
+      "ib-deck-qc review"
+    ]
+  },
+  "final_response_guidance": {
+    "lead_with": "primary_human_deliverable",
+    "mention_support_artifacts": "only_briefly_unless_requested"
+  },
+  "discipline_note": "Use the human deliverable as the main output; support artifacts are for audit/import/debug only."
+}

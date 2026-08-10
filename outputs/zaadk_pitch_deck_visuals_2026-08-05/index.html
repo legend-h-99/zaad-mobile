@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zaadk Pitch Deck Visuals</title>
+  <style>
+    :root {
+      --green: #0b6e4f;
+      --deep: #12362a;
+      --mint: #dff1e7;
+      --paper: #f5f1e8;
+      --white: #fffdf8;
+      --gold: #b88735;
+      --coral: #bf6656;
+      --ink: #17231d;
+      --muted: #5d6a63;
+      --line: #d9ded5;
+      --blue: #2e7db8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 15px/1.5 Arial, Tahoma, sans-serif;
+    }
+    header {
+      padding: 34px 44px;
+      background: linear-gradient(115deg, var(--green), var(--deep));
+      color: white;
+    }
+    .eyebrow {
+      color: #f2d08b;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 10px 0 8px;
+      font: 800 44px/1.1 Georgia, "Times New Roman", serif;
+    }
+    .sub { color: #e8f3ed; max-width: 900px; }
+    main {
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 26px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .slide {
+      position: relative;
+      overflow: hidden;
+      min-height: 610px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 34px;
+      box-shadow: 0 18px 40px rgba(18,54,42,.08);
+    }
+    .slide.dark {
+      color: white;
+      background: radial-gradient(circle at 20% 16%, rgba(255,255,255,.14), transparent 26%), linear-gradient(135deg, var(--green), var(--deep));
+      border: 0;
+    }
+    .slide h2 {
+      margin: 0;
+      color: var(--deep);
+      font: 800 34px/1.12 Georgia, "Times New Roman", serif;
+    }
+    .slide.dark h2 { color: white; }
+    .en {
+      direction: ltr;
+      text-align: left;
+      font-family: Arial, "Helvetica Neue", sans-serif;
+    }
+    .label {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .dark .label { color: #f2d08b; }
+    .muted { color: var(--muted); }
+    .dark .muted { color: #e2eee8; }
+    .grid { display: grid; gap: 16px; }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .pill, .box {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.84);
+      padding: 16px;
+    }
+    .dark .pill, .dark .box {
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+    }
+    .icon-card {
+      width: 158px;
+      height: 158px;
+      padding: 12px;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 26px 70px rgba(0,0,0,.22);
+    }
+    .icon-card img { width: 100%; height: 100%; object-fit: contain; }
+    .hero-layout {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 26px;
+      align-items: center;
+    }
+    .hero-title {
+      font: 800 52px/1.02 Georgia, "Times New Roman", serif;
+      margin: 18px 0 16px;
+      max-width: 760px;
+    }
+    .hero-ar {
+      font-size: 22px;
+      color: #e9f5ef;
+      max-width: 740px;
+    }
+    .phone-stack {
+      position: relative;
+      height: 330px;
+      margin-top: 24px;
+    }
+    .phone {
+      position: absolute;
+      width: 150px;
+      height: 285px;
+      border: 8px solid #18231d;
+      border-radius: 28px;
+      background: #f9fbf7;
+      box-shadow: 0 20px 55px rgba(0,0,0,.20);
+      padding: 16px 12px;
+    }
+    .phone:nth-child(1) { right: 16px; top: 10px; transform: rotate(2deg); }
+    .phone:nth-child(2) { right: 112px; top: 38px; transform: rotate(-7deg); }
+    .phone:nth-child(3) { right: 208px; top: 8px; transform: rotate(6deg); }
+    .phone .bar { height: 10px; background: var(--mint); margin: 10px 0; }
+    .phone .circle { width: 48px; height: 48px; border-radius: 50%; background: var(--green); margin: 0 auto 12px; }
+    .bridge {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+    .bridge .arrow {
+      height: 4px;
+      background: var(--gold);
+      position: relative;
+    }
+    .bridge .arrow::after {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: -7px;
+      border: 9px solid transparent;
+      border-right-color: var(--gold);
+    }
+    .loop {
+      width: 470px;
+      height: 470px;
+      margin: 18px auto 0;
+      position: relative;
+      border: 3px dashed #b9d7c5;
+      border-radius: 50%;
+    }
+    .node {
+      position: absolute;
+      width: 124px;
+      min-height: 82px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: white;
+      border: 2px solid var(--green);
+      padding: 10px;
+      font-weight: 800;
+      color: var(--deep);
+    }
+    .node.n1 { top: -18px; right: 172px; }
+    .node.n2 { top: 86px; right: -30px; }
+    .node.n3 { bottom: 70px; right: -20px; }
+    .node.n4 { bottom: -18px; right: 172px; }
+    .node.n5 { bottom: 70px; left: -20px; }
+    .node.n6 { top: 86px; left: -30px; }
+    .center {
+      position: absolute;
+      inset: 155px;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font: 800 24px/1.2 Georgia, "Times New Roman", serif;
+    }
+    .matrix {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 120px repeat(3, 1fr);
+      border: 1px solid var(--line);
+    }
+    .matrix div {
+      min-height: 74px;
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 10px;
+      background: white;
+    }
+    .matrix .head { background: #e4ded2; font-weight: 800; color: var(--deep); }
+    .matrix .hot { background: #e0f0e7; border: 2px solid var(--green); }
+    .ladder {
+      margin-top: 28px;
+      display: grid;
+      gap: 13px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 14px;
+      align-items: center;
+      background: white;
+      border: 1px solid var(--line);
+      padding: 14px;
+    }
+    .step .num {
+      height: 42px;
+      display: grid;
+      place-items: center;
+      background: var(--green);
+      color: white;
+      font-weight: 800;
+    }
+    .road {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .road .phase {
+      min-height: 210px;
+      background: white;
+      border: 1px solid var(--line);
+      padding: 16px;
+      position: relative;
+    }
+    .road .phase::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -16px;
+      width: 32px;
+      height: 4px;
+      background: var(--gold);
+    }
+    .road .phase:first-child::before { display: none; }
+    .gate-table {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .gate-item {
+      background: white;
+      border: 1px solid var(--line);
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+    .missing {
+      padding: 5px 8px;
+      background: #fff1df;
+      color: #8a4c1f;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    @media print {
+      body { background: white; }
+      main { display: block; max-width: none; padding: 0; }
+      .slide { page-break-after: always; min-height: 720px; box-shadow: none; border: 0; }
+      header { display: none; }
+    }
+    @media (max-width: 980px) {
+      main { grid-template-columns: 1fr; }
+      .hero-layout, .two, .three { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Zaadk Pitch Deck Visuals | Arabic + English</div>
+    <h1>مرئيات عرض زادك</h1>
+    <p class="sub">Visual system for the Zaadk pitch deck: slide-ready layouts for the master story, user problem, product loop, audience map, investor proof, execution roadmap, and public-equity boundary.</p>
+  </header>
+
+  <main>
+    <section class="slide dark">
+      <div class="hero-layout">
+        <div>
+          <div class="label">Hero Thesis</div>
+          <div class="hero-title">Zaadk turns health data into daily nutrition decisions</div>
+          <p class="hero-ar">زادك يحول التحاليل والقياسات والتفضيلات الغذائية إلى خطة يومية مفهومة: وجبات، وصفات، متابعة، مشاركة عائلية، واستشارة عند الحاجة.</p>
+          <div class="grid three" style="margin-top:30px">
+            <div class="pill">وجبات<br><span class="en">Meals</span></div>
+            <div class="pill">تحاليل<br><span class="en">Reports</span></div>
+            <div class="pill">متابعة<br><span class="en">Tracking</span></div>
+          </div>
+        </div>
+        <div class="icon-card"><img src="../../assets/icon.png" alt="Zaad app icon"></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="label">Problem To Solution Bridge</div>
+      <h2>المشكلة ليست نقص النصائح، بل تحويلها إلى وجبة اليوم</h2>
+      <p class="en muted">The pitch should build desire before introducing the product: from confusion and friction to a calmer, safer daily routine.</p>
+      <div class="bridge">
+        <div class="box">
+          <h3>الحالة الحالية</h3>
+          <p>تحاليل، قياسات، نصائح عامة، وعائلة لا تعرف ماذا تطبخ.</p>
+          <p class="en">Reports, measurements, generic advice, and unclear household action.</p>
+        </div>
+        <div class="arrow"></div>
+        <div class="box">
+          <h3>الحالة المقترحة</h3>
+          <p>خطة وجبات مفهومة، وصفات محلية، متابعة، ومشاركة آمنة.</p>
+          <p class="en">Clear meal plan, local recipes, tracking, and safe sharing.</p>
+        </div>
+      </div>
+      <div class="phone-stack">
+        <div class="phone"><div class="circle"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+        <div class="phone"><div class="circle" style="background:var(--gold)"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+        <div class="phone"><div class="circle" style="background:var(--coral)"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="label">Product Loop</div>
+      <h2>زادك أقوى عندما يظهر كحلقة يومية واحدة</h2>
+      <p class="en muted">Position the product as an integrated loop, not a set of disconnected screens.</p>
+      <div class="loop">
+        <div class="node n1">الملف الصحي<br><span class="en">Profile</span></div>
+        <div class="node n2">التحليل<br><span class="en">Report</span></div>
+        <div class="node n3">الخطة<br><span class="en">Plan</span></div>
+        <div class="node n4">الوجبة<br><span class="en">Meal</span></div>
+        <div class="node n5">المتابعة<br><span class="en">Track</span></div>
+        <div class="node n6">العائلة<br><span class="en">Family</span></div>
+        <div class="center">من التقرير<br>إلى الروتين</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="label">Audience Priority Map</div>
+      <h2>ابدأ حيث تكون الحاجة اليومية والثقة أعلى</h2>
+      <p class="en muted">Use this matrix to pick the first pitch variant and go-to-market wedge.</p>
+      <div class="matrix">
+        <div class="head">الفئة</div><div class="head">حاجة يومية</div><div class="head">الثقة المطلوبة</div><div class="head">الأولوية</div>
+        <div>المستخدمون</div><div>عالية</div><div>عالية</div><div class="hot">الأولى</div>
+        <div>العائلة</div><div>عالية</div><div>عالية</div><div class="hot">الأولى</div>
+        <div>العيادات</div><div>متوسطة</div><div>مرتفعة جدا</div><div>شراكات pilot</div>
+        <div>الشركاء</div><div>متوسطة</div><div>متوسطة</div><div>بعد إثبات التفاعل</div>
+        <div>المستثمرون</div><div>غير مباشرة</div><div>مرتفعة</div><div>بعد KPIs</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="label">Investor Proof Ladder</div>
+      <h2>قصة المستثمر تتحسن كلما صعدنا سلم الإثبات</h2>
+      <p class="en muted">The investor deck should not jump to valuation before proving usage, retention, economics, and trust.</p>
+      <div class="ladder">
+        <div class="step"><div class="num">1</div><div><strong>Product truth</strong><br>لقطات شاشة، تدفقات حقيقية، حالة الميزات</div></div>
+        <div class="step"><div class="num">2</div><div><strong>User truth</strong><br>MAU، activation، retention، adherence</div></div>
+        <div class="step"><div class="num">3</div><div><strong>Trust truth</strong><br>خصوصية، RLS، تشفير، حدود الادعاءات الصحية</div></div>
+        <div class="step"><div class="num">4</div><div><strong>Economic truth</strong><br>Revenue، CAC، gross margin، runway</div></div>
+        <div class="step"><div class="num">5</div><div><strong>Scale truth</strong><br>Market map، partner pipeline، funding ask</div></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="label">90-Day Proof Roadmap</div>
+      <h2>الأيام التسعون القادمة تحول القصة إلى أدلة</h2>
+      <p class="en muted">Use as internal operating slide or closing investor/partner next-step slide.</p>
+      <div class="road">
+        <div class="phase"><h3>0-15 يوم</h3><p>تثبيت القصة، لقطات المنتج، قائمة الادعاءات.</p><p class="en">Story lock, screenshots, claim list.</p></div>
+        <div class="phase"><h3>15-30 يوم</h3><p>KPI baseline، cohort أولي، مصدر البيانات.</p><p class="en">KPI baseline, first cohort, data source.</p></div>
+        <div class="phase"><h3>30-60 يوم</h3><p>Market map، competitor list، partner pilots.</p><p class="en">Market map, competitors, partner pilots.</p></div>
+        <div class="phase"><h3>60-90 يوم</h3><p>نموذج مالي، deck رسمي، QC نهائي.</p><p class="en">Financial model, formal deck, final QC.</p></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="label">Public Equity Gate</div>
+      <h2>فحص الأسهم العامة: قائمة مراقبة فقط بدون ticker</h2>
+      <p class="en muted">This visual keeps the long/short pitch discipline honest: no actionable trade without listed-security inputs.</p>
+      <div class="gate-table">
+        <div class="gate-item"><strong>Ticker</strong><span class="missing">Missing</span></div>
+        <div class="gate-item"><strong>Price / Liquidity</strong><span class="missing">Missing</span></div>
+        <div class="gate-item"><strong>Valuation Anchor</strong><span class="missing">Missing</span></div>
+        <div class="gate-item"><strong>Catalyst Path</strong><span class="missing">Missing</span></div>
+        <div class="gate-item"><strong>Risk Budget</strong><span class="missing">Missing</span></div>
+        <div class="gate-item"><strong>Actionability</strong><span class="missing">Watchlist</span></div>
+      </div>
+      <div class="box" style="margin-top:24px;background:#fff6e5">
+        <strong>PM stance:</strong> Screen-grade only; not actionable as a public-equity trade until Zaadk maps to a listed issuer or explicit trade expression.
+      </div>
+    </section>
+
+    <section class="slide dark">
+      <div class="label">Closing Visual</div>
+      <h2>الفكرة التي يجب أن يتذكرها الجمهور</h2>
+      <p class="hero-ar" style="margin-top:22px">زادك ليس تطبيق حمية. زادك يحول الصحة الغذائية من نصائح عامة إلى قرارات يومية قابلة للتنفيذ، باللغة العربية، وبما يناسب الطعام المحلي والعائلة والخصوصية والمتابعة.</p>
+      <p class="en" style="font-size:22px;color:#e9f5ef;max-width:850px">Zaadk is not another diet app. It turns health nutrition from generic advice into daily decisions people can actually follow.</p>
+      <div class="grid three" style="margin-top:38px">
+        <div class="pill">Trust<br><span class="en">Privacy + boundaries</span></div>
+        <div class="pill">Habit<br><span class="en">Daily meal routine</span></div>
+        <div class="pill">Proof<br><span class="en">Metrics before claims</span></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

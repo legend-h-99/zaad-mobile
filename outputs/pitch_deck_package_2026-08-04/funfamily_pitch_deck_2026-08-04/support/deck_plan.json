@@ -1,0 +1,505 @@
+{
+  "deck_metadata": {
+    "deck_type": "company_profile",
+    "client_or_subject": "Funfamily",
+    "audience": "Potential investors, strategic partners, senior internal team, and client decision makers",
+    "objective": "Create a bilingual Arabic and English working pitch package that introduces Funfamily, frames the investment or partnership case, identifies the evidence needed for a native deck, and sets up next-step diligence.",
+    "prepared_date": "2026-08-04",
+    "source_confidence": "low",
+    "template_or_style_source": "unknown",
+    "non_destructive_mode": true
+  },
+  "md_storyline": {
+    "recommended_action": "Use this working storyboard to align on Funfamily's positioning, prove the family-experience opportunity with company and market data, and then convert the source-backed version into a native investor or client presentation.",
+    "why_now": "Family-oriented digital products can win when they reduce planning friction, improve trust, and create repeat engagement; however, Funfamily needs verified traction, economics, and market evidence before external circulation.",
+    "proof_pillars": [
+      "Clear family-centered problem and product promise",
+      "Bilingual Arabic and English positioning suitable for GCC and broader family audiences",
+      "Expandable business model across subscriptions, partnerships, events, and marketplace services",
+      "Evidence-backed traction and unit economics to be added before investor or client use",
+      "Disciplined next-step plan to close source gaps and prepare a native deck"
+    ],
+    "key_risks_or_objections": [
+      "Current product scope, launch status, and monetization are not yet sourced",
+      "Market size, user traction, retention, and revenue metrics require company data or external support",
+      "Competitive differentiation must be supported by a real competitor map",
+      "External circulation should wait for source tie-out and deck QC"
+    ],
+    "next_steps": [
+      "Confirm whether the primary use is investor fundraising, strategic partnership, client sales, or internal planning",
+      "Provide Funfamily product screenshots, app link, financials, KPIs, and target market",
+      "Add market and competitor evidence with source dates",
+      "Build a native editable PowerPoint version once content and source support are stable",
+      "Run ib-deck-qc before external circulation"
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "A1",
+      "name": "User prompt identifying Funfamily and requesting all content in Arabic and English",
+      "type": "assumption",
+      "document_date": "2026-08-04",
+      "accessed_date": "2026-08-04",
+      "supports": [
+        "Subject company",
+        "Bilingual Arabic and English output preference",
+        "Full package scope"
+      ],
+      "freshness": "current",
+      "confidence": "medium"
+    },
+    {
+      "source_id": "A2",
+      "name": "Banker working assumptions pending Funfamily source packet",
+      "type": "assumption",
+      "document_date": "unknown",
+      "accessed_date": "2026-08-04",
+      "supports": [
+        "Investor and client pitch framing",
+        "Indicative business model possibilities",
+        "Open diligence items"
+      ],
+      "freshness": "unknown",
+      "confidence": "low"
+    }
+  ],
+  "slides": [
+    {
+      "slide_number": 1,
+      "section": "Opening",
+      "slide_title": "Funfamily can become the trusted digital layer for modern family experiences | يمكن أن تصبح Funfamily الطبقة الرقمية الموثوقة لتجارب العائلة الحديثة",
+      "slide_purpose": "Open with the core investment or partnership thesis and make the bilingual positioning clear.",
+      "key_message": "Funfamily should be positioned around a simple promise: help families discover, plan, share, and enjoy trusted experiences with less friction.",
+      "recommended_visual": "Hero product mockup or lifestyle/product composite with three proof pillars beneath it.",
+      "content_blocks": [
+        "English: Funfamily helps families coordinate meaningful activities, services, and moments in one trusted digital experience.",
+        "Arabic: تساعد Funfamily العائلات على تنسيق الأنشطة والخدمات واللحظات المهمة من خلال تجربة رقمية موثوقة.",
+        "Decision ask: align on positioning, confirm target audience, and approve source-backed deck build."
+      ],
+      "metrics": [
+        {
+          "metric": "Product launch status",
+          "value": "placeholder",
+          "period": "current",
+          "unit": "unknown",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "Lead with the customer problem and emotional utility, then pivot quickly to the commercial case that must be proven with source data.",
+      "footnotes": [
+        "Working-draft positioning; requires product confirmation from Funfamily."
+      ],
+      "open_items": [
+        "Provide product screenshots, app/store links, launch status, and target geography."
+      ],
+      "evidence_status": "placeholder",
+      "downstream_skills": [
+        "company-tearsheet",
+        "ib-deck-qc"
+      ]
+    },
+    {
+      "slide_number": 2,
+      "section": "Problem",
+      "slide_title": "Families face fragmented planning, trust, and coordination pain points | تواجه العائلات صعوبة في التخطيط والثقة والتنسيق عبر قنوات متفرقة",
+      "slide_purpose": "Define the pain point in a way that investors, partners, and clients can understand quickly.",
+      "key_message": "The family journey is often split across search, messaging, booking, payments, and informal recommendations; Funfamily's opportunity is to consolidate that journey.",
+      "recommended_visual": "Before/after journey map showing fragmented steps versus a single Funfamily flow.",
+      "content_blocks": [
+        "English: Discovery, suitability, safety, scheduling, and payment often happen in separate channels.",
+        "Arabic: غالبا ما تتم مراحل الاكتشاف والملاءمة والسلامة والجدولة والدفع عبر قنوات منفصلة.",
+        "Implication: a trusted family-first interface can reduce decision time and increase repeat use."
+      ],
+      "metrics": [
+        {
+          "metric": "Number of planning steps replaced",
+          "value": "placeholder",
+          "period": "current product flow",
+          "unit": "steps",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "Avoid broad unsupported market claims; focus on the operational friction and identify what needs to be validated through interviews or product analytics.",
+      "footnotes": [
+        "Problem statement is banker judgment pending user research, product analytics, or customer interviews."
+      ],
+      "open_items": [
+        "Add customer quotes, survey results, support tickets, or usage funnel evidence."
+      ],
+      "evidence_status": "assumption",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 3,
+      "section": "Solution",
+      "slide_title": "A bilingual family platform can combine discovery, planning, and trusted recommendations | منصة عائلية ثنائية اللغة تجمع الاكتشاف والتخطيط والتوصيات الموثوقة",
+      "slide_purpose": "Explain what Funfamily does without overloading the page with feature detail.",
+      "key_message": "Funfamily's product story should be organized around outcomes, not features: discover better options, coordinate faster, and build trusted family routines.",
+      "recommended_visual": "Three-column product architecture: discover, plan, engage.",
+      "content_blocks": [
+        "English: Curated family options, age/context filters, saved plans, reminders, offers, and partner integrations.",
+        "Arabic: خيارات عائلية منتقاة، فلاتر حسب العمر والسياق، خطط محفوظة، تذكيرات، عروض، وتكاملات مع الشركاء.",
+        "Positioning rule: show the actual product where possible; keep detailed feature lists in appendix."
+      ],
+      "metrics": [
+        {
+          "metric": "Core product modules",
+          "value": "placeholder",
+          "period": "current roadmap",
+          "unit": "modules",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "Use this slide to prove simplicity. The deck should make the user journey feel obvious before it claims scale.",
+      "footnotes": [
+        "Feature set requires confirmation from current product roadmap."
+      ],
+      "open_items": [
+        "Confirm live features, roadmap features, and features that should not be shown externally."
+      ],
+      "evidence_status": "placeholder",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 4,
+      "section": "Audience",
+      "slide_title": "The highest-value wedge is a repeat-use family segment with clear trust needs | نقطة الدخول الأقوى هي شريحة عائلية متكررة الاستخدام وتحتاج إلى الثقة",
+      "slide_purpose": "Focus the target customer rather than presenting Funfamily as a product for everyone.",
+      "key_message": "The strongest initial audience should be defined by frequency, trust sensitivity, willingness to pay, and partner value.",
+      "recommended_visual": "Customer segmentation matrix by frequency and monetization potential.",
+      "content_blocks": [
+        "English: Prioritize segments such as parents with young children, school-age families, family entertainment seekers, and family service buyers.",
+        "Arabic: إعطاء الأولوية لشرائح مثل الآباء والأمهات مع الأطفال الصغار، العائلات في سن المدرسة، الباحثين عن الترفيه العائلي، ومشتري الخدمات العائلية.",
+        "Decision point: select the segment that controls product roadmap, go-to-market, and monetization."
+      ],
+      "metrics": [
+        {
+          "metric": "Priority segment definition",
+          "value": "placeholder",
+          "period": "current strategy",
+          "unit": "segment",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "This page should become more specific after Funfamily provides actual user persona and acquisition data.",
+      "footnotes": [
+        "Segment examples are assumptions and should be replaced with Funfamily's actual targeting."
+      ],
+      "open_items": [
+        "Provide target persona, geography, age bands, usage frequency, and acquisition channels."
+      ],
+      "evidence_status": "assumption",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 5,
+      "section": "Market",
+      "slide_title": "The market case should link family demand to monetizable local supply | يجب أن تربط فرصة السوق بين طلب العائلات والعرض المحلي القابل للربح",
+      "slide_purpose": "Frame market opportunity without inventing TAM figures.",
+      "key_message": "The credible market argument is not just large family spending; it is the ability to connect family demand with venues, events, services, schools, brands, and communities.",
+      "recommended_visual": "Market ecosystem map with demand pools and supply partners.",
+      "content_blocks": [
+        "English: Potential supply categories include attractions, classes, events, venues, family services, brands, and community organizations.",
+        "Arabic: تشمل فئات العرض المحتملة الوجهات، الدروس، الفعاليات، الأماكن، الخدمات العائلية، العلامات التجارية، والمنظمات المجتمعية.",
+        "Evidence need: TAM/SAM/SOM, target geography, partner count, and spend category data."
+      ],
+      "metrics": [
+        {
+          "metric": "TAM / SAM / SOM",
+          "value": "needs_source",
+          "period": "latest available",
+          "unit": "currency or users",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "Keep this page honest: placeholders are better than unsupported market-size claims.",
+      "footnotes": [
+        "Market sizing requires public market sources, company assumptions, or provider data."
+      ],
+      "open_items": [
+        "Add geography, market sizing method, household count, family spend categories, and source dates."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": [
+        "market map support"
+      ]
+    },
+    {
+      "slide_number": 6,
+      "section": "Business Model",
+      "slide_title": "Funfamily can scale through multiple revenue lanes if the core journey earns repeat trust | يمكن أن تنمو Funfamily عبر عدة مصادر إيراد إذا حققت الثقة والاستخدام المتكرر",
+      "slide_purpose": "Translate product utility into a monetization architecture.",
+      "key_message": "The deck should present monetization as staged optionality: prove engagement first, then layer subscriptions, partner fees, commissions, promotions, and premium family services.",
+      "recommended_visual": "Revenue-lane waterfall from engagement to monetization.",
+      "content_blocks": [
+        "English: Potential revenue lanes include subscription, booking commission, partner listing fees, sponsored placements, events, and premium service bundles.",
+        "Arabic: تشمل مصادر الإيراد المحتملة الاشتراكات، عمولات الحجز، رسوم إدراج الشركاء، الظهور المدعوم، الفعاليات، وباقات الخدمات المميزة.",
+        "Investor focus: avoid claiming all lanes at once; show sequencing and proof thresholds."
+      ],
+      "metrics": [
+        {
+          "metric": "Revenue model status",
+          "value": "placeholder",
+          "period": "current",
+          "unit": "unknown",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "This slide should eventually tie each revenue lane to a unit economics driver and required evidence.",
+      "footnotes": [
+        "Revenue lanes are strategic options pending management confirmation."
+      ],
+      "open_items": [
+        "Confirm current monetization, pricing, take rates, partner terms, gross margin, and payment flows."
+      ],
+      "evidence_status": "assumption",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 7,
+      "section": "Traction",
+      "slide_title": "Investor confidence will depend on engagement, retention, and partner proof | ستعتمد ثقة المستثمرين على إثبات التفاعل والاحتفاظ والشراكات",
+      "slide_purpose": "Define the KPIs that must be shown before external investor use.",
+      "key_message": "Funfamily should lead with a small number of traction metrics that prove families return and partners see value.",
+      "recommended_visual": "KPI dashboard placeholder with user growth, active families, retention, bookings, partner count, and revenue.",
+      "content_blocks": [
+        "English: Priority KPIs: registered families, monthly active users, repeat usage, partner supply, bookings or leads, revenue, CAC, and retention.",
+        "Arabic: مؤشرات الأداء ذات الأولوية: العائلات المسجلة، المستخدمون النشطون شهريا، الاستخدام المتكرر، عدد الشركاء، الحجوزات أو العملاء المحتملون، الإيرادات، تكلفة اكتساب العميل، والاحتفاظ.",
+        "Evidence posture: all metrics are placeholders until Funfamily provides analytics or financials."
+      ],
+      "metrics": [
+        {
+          "metric": "Monthly active users",
+          "value": "needs_source",
+          "period": "latest month",
+          "unit": "users",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "This is a gating page for fundraising. A clean, sourced KPI page is more valuable than a broad feature page.",
+      "footnotes": [
+        "Requires analytics export or management KPI schedule."
+      ],
+      "open_items": [
+        "Provide monthly KPI history, cohort retention, conversion funnel, revenue, CAC, and partner data."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": [
+        "financials-normalizer"
+      ]
+    },
+    {
+      "slide_number": 8,
+      "section": "Go-To-Market",
+      "slide_title": "A city-by-city partner strategy can lower acquisition cost and improve trust | استراتيجية شراكات حسب المدينة يمكن أن تخفض تكلفة الاكتساب وتعزز الثقة",
+      "slide_purpose": "Show how Funfamily could acquire both family demand and supply partners efficiently.",
+      "key_message": "The strongest go-to-market route likely combines local partner supply, parent communities, school or venue partnerships, and referral loops.",
+      "recommended_visual": "Go-to-market flywheel connecting families, partners, content, bookings, and referrals.",
+      "content_blocks": [
+        "English: Build density in priority cities before expanding categories and geographies.",
+        "Arabic: بناء كثافة في المدن ذات الأولوية قبل التوسع في الفئات والمناطق الجغرافية.",
+        "Proof need: channel performance, partner conversion, CAC, referral rate, and repeat use."
+      ],
+      "metrics": [
+        {
+          "metric": "Customer acquisition cost",
+          "value": "needs_source",
+          "period": "latest quarter",
+          "unit": "currency per user or family",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "The page should show a focused expansion motion, not an unbounded marketing wish list.",
+      "footnotes": [
+        "GTM channels are assumptions until supported by campaign or partnership data."
+      ],
+      "open_items": [
+        "Add priority geographies, current channel mix, CAC, conversion, and partner pipeline."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": []
+    },
+    {
+      "slide_number": 9,
+      "section": "Competition",
+      "slide_title": "Differentiation must be proven against marketplaces, event platforms, and informal discovery channels | يجب إثبات التميز أمام الأسواق الرقمية ومنصات الفعاليات والقنوات غير الرسمية",
+      "slide_purpose": "Anticipate the most obvious objection: why Funfamily wins versus existing alternatives.",
+      "key_message": "Funfamily's differentiation should be anchored in family-specific trust, curation, bilingual usability, local relevance, and repeat planning workflows.",
+      "recommended_visual": "Competitive positioning matrix by family specificity and journey coverage.",
+      "content_blocks": [
+        "English: Compare against generic marketplaces, event platforms, social discovery, venue websites, and chat-based recommendations.",
+        "Arabic: المقارنة مع الأسواق العامة، منصات الفعاليات، الاكتشاف عبر الشبكات الاجتماعية، مواقع الأماكن، والتوصيات عبر المحادثات.",
+        "Evidence need: named competitors, product comparison, pricing, supply depth, and customer switching behavior."
+      ],
+      "metrics": [
+        {
+          "metric": "Competitor set",
+          "value": "needs_source",
+          "period": "current",
+          "unit": "companies",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "This slide should be specific. Replace category labels with named competitors once geography is confirmed.",
+      "footnotes": [
+        "Competitive map requires named target geography and competitor source review."
+      ],
+      "open_items": [
+        "Confirm competitors, geographies, pricing, supply categories, and product differentiation."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": [
+        "market map support"
+      ]
+    },
+    {
+      "slide_number": 10,
+      "section": "Financial Path",
+      "slide_title": "The financial story should show a path from engagement density to scalable gross profit | يجب أن توضح القصة المالية مسارا من كثافة التفاعل إلى ربح إجمالي قابل للتوسع",
+      "slide_purpose": "Introduce the financial logic without inventing a forecast.",
+      "key_message": "The model should connect active families, repeat usage, partner monetization, take rate, gross margin, and acquisition cost into a simple forecast architecture.",
+      "recommended_visual": "Driver tree from active families to revenue and gross profit.",
+      "content_blocks": [
+        "English: Key drivers: active families, frequency, conversion, average order or booking value, take rate, subscription price, gross margin, CAC, and retention.",
+        "Arabic: المحركات الرئيسية: العائلات النشطة، التكرار، التحويل، متوسط قيمة الطلب أو الحجز، معدل العمولة، سعر الاشتراك، هامش الربح الإجمالي، تكلفة الاكتساب، والاحتفاظ.",
+        "Model need: 3- to 5-year operating case with base, upside, and downside scenarios."
+      ],
+      "metrics": [
+        {
+          "metric": "Revenue forecast",
+          "value": "needs_source",
+          "period": "3-5 year plan",
+          "unit": "currency",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "This is a model handoff page. It should not contain valuation claims until a workbook exists.",
+      "footnotes": [
+        "Forecast and valuation outputs require company financials and model build."
+      ],
+      "open_items": [
+        "Provide historical financials, forecast assumptions, pricing, costs, team plan, and funding needs."
+      ],
+      "evidence_status": "needs_source",
+      "downstream_skills": [
+        "three-statement-model-builder",
+        "scenario-sensitivity-generator"
+      ]
+    },
+    {
+      "slide_number": 11,
+      "section": "Funding Or Partnership Ask",
+      "slide_title": "The ask should match the next proof milestone, not just the ambition | يجب أن يتوافق الطلب مع محطة الإثبات التالية وليس مع الطموح فقط",
+      "slide_purpose": "Frame the investment, partnership, or client ask in terms of use of proceeds and milestones.",
+      "key_message": "Whether Funfamily is raising capital or seeking partners, the ask should fund a specific proof agenda: product validation, market density, partner supply, revenue conversion, and retention.",
+      "recommended_visual": "Use-of-funds or partnership milestone roadmap.",
+      "content_blocks": [
+        "English: Potential milestone buckets: product build, city launch, partner acquisition, family acquisition, analytics, team, and working capital.",
+        "Arabic: محاور المحطات المحتملة: بناء المنتج، إطلاق المدن، اكتساب الشركاء، اكتساب العائلات، التحليلات، الفريق، ورأس المال العامل.",
+        "Decision point: define the amount, structure, timeline, and milestones."
+      ],
+      "metrics": [
+        {
+          "metric": "Funding ask or partnership objective",
+          "value": "placeholder",
+          "period": "current raise or mandate",
+          "unit": "currency or qualitative objective",
+          "source_id": "A2",
+          "evidence_label": "placeholder",
+          "canonical_evidence_category": "unknown"
+        }
+      ],
+      "speaker_notes": "Keep the ask flexible until the use case is confirmed: investor raise, partner pitch, client sales, or internal strategy.",
+      "footnotes": [
+        "Funding amount, valuation, use of proceeds, and partnership terms are unknown."
+      ],
+      "open_items": [
+        "Confirm fundraising amount, valuation expectations, partner target, or commercial ask."
+      ],
+      "evidence_status": "placeholder",
+      "downstream_skills": [
+        "capital-markets-issuance"
+      ]
+    },
+    {
+      "slide_number": 12,
+      "section": "Execution Plan",
+      "slide_title": "The next 90 days should convert the story into sourced proof | يجب أن تحول الأيام التسعون القادمة القصة إلى أدلة موثقة",
+      "slide_purpose": "Close with concrete next actions and diligence workstreams.",
+      "key_message": "Funfamily should close the highest-risk evidence gaps before external circulation: product proof, KPI history, market sizing, competitor map, financial model, and partner pipeline.",
+      "recommended_visual": "90-day workplan with owners, evidence outputs, and deck conversion milestones.",
+      "content_blocks": [
+        "English: Workstreams: source pack, company profile, market map, KPI schedule, operating model, native deck build, and QC.",
+        "Arabic: مسارات العمل: حزمة المصادر، ملف الشركة، خريطة السوق، جدول مؤشرات الأداء، النموذج التشغيلي، بناء العرض التقديمي الأصلي، ومراجعة الجودة.",
+        "Final gate: no external-ready status until citations, numbers, and layout are tied out."
+      ],
+      "metrics": [
+        {
+          "metric": "Readiness for external circulation",
+          "value": "not ready",
+          "period": "2026-08-04",
+          "unit": "status",
+          "source_id": "A1",
+          "evidence_label": "banker_judgment",
+          "canonical_evidence_category": "inference"
+        }
+      ],
+      "speaker_notes": "End with a practical path. The value of this working draft is alignment and source collection, not final distribution.",
+      "footnotes": [
+        "Readiness judgment reflects missing source packet and absence of native deck QC."
+      ],
+      "open_items": [
+        "Run source tie-out and ib-deck-qc before client, investor, lender, or external use."
+      ],
+      "evidence_status": "assumption",
+      "downstream_skills": [
+        "ib-deck-qc"
+      ]
+    }
+  ],
+  "appendix": [
+    {
+      "slide_title": "Source request checklist | قائمة المصادر المطلوبة",
+      "purpose": "Collect company, product, market, KPI, financial, competitor, and partner evidence.",
+      "evidence_status": "needs_source"
+    },
+    {
+      "slide_title": "KPI definitions and data dictionary | تعريفات مؤشرات الأداء وقاموس البيانات",
+      "purpose": "Standardize metrics before investor or client use.",
+      "evidence_status": "placeholder"
+    },
+    {
+      "slide_title": "Financial model handoff | تسليم النموذج المالي",
+      "purpose": "Map deck claims to a future workbook and scenario cases.",
+      "evidence_status": "needs_source"
+    }
+  ],
+  "qa": {
+    "all_material_numbers_sourced": false,
+    "template_preserved": true,
+    "generic_titles_removed": true,
+    "conflicts_disclosed": true,
+    "assumptions_labeled": true,
+    "ready_for_ib_deck_qc": false
+  }
+}

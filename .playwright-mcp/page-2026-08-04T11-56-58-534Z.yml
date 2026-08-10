@@ -1,0 +1,142 @@
+- generic [ref=e17]:
+  - generic [ref=e18]:
+    - generic [ref=e19]: Language
+    - generic [ref=e20]:
+      - button "Switch to English" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: English
+      - button "التبديل إلى العربية" [ref=e23] [cursor=pointer]:
+        - generic [ref=e24]: العربية
+  - generic [ref=e25]: Z
+  - generic [ref=e27]: Zaad
+  - generic [ref=e28]: Food that gets you closer to your goals, every day.
+  - generic [ref=e29]: A flexible plan that understands your health and preferences, then improves with your choices.
+  - generic [ref=e30]:
+    - generic [ref=e31]: Welcome back
+    - generic [ref=e32]:
+      - generic [ref=e33]: Email address
+      - generic [ref=e34]:
+        - generic [ref=e35]: 
+        - textbox "name@example.com" [ref=e36]
+    - generic [ref=e37]:
+      - generic [ref=e38]: Password
+      - generic [ref=e39]:
+        - button "Show password" [ref=e40] [cursor=pointer]:
+          - generic [ref=e41]: 
+        - textbox "••••••••" [ref=e42]
+    - generic [ref=e43] [cursor=pointer]: Forgot password?
+    - button "Sign in" [ref=e45] [cursor=pointer]
+    - generic [ref=e48]: or
+    - button "Sign in with Google" [ref=e52] [cursor=pointer]:
+      - generic [ref=e53]: 
+  - generic [ref=e56]:
+    - generic [ref=e57]:
+      - generic [ref=e58]: 
+      - generic [ref=e60]:
+        - generic [ref=e61]: Try a demo account
+        - generic [ref=e62]: 20 accounts with different goals and conditions
+    - generic [ref=e64]:
+      - button "Select Mohammed's account" [ref=e65] [cursor=pointer]:
+        - generic [ref=e66]: M
+        - generic [ref=e68]: Mohammed
+        - generic [ref=e69]: Be more active
+        - generic [ref=e70]: "1"
+      - button "Select Noura's account" [ref=e71] [cursor=pointer]:
+        - generic [ref=e72]: "N"
+        - generic [ref=e74]: Noura
+        - generic [ref=e75]: Balance blood sugar
+        - generic [ref=e76]: "2"
+      - button "Select Salman's account" [ref=e77] [cursor=pointer]:
+        - generic [ref=e78]: S
+        - generic [ref=e80]: Salman
+        - generic [ref=e81]: Build muscle
+        - generic [ref=e82]: "3"
+      - button "Select Reem's account" [ref=e83] [cursor=pointer]:
+        - generic [ref=e84]: R
+        - generic [ref=e86]: Reem
+        - generic [ref=e87]: Healthy lifestyle
+        - generic [ref=e88]: "4"
+      - button "Select فيصل's account" [ref=e89] [cursor=pointer]:
+        - generic [ref=e90]: ف
+        - generic [ref=e92]: فيصل
+        - generic [ref=e93]: خفض الكوليسترول
+        - generic [ref=e94]: "5"
+      - button "Select هناء's account" [ref=e95] [cursor=pointer]:
+        - generic [ref=e96]: ه
+        - generic [ref=e98]: هناء
+        - generic [ref=e99]: الحفاظ على الوزن
+        - generic [ref=e100]: "6"
+      - button "Select عبدالله's account" [ref=e101] [cursor=pointer]:
+        - generic [ref=e102]: ع
+        - generic [ref=e104]: عبدالله
+        - generic [ref=e105]: صحة القلب
+        - generic [ref=e106]: "7"
+      - button "Select سارة's account" [ref=e107] [cursor=pointer]:
+        - generic [ref=e108]: س
+        - generic [ref=e110]: سارة
+        - generic [ref=e111]: نزول الوزن
+        - generic [ref=e112]: "8"
+      - button "Select خالد's account" [ref=e113] [cursor=pointer]:
+        - generic [ref=e114]: خ
+        - generic [ref=e116]: خالد
+        - generic [ref=e117]: تحسين اللياقة
+        - generic [ref=e118]: "9"
+      - button "Select مريم's account" [ref=e119] [cursor=pointer]:
+        - generic [ref=e120]: م
+        - generic [ref=e122]: مريم
+        - generic [ref=e123]: تغذية متوازنة
+        - generic [ref=e124]: "10"
+      - button "Select تركي's account" [ref=e125] [cursor=pointer]:
+        - generic [ref=e126]: ت
+        - generic [ref=e128]: تركي
+        - generic [ref=e129]: زيادة الوزن
+        - generic [ref=e130]: "11"
+      - button "Select لمى's account" [ref=e131] [cursor=pointer]:
+        - generic [ref=e132]: ل
+        - generic [ref=e134]: لمى
+        - generic [ref=e135]: الطاقة اليومية
+        - generic [ref=e136]: "12"
+      - button "Select عمر's account" [ref=e137] [cursor=pointer]:
+        - generic [ref=e138]: ع
+        - generic [ref=e140]: عمر
+        - generic [ref=e141]: التحكم بالضغط
+        - generic [ref=e142]: "13"
+      - button "Select أسماء's account" [ref=e143] [cursor=pointer]:
+        - generic [ref=e144]: أ
+        - generic [ref=e146]: أسماء
+        - generic [ref=e147]: نمط صحي
+        - generic [ref=e148]: "14"
+      - button "Select يوسف's account" [ref=e149] [cursor=pointer]:
+        - generic [ref=e150]: ي
+        - generic [ref=e152]: يوسف
+        - generic [ref=e153]: بناء العضلات
+        - generic [ref=e154]: "15"
+      - button "Select شهد's account" [ref=e155] [cursor=pointer]:
+        - generic [ref=e156]: ش
+        - generic [ref=e158]: شهد
+        - generic [ref=e159]: صحة عامة
+        - generic [ref=e160]: "16"
+      - button "Select بدر's account" [ref=e161] [cursor=pointer]:
+        - generic [ref=e162]: ب
+        - generic [ref=e164]: بدر
+        - generic [ref=e165]: خفض الدهون
+        - generic [ref=e166]: "17"
+      - button "Select غادة's account" [ref=e167] [cursor=pointer]:
+        - generic [ref=e168]: غ
+        - generic [ref=e170]: غادة
+        - generic [ref=e171]: الحفاظ على الوزن
+        - generic [ref=e172]: "18"
+      - button "Select راكان's account" [ref=e173] [cursor=pointer]:
+        - generic [ref=e174]: ر
+        - generic [ref=e176]: راكان
+        - generic [ref=e177]: تحسين اللياقة
+        - generic [ref=e178]: "19"
+      - button "Select جود's account" [ref=e179] [cursor=pointer]:
+        - generic [ref=e180]: ج
+        - generic [ref=e182]: جود
+        - generic [ref=e183]: توازن غذائي
+        - generic [ref=e184]: "20"
+    - generic [ref=e185]: "Password for every account: ZaadDemo123!"
+  - generic [ref=e186] [cursor=pointer]: New to Zaad? Create an account
+  - generic [ref=e188]:
+    - generic [ref=e189]: 
+    - generic [ref=e190]: Your health data is private and protected

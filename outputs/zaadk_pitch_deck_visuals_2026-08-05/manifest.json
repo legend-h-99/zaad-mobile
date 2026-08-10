@@ -1,0 +1,30 @@
+{
+  "manifest_version": "1.0",
+  "artifact_mode": "generated_package",
+  "output_dir": "/Users/hossam/Documents/zaad/mobile/outputs/zaadk_pitch_deck_visuals_2026-08-05",
+  "first_read": {
+    "path": "/Users/hossam/Documents/zaad/mobile/outputs/zaadk_pitch_deck_visuals_2026-08-05/index.html",
+    "role": "primary human deliverable",
+    "why": "Open this first because it contains the visual board for the Zaadk pitch deck."
+  },
+  "primary_human_deliverable": "/Users/hossam/Documents/zaad/mobile/outputs/zaadk_pitch_deck_visuals_2026-08-05/index.html",
+  "human_deliverables": [
+    "index.html",
+    "zaadk_pitch_deck_visuals.pdf",
+    "zaadk_pitch_deck_visuals_contact_sheet.png"
+  ],
+  "support_artifacts": [
+    "README.md",
+    "manifest.json"
+  ],
+  "blocked_or_partial_status": {
+    "status": "partial",
+    "reason": "Working draft visuals; final deck cropping and brand QA still required.",
+    "missing_inputs": [
+      "final brand guidelines",
+      "approved screenshots",
+      "native deck build",
+      "final slide QA"
+    ]
+  }
+}

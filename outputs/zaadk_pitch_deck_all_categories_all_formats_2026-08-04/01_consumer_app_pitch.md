@@ -1,0 +1,42 @@
+# عرض المستخدم النهائي / Consumer App Pitch
+
+Prepared: 2026-08-04
+Audience: المستخدمون / Users
+
+Arabic objective: إقناع المستخدم أن زادك يجعل التغذية الصحية أسهل وأقرب لعاداته اليومية.
+English objective: Convince users that Zaadk makes health nutrition easier and closer to daily habits.
+
+## Persuasion Sequence
+Consumer awareness is problem-aware: lead with daily food anxiety, desire for a calmer routine, then show Zaadk as practical help.
+
+## Slide Structure
+
+### 1. الطعام يومي والقرار صعب / Food is daily and the decision is hard
+المستخدم لا يحتاج نصيحة أكثر، بل قرار وجبة مناسب اليوم.
+Users do not need more advice; they need a safer meal decision today.
+
+### 2. الخطة ليست مثالية، بل عملية / The plan is practical, not perfect
+زادك يوازن السعرات والبروتين والصوديوم والتفضيلات.
+Zaadk balances calories, protein, sodium, and preferences.
+
+### 3. من التحليل إلى الوجبة / From lab report to meal
+التحاليل والقياسات تصبح ملاحظات غذائية مفهومة.
+Reports and measures become understandable nutrition cues.
+
+### 4. دعوة للاستخدام / Call to action
+ابدأ بملفك الصحي وابن أول خطة آمنة.
+Start with your health profile and build the first safe plan.
+
+## Evidence Needed Before External Use
+
+- app screenshots
+- onboarding completion
+- activation rate
+- retention
+- user testimonials
+
+## Readiness
+- Zaadk only: yes.
+- Source posture: product-grounded, metrics need source.
+- External readiness: working draft only.
+- Public equity actionability: not actionable without ticker.

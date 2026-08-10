@@ -1,0 +1,140 @@
+- generic [ref=e17]:
+  - generic [ref=e18]:
+    - generic [ref=e19]: Language
+    - generic [ref=e20]:
+      - button "Switch to English" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: English
+      - button "التبديل إلى العربية" [ref=e23] [cursor=pointer]:
+        - generic [ref=e24]: العربية
+  - generic [ref=e25]: Z
+  - generic [ref=e27]: Zaad
+  - generic [ref=e28]: Food that gets you closer to your goals, every day.
+  - generic [ref=e29]: A flexible plan that understands your health and preferences, then improves with your choices.
+  - generic [ref=e30]:
+    - generic [ref=e31]: Welcome back
+    - generic [ref=e32]:
+      - generic [ref=e33]: Email address
+      - textbox "name@example.com" [ref=e35]
+    - generic [ref=e36]:
+      - generic [ref=e37]: Password
+      - generic [ref=e38]:
+        - button "Show password" [ref=e39] [cursor=pointer]:
+          - generic [ref=e40]: 
+        - textbox "••••••••" [ref=e41]
+    - generic [ref=e42] [cursor=pointer]: Forgot password?
+    - button "Sign in" [ref=e44] [cursor=pointer]
+    - generic [ref=e47]: or
+    - button "Sign in with Google" [ref=e51] [cursor=pointer]:
+      - generic [ref=e52]: 
+  - generic [ref=e55]:
+    - generic [ref=e56]:
+      - generic [ref=e57]: 
+      - generic [ref=e59]:
+        - generic [ref=e60]: Try a demo account
+        - generic [ref=e61]: 20 accounts with different goals and conditions
+    - generic [ref=e63]:
+      - button "Select Mohammed's account" [ref=e64] [cursor=pointer]:
+        - generic [ref=e65]: M
+        - generic [ref=e67]: Mohammed
+        - generic [ref=e68]: Be more active
+        - generic [ref=e69]: "1"
+      - button "Select Noura's account" [ref=e70] [cursor=pointer]:
+        - generic [ref=e71]: "N"
+        - generic [ref=e73]: Noura
+        - generic [ref=e74]: Balance blood sugar
+        - generic [ref=e75]: "2"
+      - button "Select Salman's account" [ref=e76] [cursor=pointer]:
+        - generic [ref=e77]: S
+        - generic [ref=e79]: Salman
+        - generic [ref=e80]: Build muscle
+        - generic [ref=e81]: "3"
+      - button "Select Reem's account" [ref=e82] [cursor=pointer]:
+        - generic [ref=e83]: R
+        - generic [ref=e85]: Reem
+        - generic [ref=e86]: Healthy lifestyle
+        - generic [ref=e87]: "4"
+      - button "Select فيصل's account" [ref=e88] [cursor=pointer]:
+        - generic [ref=e89]: ف
+        - generic [ref=e91]: فيصل
+        - generic [ref=e92]: خفض الكوليسترول
+        - generic [ref=e93]: "5"
+      - button "Select هناء's account" [ref=e94] [cursor=pointer]:
+        - generic [ref=e95]: ه
+        - generic [ref=e97]: هناء
+        - generic [ref=e98]: الحفاظ على الوزن
+        - generic [ref=e99]: "6"
+      - button "Select عبدالله's account" [ref=e100] [cursor=pointer]:
+        - generic [ref=e101]: ع
+        - generic [ref=e103]: عبدالله
+        - generic [ref=e104]: صحة القلب
+        - generic [ref=e105]: "7"
+      - button "Select سارة's account" [ref=e106] [cursor=pointer]:
+        - generic [ref=e107]: س
+        - generic [ref=e109]: سارة
+        - generic [ref=e110]: نزول الوزن
+        - generic [ref=e111]: "8"
+      - button "Select خالد's account" [ref=e112] [cursor=pointer]:
+        - generic [ref=e113]: خ
+        - generic [ref=e115]: خالد
+        - generic [ref=e116]: تحسين اللياقة
+        - generic [ref=e117]: "9"
+      - button "Select مريم's account" [ref=e118] [cursor=pointer]:
+        - generic [ref=e119]: م
+        - generic [ref=e121]: مريم
+        - generic [ref=e122]: تغذية متوازنة
+        - generic [ref=e123]: "10"
+      - button "Select تركي's account" [ref=e124] [cursor=pointer]:
+        - generic [ref=e125]: ت
+        - generic [ref=e127]: تركي
+        - generic [ref=e128]: زيادة الوزن
+        - generic [ref=e129]: "11"
+      - button "Select لمى's account" [ref=e130] [cursor=pointer]:
+        - generic [ref=e131]: ل
+        - generic [ref=e133]: لمى
+        - generic [ref=e134]: الطاقة اليومية
+        - generic [ref=e135]: "12"
+      - button "Select عمر's account" [ref=e136] [cursor=pointer]:
+        - generic [ref=e137]: ع
+        - generic [ref=e139]: عمر
+        - generic [ref=e140]: التحكم بالضغط
+        - generic [ref=e141]: "13"
+      - button "Select أسماء's account" [ref=e142] [cursor=pointer]:
+        - generic [ref=e143]: أ
+        - generic [ref=e145]: أسماء
+        - generic [ref=e146]: نمط صحي
+        - generic [ref=e147]: "14"
+      - button "Select يوسف's account" [ref=e148] [cursor=pointer]:
+        - generic [ref=e149]: ي
+        - generic [ref=e151]: يوسف
+        - generic [ref=e152]: بناء العضلات
+        - generic [ref=e153]: "15"
+      - button "Select شهد's account" [ref=e154] [cursor=pointer]:
+        - generic [ref=e155]: ش
+        - generic [ref=e157]: شهد
+        - generic [ref=e158]: صحة عامة
+        - generic [ref=e159]: "16"
+      - button "Select بدر's account" [ref=e160] [cursor=pointer]:
+        - generic [ref=e161]: ب
+        - generic [ref=e163]: بدر
+        - generic [ref=e164]: خفض الدهون
+        - generic [ref=e165]: "17"
+      - button "Select غادة's account" [ref=e166] [cursor=pointer]:
+        - generic [ref=e167]: غ
+        - generic [ref=e169]: غادة
+        - generic [ref=e170]: الحفاظ على الوزن
+        - generic [ref=e171]: "18"
+      - button "Select راكان's account" [ref=e172] [cursor=pointer]:
+        - generic [ref=e173]: ر
+        - generic [ref=e175]: راكان
+        - generic [ref=e176]: تحسين اللياقة
+        - generic [ref=e177]: "19"
+      - button "Select جود's account" [ref=e178] [cursor=pointer]:
+        - generic [ref=e179]: ج
+        - generic [ref=e181]: جود
+        - generic [ref=e182]: توازن غذائي
+        - generic [ref=e183]: "20"
+    - generic [ref=e184]: "Password for every account: ZaadDemo123!"
+  - generic [ref=e185] [cursor=pointer]: New to Zaad? Create an account
+  - generic [ref=e187]:
+    - generic [ref=e188]: 
+    - generic [ref=e189]: Your health data is private and protected

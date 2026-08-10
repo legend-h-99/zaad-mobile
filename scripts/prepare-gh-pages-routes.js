@@ -25,6 +25,7 @@ if (!fs.existsSync(indexPath)) {
 
 fs.copyFileSync(indexPath, path.join(distDir, '404.html'))
 fs.writeFileSync(path.join(distDir, '.nojekyll'), '')
+fs.writeFileSync(path.join(distDir, '_redirects'), '/* /index.html 200\n')
 
 for (const route of routes) {
   const routeDir = path.join(distDir, route)
@@ -32,4 +33,4 @@ for (const route of routes) {
   fs.copyFileSync(indexPath, path.join(routeDir, 'index.html'))
 }
 
-console.log(`Prepared GitHub Pages SPA routes: ${routes.join(', ')}`)
+console.log(`Prepared web SPA routes and Cloudflare Pages fallback: ${routes.join(', ')}`)

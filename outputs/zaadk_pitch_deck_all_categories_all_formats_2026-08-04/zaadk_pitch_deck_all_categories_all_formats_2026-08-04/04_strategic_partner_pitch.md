@@ -1,0 +1,41 @@
+# عرض الشركاء التجاريين / Strategic Partner Pitch
+
+Prepared: 2026-08-04
+Audience: الشركاء التجاريون / Strategic partners
+
+Arabic objective: عرض زادك كقناة سياقية لسلوك غذائي متكرر داخل الصحة والعافية والطعام.
+English objective: Present Zaadk as a contextual channel for repeat food-health behavior.
+
+## Persuasion Sequence
+Partners are outcome-aware: lead with shared user problem, partner upside, pilot path, then commercial model.
+
+## Slide Structure
+
+### 1. الشريك يحتاج سياقا / Partners need context
+العرض العشوائي أقل قيمة من توصية غذائية مرتبطة بالملف الصحي.
+Random placement is less valuable than health-contextual relevance.
+
+### 2. فئات الشراكة / Partner categories
+عيادات، مختبرات، أغذية صحية، أصحاب عمل، برامج عافية.
+Clinics, labs, healthy food, employers, wellness programs.
+
+### 3. Pilot قابل للقياس / Measurable pilot
+تحديد cohort، عرض، conversion، retention.
+Define cohort, offer, conversion, and retention.
+
+### 4. النموذج التجاري / Commercial model
+اشتراك، إحالة، برنامج مؤسسي، أو توزيع شريك.
+Subscription, referral, enterprise program, or partner distribution.
+
+## Evidence Needed Before External Use
+
+- partner pipeline
+- pilot metrics
+- commercial terms
+- conversion funnel
+
+## Readiness
+- Zaadk only: yes.
+- Source posture: product-grounded, metrics need source.
+- External readiness: working draft only.
+- Public equity actionability: not actionable without ticker.

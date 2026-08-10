@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Funfamily | Bilingual Pitch Deck Storyboard</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5d6876;
+      --line: #d9dee5;
+      --paper: #f6f2ea;
+      --white: #ffffff;
+      --navy: #123047;
+      --teal: #0b7f86;
+      --gold: #b9852f;
+      --rose: #b14d61;
+      --soft: #eef6f5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 15px/1.55 Arial, "Helvetica Neue", sans-serif;
+    }
+    header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 46px clamp(22px, 6vw, 76px) 38px;
+    }
+    .eyebrow {
+      color: #f1c878;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 14px 0 12px;
+      max-width: 980px;
+      font: 700 clamp(34px, 5vw, 58px)/1.05 Georgia, serif;
+    }
+    .subtitle {
+      max-width: 920px;
+      color: #dce7ee;
+      font-size: 17px;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .meta span {
+      border: 1px solid rgba(255,255,255,.24);
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #e8eef3;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px clamp(18px, 4vw, 42px) 70px;
+    }
+    section { margin-top: 30px; }
+    .decision {
+      background: var(--white);
+      border-left: 5px solid var(--gold);
+      padding: 24px 26px;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font: 700 28px/1.15 Georgia, serif;
+      color: var(--navy);
+    }
+    h3 {
+      margin: 0 0 10px;
+      font: 700 20px/1.25 Arial, sans-serif;
+      color: var(--navy);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .box, .slide {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 20px;
+    }
+    .box strong { color: var(--navy); }
+    .arabic {
+      direction: rtl;
+      text-align: right;
+      font-family: Arial, "Tahoma", sans-serif;
+    }
+    .architecture {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+    }
+    th {
+      background: #e5ddd0;
+      color: #31465a;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    td, th {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 13px;
+      vertical-align: top;
+    }
+    .status {
+      color: #845d1f;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .slide {
+      margin-bottom: 16px;
+      border-left: 4px solid var(--teal);
+    }
+    .slide:nth-child(3n) { border-left-color: var(--rose); }
+    .slide:nth-child(4n) { border-left-color: var(--gold); }
+    .slide-title {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .num {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      background: var(--navy);
+      color: var(--white);
+      font-weight: 700;
+    }
+    .kicker {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .columns {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 16px;
+    }
+    ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+    li { margin: 5px 0; }
+    .arabic ul {
+      margin: 8px 18px 0 0;
+    }
+    .visual {
+      background: var(--soft);
+      border: 1px solid #c8dddb;
+      padding: 13px 14px;
+      margin-top: 14px;
+      color: #29545a;
+    }
+    .open {
+      background: #fff8ec;
+      border: 1px solid #ead7b9;
+      padding: 13px 14px;
+      margin-top: 14px;
+    }
+    .footer-note {
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 760px) {
+      .grid, .columns { grid-template-columns: 1fr; }
+      .slide-title { grid-template-columns: 1fr; }
+      td, th { font-size: 13px; }
+      .status { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Working Draft | Bilingual Arabic + English | Investment Banking Storyboard</div>
+    <h1>Funfamily Pitch Deck Storyboard</h1>
+    <p class="subtitle">A first-read bilingual page plan for an investor, partner, client, or senior-team discussion. This is not external-ready until Funfamily provides source data, financials, product proof, market support, and deck QC.</p>
+    <div class="meta">
+      <span>Prepared: 2026-08-04</span>
+      <span>Audience: investors, partners, clients, senior team</span>
+      <span>Source confidence: low</span>
+      <span>Posture: working draft</span>
+    </div>
+  </header>
+  <main>
+    <section class="decision">
+      <h2>MD-Level Storyline | القصة الرئيسية</h2>
+      <div class="grid">
+        <p><strong>English:</strong> Funfamily should be positioned as a trusted digital layer for modern family experiences: helping families discover, plan, and engage with relevant activities and services. The next decision is to validate the product promise with real traction, market, financial, and partner evidence before converting this storyboard into a native external deck.</p>
+        <p class="arabic"><strong>العربية:</strong> يجب تقديم Funfamily كطبقة رقمية موثوقة لتجارب العائلة الحديثة، تساعد العائلات على الاكتشاف والتخطيط والتفاعل مع الأنشطة والخدمات المناسبة. القرار التالي هو إثبات وعد المنتج من خلال بيانات حقيقية عن التفاعل والسوق والماليات والشراكات قبل تحويل هذه القصة إلى عرض تقديمي خارجي.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Proof Pillars | ركائز الإثبات</h2>
+      <div class="grid">
+        <div class="box">
+          <h3>English</h3>
+          <ul>
+            <li>Family-centered problem and product promise.</li>
+            <li>Bilingual Arabic and English positioning for GCC and broader family audiences.</li>
+            <li>Revenue optionality across subscriptions, commissions, partners, events, and premium services.</li>
+            <li>Traction, retention, unit economics, and market evidence to be added before circulation.</li>
+          </ul>
+        </div>
+        <div class="box arabic">
+          <h3>العربية</h3>
+          <ul>
+            <li>مشكلة واضحة تتمحور حول العائلة ووعد منتج قابل للفهم.</li>
+            <li>تموضع ثنائي اللغة مناسب للجمهور الخليجي والعائلي الأوسع.</li>
+            <li>خيارات إيراد تشمل الاشتراكات والعمولات والشراكات والفعاليات والخدمات المميزة.</li>
+            <li>إضافة بيانات التفاعل والاحتفاظ والاقتصاديات والسوق قبل أي تداول خارجي.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Proposed Deck Architecture | هيكل العرض المقترح</h2>
+      <table class="architecture">
+        <thead>
+          <tr><th>#</th><th>Slide</th><th>Purpose</th><th>Evidence</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Funfamily can become the trusted digital layer for modern family experiences</td><td>Open with thesis and bilingual positioning</td><td><span class="status">placeholder</span></td></tr>
+          <tr><td>2</td><td>Families face fragmented planning, trust, and coordination pain points</td><td>Define the customer problem</td><td><span class="status">assumption</span></td></tr>
+          <tr><td>3</td><td>A bilingual family platform can combine discovery, planning, and trusted recommendations</td><td>Explain the product promise</td><td><span class="status">placeholder</span></td></tr>
+          <tr><td>4</td><td>The highest-value wedge is a repeat-use family segment with clear trust needs</td><td>Focus the target customer</td><td><span class="status">assumption</span></td></tr>
+          <tr><td>5</td><td>The market case should link family demand to monetizable local supply</td><td>Frame the market opportunity</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>6</td><td>Funfamily can scale through multiple revenue lanes if the core journey earns repeat trust</td><td>Translate product utility into monetization</td><td><span class="status">assumption</span></td></tr>
+          <tr><td>7</td><td>Investor confidence will depend on engagement, retention, and partner proof</td><td>Define required traction KPIs</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>8</td><td>A city-by-city partner strategy can lower acquisition cost and improve trust</td><td>Show go-to-market logic</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>9</td><td>Differentiation must be proven against marketplaces, event platforms, and informal discovery channels</td><td>Address competition</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>10</td><td>The financial story should show a path from engagement density to scalable gross profit</td><td>Set up model and unit economics</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>11</td><td>The ask should match the next proof milestone, not just the ambition</td><td>Frame funding or partnership ask</td><td><span class="status">placeholder</span></td></tr>
+          <tr><td>12</td><td>The next 90 days should convert the story into sourced proof</td><td>Close with execution plan</td><td><span class="status">assumption</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Slide-By-Slide Draft | مسودة الشرائح</h2>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">1</div><div><div class="kicker">Opening</div><h3>Funfamily can become the trusted digital layer for modern family experiences<br><span class="arabic">يمكن أن تصبح Funfamily الطبقة الرقمية الموثوقة لتجارب العائلة الحديثة</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Funfamily should be positioned around a simple promise: help families discover, plan, share, and enjoy trusted experiences with less friction.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> يجب أن تتمحور Funfamily حول وعد بسيط: مساعدة العائلات على اكتشاف التجارب الموثوقة والتخطيط لها ومشاركتها والاستمتاع بها بسهولة أكبر.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> Product mockup or lifestyle/product composite with three proof pillars.</div>
+        <div class="open"><strong>Open items:</strong> product screenshots, app/store links, target geography, launch status.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">2</div><div><div class="kicker">Problem</div><h3>Families face fragmented planning, trust, and coordination pain points<br><span class="arabic">تواجه العائلات صعوبة في التخطيط والثقة والتنسيق عبر قنوات متفرقة</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Discovery, suitability, safety, scheduling, and payment often happen in separate channels; Funfamily can consolidate the journey.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> تتم مراحل الاكتشاف والملاءمة والسلامة والجدولة والدفع عبر قنوات منفصلة؛ يمكن لـ Funfamily توحيد هذه الرحلة.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> Before/after family journey map.</div>
+        <div class="open"><strong>Open items:</strong> customer quotes, surveys, funnel data, support tickets, or user interviews.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">3</div><div><div class="kicker">Solution</div><h3>A bilingual family platform can combine discovery, planning, and trusted recommendations<br><span class="arabic">منصة عائلية ثنائية اللغة تجمع الاكتشاف والتخطيط والتوصيات الموثوقة</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Organize the product around outcomes: discover better options, coordinate faster, and build trusted family routines.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> تنظيم المنتج حول النتائج: اكتشاف خيارات أفضل، تنسيق أسرع، وبناء عادات عائلية موثوقة.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> Three product modules: discover, plan, engage.</div>
+        <div class="open"><strong>Open items:</strong> confirm live features, roadmap features, and external-safe claims.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">4</div><div><div class="kicker">Audience</div><h3>The highest-value wedge is a repeat-use family segment with clear trust needs<br><span class="arabic">نقطة الدخول الأقوى هي شريحة عائلية متكررة الاستخدام وتحتاج إلى الثقة</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Prioritize segments by frequency, trust sensitivity, willingness to pay, and partner value.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> تحديد الأولوية حسب تكرار الاستخدام، حساسية الثقة، الاستعداد للدفع، وقيمة الشريحة للشركاء.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> Segment matrix by frequency and monetization potential.</div>
+        <div class="open"><strong>Open items:</strong> target persona, geography, usage frequency, acquisition channels.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">5</div><div><div class="kicker">Market</div><h3>The market case should link family demand to monetizable local supply<br><span class="arabic">يجب أن تربط فرصة السوق بين طلب العائلات والعرض المحلي القابل للربح</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> The market argument should connect family demand with venues, events, services, schools, brands, and communities.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> يجب أن تربط القصة السوقية طلب العائلات بالأماكن والفعاليات والخدمات والمدارس والعلامات التجارية والمجتمعات.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> Ecosystem map plus TAM/SAM/SOM once sourced.</div>
+        <div class="open"><strong>Open items:</strong> geography, market size, household count, family spend categories, sources.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">6</div><div><div class="kicker">Business Model</div><h3>Funfamily can scale through multiple revenue lanes if the core journey earns repeat trust<br><span class="arabic">يمكن أن تنمو Funfamily عبر عدة مصادر إيراد إذا حققت الثقة والاستخدام المتكرر</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Prove engagement first, then layer subscriptions, commissions, partner fees, sponsored placements, events, and premium bundles.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> إثبات التفاعل أولا، ثم إضافة الاشتراكات والعمولات ورسوم الشركاء والظهور المدعوم والفعاليات والباقات المميزة.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> Revenue-lane waterfall from engagement to monetization.</div>
+        <div class="open"><strong>Open items:</strong> pricing, take rates, partner terms, gross margin, payment flows.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">7</div><div><div class="kicker">Traction</div><h3>Investor confidence will depend on engagement, retention, and partner proof<br><span class="arabic">ستعتمد ثقة المستثمرين على إثبات التفاعل والاحتفاظ والشراكات</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Lead with a small number of sourced KPIs: active families, repeat use, bookings or leads, partner count, revenue, CAC, and retention.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> التركيز على عدد محدود من المؤشرات الموثقة: العائلات النشطة، الاستخدام المتكرر، الحجوزات أو العملاء المحتملون، الشركاء، الإيرادات، تكلفة الاكتساب، والاحتفاظ.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> KPI dashboard placeholder with actual data once provided.</div>
+        <div class="open"><strong>Open items:</strong> analytics export, KPI history, cohort retention, funnel conversion, revenue.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">8</div><div><div class="kicker">Go-To-Market</div><h3>A city-by-city partner strategy can lower acquisition cost and improve trust<br><span class="arabic">استراتيجية شراكات حسب المدينة يمكن أن تخفض تكلفة الاكتساب وتعزز الثقة</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Build density in priority cities through partner supply, parent communities, school or venue partnerships, and referral loops.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> بناء كثافة في المدن ذات الأولوية عبر الشركاء ومجتمعات الآباء والمدارس أو الأماكن وحلقات الإحالة.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> GTM flywheel connecting families, partners, content, bookings, and referrals.</div>
+        <div class="open"><strong>Open items:</strong> channel mix, CAC, conversion, partner pipeline, launch cities.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">9</div><div><div class="kicker">Competition</div><h3>Differentiation must be proven against marketplaces, event platforms, and informal discovery channels<br><span class="arabic">يجب إثبات التميز أمام الأسواق الرقمية ومنصات الفعاليات والقنوات غير الرسمية</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Differentiation should be anchored in family-specific trust, curation, bilingual usability, local relevance, and repeat planning workflows.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> يجب أن يستند التميز إلى الثقة العائلية، الانتقاء، سهولة الاستخدام باللغتين، الملاءمة المحلية، وتكرار التخطيط.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> Competitive positioning matrix by family specificity and journey coverage.</div>
+        <div class="open"><strong>Open items:</strong> named competitors, geography, pricing, product comparison.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">10</div><div><div class="kicker">Financial Path</div><h3>The financial story should show a path from engagement density to scalable gross profit<br><span class="arabic">يجب أن توضح القصة المالية مسارا من كثافة التفاعل إلى ربح إجمالي قابل للتوسع</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Connect active families, frequency, conversion, order value, take rate, subscription price, gross margin, CAC, and retention into a simple model.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> ربط العائلات النشطة والتكرار والتحويل ومتوسط قيمة الطلب والعمولة وسعر الاشتراك والهامش وتكلفة الاكتساب والاحتفاظ في نموذج واضح.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> Driver tree from active families to revenue and gross profit.</div>
+        <div class="open"><strong>Open items:</strong> historical financials, assumptions, team plan, funding needs, 3- to 5-year forecast.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">11</div><div><div class="kicker">Ask</div><h3>The ask should match the next proof milestone, not just the ambition<br><span class="arabic">يجب أن يتوافق الطلب مع محطة الإثبات التالية وليس مع الطموح فقط</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Whether the ask is capital, partnership, or client adoption, it should fund a specific proof agenda.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> سواء كان الطلب تمويلا أو شراكة أو تبنيا من العملاء، يجب أن يمول أجندة إثبات محددة.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> Use-of-funds or partnership milestone roadmap.</div>
+        <div class="open"><strong>Open items:</strong> funding amount, valuation expectations, partner targets, commercial ask.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-title"><div class="num">12</div><div><div class="kicker">Execution</div><h3>The next 90 days should convert the story into sourced proof<br><span class="arabic">يجب أن تحول الأيام التسعون القادمة القصة إلى أدلة موثقة</span></h3></div></div>
+        <div class="columns">
+          <div><strong>Key message:</strong> Close evidence gaps through a source pack, market map, KPI schedule, operating model, native deck build, and QC.</div>
+          <div class="arabic"><strong>الرسالة الرئيسية:</strong> إغلاق فجوات الإثبات عبر حزمة مصادر وخريطة سوق وجدول مؤشرات ونموذج تشغيلي وبناء عرض قابل للتعديل ومراجعة جودة.</div>
+        </div>
+        <div class="visual"><strong>Recommended visual:</strong> 90-day workplan with owners, evidence outputs, and deck milestones.</div>
+        <div class="open"><strong>Open items:</strong> source tie-out and ib-deck-qc before investor, client, lender, or external use.</div>
+      </article>
+    </section>
+
+    <section>
+      <h2>Source Request Checklist | قائمة المصادر المطلوبة</h2>
+      <div class="grid">
+        <div class="box">
+          <h3>English</h3>
+          <ul>
+            <li>Product screenshots, demo, app links, roadmap, and launch status.</li>
+            <li>Target geography, user personas, customer research, and survey evidence.</li>
+            <li>Monthly KPIs: registered families, MAU, retention, conversion, bookings/leads, revenue, CAC.</li>
+            <li>Partner pipeline, signed partners, supply categories, pricing, take rates, and gross margin.</li>
+            <li>Market sizing, competitor list, funding need, use of proceeds, and financial forecast.</li>
+          </ul>
+        </div>
+        <div class="box arabic">
+          <h3>العربية</h3>
+          <ul>
+            <li>صور المنتج، العرض التجريبي، روابط التطبيق، خارطة الطريق، وحالة الإطلاق.</li>
+            <li>الأسواق المستهدفة، شخصيات المستخدمين، أبحاث العملاء، وأدلة الاستبيانات.</li>
+            <li>المؤشرات الشهرية: العائلات المسجلة، المستخدمون النشطون، الاحتفاظ، التحويل، الحجوزات أو العملاء المحتملون، الإيرادات، وتكلفة الاكتساب.</li>
+            <li>قائمة الشركاء، الشركاء الموقعون، فئات العرض، التسعير، نسب العمولة، والهامش الإجمالي.</li>
+            <li>حجم السوق، قائمة المنافسين، احتياج التمويل، استخدام المتحصلات، والتوقعات المالية.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>QC Status | حالة المراجعة</h2>
+      <table class="architecture">
+        <thead><tr><th>Item</th><th>Status</th><th>Blocks circulation?</th></tr></thead>
+        <tbody>
+          <tr><td>Material numbers sourced and dated</td><td><span class="status">Open</span></td><td>Yes</td></tr>
+          <tr><td>Company facts verified</td><td><span class="status">Open</span></td><td>Yes</td></tr>
+          <tr><td>Native editable PowerPoint built</td><td><span class="status">Not available in this run</span></td><td>Yes</td></tr>
+          <tr><td>Bilingual content included</td><td><span class="status">Complete for draft</span></td><td>No</td></tr>
+          <tr><td>Assumptions and placeholders labeled</td><td><span class="status">Complete</span></td><td>No</td></tr>
+          <tr><td>Ready for ib-deck-qc</td><td><span class="status">No</span></td><td>Yes</td></tr>
+        </tbody>
+      </table>
+      <p class="footer-note">This storyboard is a banker-facing planning artifact. It should not be described as client-ready, investor-ready, board-ready, or lender-ready until sources, model outputs, citations, native deck rendering, and final QC are complete.</p>
+    </section>
+  </main>
+</body>
+</html>

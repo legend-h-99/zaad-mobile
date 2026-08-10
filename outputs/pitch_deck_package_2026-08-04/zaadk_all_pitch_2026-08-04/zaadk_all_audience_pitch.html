@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zaadk | All-Audience Bilingual Pitch</title>
+  <style>
+    :root {
+      --ink: #18231d;
+      --muted: #5d6a63;
+      --paper: #f4f1e8;
+      --white: #fffdf8;
+      --green: #0b6e4f;
+      --deep: #13362a;
+      --mint: #dcefe5;
+      --gold: #b88735;
+      --coral: #bf6656;
+      --line: #d9ded5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font: 15px/1.55 Arial, "Helvetica Neue", sans-serif;
+    }
+    header {
+      min-height: 520px;
+      padding: 48px clamp(22px, 5vw, 76px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) 320px;
+      gap: 42px;
+      align-items: center;
+      background:
+        linear-gradient(110deg, rgba(11,110,79,.96), rgba(19,54,42,.97)),
+        radial-gradient(circle at 75% 30%, rgba(255,255,255,.18), transparent 34%);
+      color: white;
+    }
+    .eyebrow {
+      color: #f0cf8b;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 16px 0 16px;
+      max-width: 940px;
+      font: 800 clamp(42px, 6vw, 74px)/1.02 Georgia, serif;
+    }
+    .subtitle {
+      max-width: 850px;
+      color: #e4f1ea;
+      font-size: 18px;
+    }
+    .hero-icon {
+      justify-self: center;
+      width: min(280px, 70vw);
+      aspect-ratio: 1;
+      border-radius: 34px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.28);
+      background: white;
+      padding: 18px;
+    }
+    .hero-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .meta span {
+      border: 1px solid rgba(255,255,255,.24);
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #edf7f2;
+    }
+    main { max-width: 1180px; margin: 0 auto; padding: 36px clamp(18px, 4vw, 42px) 76px; }
+    section { margin-top: 34px; }
+    h2 {
+      margin: 0 0 14px;
+      color: var(--deep);
+      font: 800 30px/1.15 Georgia, serif;
+    }
+    h3 {
+      margin: 0 0 9px;
+      color: var(--deep);
+      font: 800 19px/1.25 Arial, sans-serif;
+    }
+    p { margin: 0 0 10px; }
+    .arabic { direction: rtl; text-align: right; font-family: Arial, Tahoma, sans-serif; }
+    .decision, .card, .slide, .gate {
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+    .decision {
+      border-left: 5px solid var(--gold);
+      padding: 24px 26px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { padding: 20px; }
+    .tag {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--green);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    ul { margin: 8px 0 0 18px; padding: 0; }
+    .arabic ul { margin: 8px 18px 0 0; }
+    li { margin: 6px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+    th {
+      background: #e4ded2;
+      color: #3a4d42;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    td, th { border-bottom: 1px solid var(--line); padding: 12px 13px; vertical-align: top; }
+    .status { color: #8a641f; font-weight: 800; white-space: nowrap; }
+    .slide {
+      margin-bottom: 15px;
+      padding: 18px;
+      border-left: 4px solid var(--green);
+    }
+    .slide:nth-child(3n) { border-left-color: var(--coral); }
+    .slide:nth-child(4n) { border-left-color: var(--gold); }
+    .slide-head {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .num {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--deep);
+      font-weight: 800;
+    }
+    .kicker {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .note {
+      margin-top: 12px;
+      padding: 12px 13px;
+      background: var(--mint);
+      border: 1px solid #c3dfcf;
+      color: #234d3b;
+    }
+    .open {
+      margin-top: 12px;
+      padding: 12px 13px;
+      background: #fff6e5;
+      border: 1px solid #ead6aa;
+    }
+    .gate {
+      padding: 18px;
+      border-left: 4px solid var(--coral);
+    }
+    .footer-note { margin-top: 32px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 860px) {
+      header { grid-template-columns: 1fr; min-height: auto; }
+      .hero-icon { justify-self: start; width: 170px; border-radius: 24px; }
+      .grid, .three { grid-template-columns: 1fr; }
+      .slide-head { grid-template-columns: 1fr; }
+      .status { white-space: normal; }
+      td, th { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="eyebrow">All-Audience Master Pitch | Arabic + English | Working Draft</div>
+      <h1>Zaadk turns health data into daily nutrition decisions</h1>
+      <p class="subtitle">زادك يحول التحاليل والقياسات والتفضيلات الغذائية إلى خطة يومية مفهومة: وجبات، وصفات، متابعة، مشاركة عائلية، واستشارة عند الحاجة.</p>
+      <div class="meta">
+        <span>Prepared: 2026-08-04</span>
+        <span>Audience: users, families, partners, investors, internal team</span>
+        <span>Source confidence: medium for product, low for market/financials</span>
+        <span>Posture: working draft</span>
+      </div>
+    </div>
+    <div class="hero-icon"><img src="../../assets/icon.png" alt="Zaad app icon"></div>
+  </header>
+
+  <main>
+    <section class="decision">
+      <h2>Core Story | القصة الأساسية</h2>
+      <div class="grid">
+        <p><strong>English:</strong> Zaadk should not be pitched as another diet app. It is better framed as an Arabic-first therapeutic nutrition companion: it starts from the user's health context, turns reports and goals into meal decisions, and helps the family or specialist support the routine without overwhelming the user.</p>
+        <p class="arabic"><strong>العربية:</strong> لا ينبغي تقديم زادك كتطبيق حمية آخر. القصة الأقوى أنه رفيق تغذية علاجية عربي يبدأ من سياق المستخدم الصحي، ويحوّل التحاليل والأهداف إلى قرارات وجبات، ويساعد العائلة أو المختص على دعم الروتين بدون إرهاق المستخدم.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Persuasion Sequence | تسلسل الإقناع</h2>
+      <div class="grid three">
+        <div class="card">
+          <span class="tag">1. Audience World</span>
+          <h3>Health advice is not the bottleneck</h3>
+          <p>The user already hears “eat better.” The hard part is what to eat today, given blood sugar, pressure, cholesterol, family cooking, budget, and culture.</p>
+        </div>
+        <div class="card">
+          <span class="tag">2. Desire Before Solution</span>
+          <h3>A calmer daily food routine</h3>
+          <p>The desired future is not perfection. It is a safer next meal, a clearer weekly plan, and fewer abandoned attempts.</p>
+        </div>
+        <div class="card">
+          <span class="tag">3. Zaadk As Bridge</span>
+          <h3>From report to routine</h3>
+          <p>Zaadk connects profile, meals, recipes, lab indicators, tracking, family sharing, and consultation into one practical loop.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Audience-Specific Pitch Branches | نسخ العرض حسب الجمهور</h2>
+      <table>
+        <thead><tr><th>Audience</th><th>Lead Message</th><th>What Must Be Proven</th></tr></thead>
+        <tbody>
+          <tr><td>Users / المستخدمون</td><td>Practical nutrition decisions that respect Arabic food habits and health context.</td><td>Ease, trust, personalization, safety boundaries.</td></tr>
+          <tr><td>Families / العائلات</td><td>Share the right meal context with the person who cooks or supports care.</td><td>Privacy controls, clarity, adherence benefit.</td></tr>
+          <tr><td>Healthcare collaborators / الشركاء الصحيون</td><td>A behavior layer between advice, meals, measurements, and follow-up.</td><td>Clinical boundaries, workflow fit, data quality.</td></tr>
+          <tr><td>Strategic partners / الشركاء التجاريون</td><td>A culturally relevant path to healthier food decisions and repeat engagement.</td><td>Partner economics, distribution, conversion.</td></tr>
+          <tr><td>Investors / المستثمرون</td><td>Arabic-first health nutrition infrastructure with repeat-use potential.</td><td>Retention, revenue, CAC, outcomes, market size.</td></tr>
+          <tr><td>Public equity PMs / مدراء محافظ الأسهم العامة</td><td>Watchlist only unless Zaadk maps to a listed security.</td><td>Ticker, price, liquidity, valuation, catalyst, risk rules.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Proposed Deck Architecture | هيكل العرض المقترح</h2>
+      <table>
+        <thead><tr><th>#</th><th>Slide</th><th>Purpose</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Zaadk turns health data into daily nutrition decisions</td><td>Open with the all-audience thesis</td><td><span class="status">supported</span></td></tr>
+          <tr><td>2</td><td>The pitch should begin with the user's world</td><td>Build desire before solution</td><td><span class="status">assumption</span></td></tr>
+          <tr><td>3</td><td>Zaadk connects the daily loop</td><td>Show product architecture</td><td><span class="status">supported</span></td></tr>
+          <tr><td>4</td><td>Zaadk's user promise is practical safety, not perfect dieting</td><td>Clarify consumer value</td><td><span class="status">supported</span></td></tr>
+          <tr><td>5</td><td>Lab reports become nutrition-relevant guidance only when limits stay visible</td><td>Make health-data feature credible</td><td><span class="status">supported</span></td></tr>
+          <tr><td>6</td><td>Family sharing can turn individual plans into household adherence</td><td>Explain family/caregiver value</td><td><span class="status">supported</span></td></tr>
+          <tr><td>7</td><td>Trust is a product feature</td><td>Elevate privacy and security</td><td><span class="status">supported</span></td></tr>
+          <tr><td>8</td><td>Partners get a context-rich path to healthier food decisions</td><td>Frame healthcare and commercial partnerships</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>9</td><td>The investor case depends on repeat use and scalable economics</td><td>Frame investability</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>10</td><td>Public-equity pitch mode is watchlist-only</td><td>Set long/short boundary</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>11</td><td>Revenue should follow trust</td><td>Stage the business model</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>12</td><td>GTM should start where trust and daily urgency are highest</td><td>Define first wedge</td><td><span class="status">needs source</span></td></tr>
+          <tr><td>13</td><td>The next 90 days should convert Zaadk into an evidence-backed story</td><td>Close with proof roadmap</td><td><span class="status">assumption</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Slide-By-Slide Draft | مسودة الشرائح</h2>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">1</div><div><div class="kicker">Opening</div><h3>Zaadk turns health data into daily nutrition decisions<br><span class="arabic">زادك يحول البيانات الصحية إلى قرارات غذائية يومية</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Zaadk helps users move from confusing health information to practical meals, measurements, and follow-up routines.</p><p class="arabic"><strong>العربية:</strong> زادك يساعد المستخدم على الانتقال من معلومات صحية مشتتة إلى وجبات عملية وقياسات ومتابعة واضحة.</p></div>
+        <div class="note"><strong>Visual:</strong> App icon plus screenshots for meals, lab reports, recipes, tracking, and profile.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">2</div><div><div class="kicker">Audience Psychology</div><h3>The user's world: food is daily, health data is confusing<br><span class="arabic">عالم المستخدم: الطعام يومي والبيانات الصحية مربكة</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> The problem is not lack of advice; it is turning advice into a safe meal today and a routine tomorrow.</p><p class="arabic"><strong>العربية:</strong> المشكلة ليست نقص النصائح؛ بل تحويل النصيحة إلى وجبة آمنة اليوم وروتين قابل للاستمرار غدا.</p></div>
+        <div class="open"><strong>Needed proof:</strong> user interviews, onboarding friction, retention/drop-off, support messages.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">3</div><div><div class="kicker">Product Loop</div><h3>Zaadk connects profile, plan, meal, measurement, report, and family<br><span class="arabic">زادك يربط الملف والخطة والوجبة والقياس والتحليل والعائلة</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Onboarding captures health context; meal plans and recipes translate it; tracking and reports update it; family sharing and consultations support adherence.</p><p class="arabic"><strong>العربية:</strong> الإعداد يجمع السياق الصحي؛ الخطط والوصفات تترجمه؛ التتبع والتحاليل تحدثه؛ مشاركة العائلة والاستشارات تدعم الالتزام.</p></div>
+        <div class="note"><strong>Evidence:</strong> Supported by local UX flows and typed app data structures.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">4</div><div><div class="kicker">Consumer Promise</div><h3>Practical safety, not perfect dieting<br><span class="arabic">السلامة العملية وليس الحمية المثالية</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Zaadk balances calories, protein, sodium, timing, preferences, allergies, and lab indicators around real daily choices.</p><p class="arabic"><strong>العربية:</strong> زادك يوازن السعرات والبروتين والصوديوم والتوقيت والتفضيلات والحساسيات ومؤشرات التحاليل حول قرارات يومية واقعية.</p></div>
+        <div class="open"><strong>Claim guardrail:</strong> This must stay decision-support language, not diagnosis or treatment language.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">5</div><div><div class="kicker">Reports</div><h3>Lab reports become useful when source and limits stay visible<br><span class="arabic">تصبح التحاليل مفيدة عندما تبقى المصادر والحدود واضحة</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Zaadk can organize nutrition-relevant markers across glucose, lipids, kidney function, electrolytes, inflammation, vitamin D, and uric acid.</p><p class="arabic"><strong>العربية:</strong> يستطيع زادك تنظيم المؤشرات الغذائية ذات الصلة مثل السكر والدهون ووظائف الكلى والأملاح والالتهاب وفيتامين د وحمض اليوريك.</p></div>
+        <div class="open"><strong>Needed proof:</strong> extraction accuracy, supported report formats, review workflow, and error handling.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">6</div><div><div class="kicker">Family</div><h3>Family sharing turns individual plans into household adherence<br><span class="arabic">مشاركة العائلة تحول الخطة الفردية إلى التزام منزلي</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Zaadk can give the person who cooks or supports the user the right meal context without exposing the full health file.</p><p class="arabic"><strong>العربية:</strong> يمكن لزادك أن يعطي من يطبخ أو يدعم المستخدم سياق الوجبة المناسب بدون كشف كامل الملف الصحي.</p></div>
+        <div class="note"><strong>Evidence:</strong> Supported by family sharing, profile roles, and consultation flows in the repo.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">7</div><div><div class="kicker">Trust</div><h3>Trust is a product feature<br><span class="arabic">الثقة ميزة أساسية في المنتج</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Health data, meals, reports, and family access require visible privacy rules, ownership controls, and sensitive-data protection.</p><p class="arabic"><strong>العربية:</strong> البيانات الصحية والوجبات والتحاليل ووصول العائلة تحتاج إلى قواعد خصوصية واضحة وتحكم بالملكية وحماية للبيانات الحساسة.</p></div>
+        <div class="open"><strong>Needed proof:</strong> security audit, privacy policy, encryption status, regulatory review.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">8</div><div><div class="kicker">Partners</div><h3>A context-rich path to healthier food decisions<br><span class="arabic">مسار غني بالسياق لقرارات غذائية أفضل</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Clinics, dietitians, employers, labs, food providers, and wellness programs can use Zaadk as a behavior layer between advice and daily action.</p><p class="arabic"><strong>العربية:</strong> يمكن للعيادات وأخصائيي التغذية وأصحاب العمل والمختبرات ومقدمي الطعام وبرامج العافية استخدام زادك كطبقة سلوكية بين النصيحة والفعل اليومي.</p></div>
+        <div class="open"><strong>Needed proof:</strong> partner pipeline, pilot design, commercial terms, measured engagement.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">9</div><div><div class="kicker">Investors</div><h3>The investor case depends on repeat use and scalable economics<br><span class="arabic">قصة المستثمر تعتمد على الاستخدام المتكرر والاقتصاديات القابلة للتوسع</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> The investor version should lead with retention, health-context engagement, partner proof, and monetization sequencing before valuation.</p><p class="arabic"><strong>العربية:</strong> يجب أن تبدأ نسخة المستثمرين بالاحتفاظ والتفاعل الصحي وإثبات الشراكات وتسلسل الإيراد قبل التقييم.</p></div>
+        <div class="open"><strong>Needed proof:</strong> MAU, retention cohorts, revenue, CAC, gross margin, runway, funding ask.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">10</div><div><div class="kicker">Public Equity Boundary</div><h3>Watchlist-only unless Zaadk maps to a listed security<br><span class="arabic">للمراقبة فقط ما لم يرتبط زادك بورقة مالية مدرجة</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> No ticker, listed issuer, price, liquidity, valuation anchor, catalyst, borrow, or risk budget was provided, so this is not an actionable long/short pitch.</p><p class="arabic"><strong>العربية:</strong> لم يتم توفير رمز تداول أو شركة مدرجة أو سعر أو سيولة أو مرجع تقييم أو محفز أو تكلفة اقتراض أو ميزانية مخاطر، لذلك ليس هذا عرض صفقة أسهم قابلة للتنفيذ.</p></div>
+        <div class="gate"><strong>PM stance:</strong> Screen-grade only; placeholder assumptions used. Actionability: watchlist / not actionable as a public-equity trade.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">11</div><div><div class="kicker">Business Model</div><h3>Revenue should follow trust<br><span class="arabic">يجب أن يتبع الإيراد الثقة</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Stage monetization through paid plans, consultations, employer/clinic programs, partner distribution, and premium family/care features after habit formation.</p><p class="arabic"><strong>العربية:</strong> بناء الإيراد تدريجيا عبر الخطط المدفوعة والاستشارات وبرامج أصحاب العمل أو العيادات وتوزيع الشركاء وميزات العائلة والرعاية بعد تكوين العادة.</p></div>
+        <div class="open"><strong>Needed proof:</strong> pricing, current revenue, payment flows, consultation economics, margin.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">12</div><div><div class="kicker">Go-To-Market</div><h3>Start where trust and daily urgency are highest<br><span class="arabic">ابدأ حيث تكون الثقة والحاجة اليومية أعلى</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Prioritize high-frequency segments: chronic-condition users, family caregivers, dietitian workflows, employer wellness, clinics, and culturally familiar meal communities.</p><p class="arabic"><strong>العربية:</strong> إعطاء الأولوية للشرائح عالية التكرار: أصحاب الحالات المزمنة، مقدمو الرعاية العائلية، أخصائيو التغذية، برامج الموظفين، العيادات، ومجتمعات الطعام المحلية.</p></div>
+        <div class="open"><strong>Needed proof:</strong> target cities, channel mix, CAC, conversion funnel, referral loops.</div>
+      </article>
+
+      <article class="slide">
+        <div class="slide-head"><div class="num">13</div><div><div class="kicker">Proof Roadmap</div><h3>The next 90 days should convert Zaadk into an evidence-backed story<br><span class="arabic">الأيام التسعون القادمة يجب أن تحول زادك إلى قصة مدعومة بالأدلة</span></h3></div></div>
+        <div class="grid"><p><strong>English:</strong> Build proof in this order: product truth, user truth, clinical/claim boundaries, business economics, partner evidence, investor story.</p><p class="arabic"><strong>العربية:</strong> بناء الإثبات بهذا الترتيب: حقيقة المنتج، حقيقة المستخدم، حدود الادعاءات الصحية، الاقتصاديات، أدلة الشراكات، قصة المستثمر.</p></div>
+        <div class="note"><strong>Final gate:</strong> Do not mark external-ready until source tie-out, native deck rendering, and QC are complete.</div>
+      </article>
+    </section>
+
+    <section>
+      <h2>Source Request Checklist | قائمة المصادر المطلوبة</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>English</h3>
+          <ul>
+            <li>Current screenshots, product demo, and live/planned feature list.</li>
+            <li>User metrics: registrations, MAU, activation, retention, plan adherence, reports uploaded, recipes opened, consultations booked.</li>
+            <li>Financials: revenue, pricing, CAC, gross margin, operating costs, runway, funding ask.</li>
+            <li>Market and competitor evidence for Saudi/GCC Arabic health nutrition apps.</li>
+            <li>Security/privacy evidence: RLS migration status, encryption status, privacy policy, audit results.</li>
+            <li>Healthcare/legal claim review and approved medical disclaimer.</li>
+          </ul>
+        </div>
+        <div class="card arabic">
+          <h3>العربية</h3>
+          <ul>
+            <li>لقطات الشاشة الحالية، عرض المنتج، وقائمة الميزات الحالية والمخططة.</li>
+            <li>مؤشرات المستخدمين: التسجيلات، المستخدمون النشطون، التفعيل، الاحتفاظ، الالتزام بالخطة، التحاليل المرفوعة، الوصفات المفتوحة، والاستشارات المحجوزة.</li>
+            <li>الماليات: الإيرادات، التسعير، تكلفة الاكتساب، الهامش، التكاليف، مدة السيولة، وطلب التمويل.</li>
+            <li>أدلة السوق والمنافسين لتطبيقات التغذية الصحية العربية في السعودية والخليج.</li>
+            <li>أدلة الخصوصية والأمان: حالة RLS، التشفير، سياسة الخصوصية، ونتائج المراجعة.</li>
+            <li>مراجعة الادعاءات الصحية وإخلاء المسؤولية الطبي المعتمد.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>QC Status | حالة الجاهزية</h2>
+      <table>
+        <thead><tr><th>Item</th><th>Status</th><th>Blocks external circulation?</th></tr></thead>
+        <tbody>
+          <tr><td>Product features grounded in local repo</td><td><span class="status">Complete for working draft</span></td><td>No</td></tr>
+          <tr><td>Bilingual Arabic + English narrative</td><td><span class="status">Complete for working draft</span></td><td>No</td></tr>
+          <tr><td>Persuasion sequence</td><td><span class="status">Complete</span></td><td>No</td></tr>
+          <tr><td>Market, traction, and financial claims</td><td><span class="status">Missing / needs source</span></td><td>Yes</td></tr>
+          <tr><td>Public-equity trade pitch</td><td><span class="status">Not applicable without ticker</span></td><td>Yes</td></tr>
+          <tr><td>Native editable deck and rendered deck QA</td><td><span class="status">Not available in this run</span></td><td>Yes</td></tr>
+          <tr><td>Final ib-deck-qc</td><td><span class="status">Not ready</span></td><td>Yes</td></tr>
+        </tbody>
+      </table>
+      <p class="footer-note">This is a working storyboard and master pitch package. It is not client-ready, investor-ready, medical-claims-ready, or trade-actionable until sources, model support, citations, legal/clinical review, native deck rendering, and QC are complete.</p>
+    </section>
+  </main>
+</body>
+</html>

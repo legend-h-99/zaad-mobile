@@ -1,0 +1,42 @@
+ عرض الشركاء الصحيين / Healthcare Collaborator Deck
+
+Prepared: 2026-08-04
+Audience: الأخصائيون والعيادات / Dietitians and clinics
+
+Arabic objective: إثبات أن زادك طبقة متابعة بين النصيحة الصحية والالتزام الغذائي اليومي.
+English objective: Position Zaadk as a follow-up layer between health advice and daily nutrition adherence.
+
+ Persuasion Sequence
+Healthcare collaborators are skeptical/technical: lead with evidence posture, limits, workflow, then product.
+
+ Slide Structure
+
+ 1. ليس بديلا للمختص / Not a clinician replacement
+زادك ينظم الغذاء والمؤشرات ولا يشخص أو يعالج.
+Zaadk organizes nutrition and markers; it does not diagnose or treat.
+
+ 2. سير العمل / Workflow fit
+ملف صحي، تحاليل، خطة وجبات، متابعة، استشارة.
+Profile, reports, meal plan, tracking, consultation.
+
+ 3. حدود الادعاءات / Claim boundaries
+كل ادعاء صحي يحتاج مراجعة ومصدر.
+Every health claim needs review and source support.
+
+ 4. Pilot صحي / Healthcare pilot
+قياس الالتزام، رضا المستخدم، وحالات التحويل للمختص.
+Measure adherence, satisfaction, and referral triggers.
+
+ Evidence Needed Before External Use
+
+- clinical review
+- workflow map
+- data quality
+- pilot protocol
+- privacy policy
+
+ Readiness
+- Zaadk only: yes.
+- Source posture: product-grounded, metrics need source.
+- External readiness: working draft only.
+- Public equity actionability: not actionable without ticker.

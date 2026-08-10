@@ -1,0 +1,233 @@
+{
+  "name": "زاد - نشر تلقائي (كلود + موافقة تيليجرام + Ayrshare)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "trigger-schedule",
+      "name": "جدولة يومية 9 صباحاً",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-400, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "topic",
+              "value": "= اكتب هنا فكرة المحتوى / المشكلة التي نريد التوعية بها اليوم",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "content_pillar",
+              "value": "توعية بالمشكلة",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-idea",
+      "name": "فكرة المحتوى",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-180, 300],
+      "notes": "استبدل هذا لاحقاً بعقدة Google Sheets لقراءة الأفكار من جدول تقويم المحتوى"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-5-20250929\",\n  \"max_tokens\": 2000,\n  \"system\": \"أنت خبير تسويق ومحتوى توعوي لمنصة \\\"زاد\\\". فلسفتك: سوّق الفكرة والمشكلة قبل الحل. اكتب بالعربية الفصحى المبسطة بنبرة دافئة وموثوقة. لا تستخدم مبالغات ولا ادعاءات غير مدعومة. أعد فقط JSON صالحاً بدون أي نص إضافي.\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"عمود المحتوى: {{ $json.content_pillar }}\\nفكرة/مشكلة اليوم: {{ $json.topic }}\\n\\nاكتب منشوراً مخصصاً لكل منصة يبدأ بالمشكلة/الألم ثم يبني الاهتمام (دون بيع مباشر). أعد JSON بهذا الشكل بالضبط:\\n{\\n  \\\"twitter\\\": \\\"نص لتويتر بحد 270 حرفاً مع 2-3 هاشتاقات\\\",\\n  \\\"instagram\\\": \\\"كابشن إنستقرام 3-5 أسطر مع سطر فراغ وهاشتاقات في النهاية\\\",\\n  \\\"tiktok\\\": \\\"وصف قصير جذاب لفيديو تيك توك/سناب مع هاشتاقات\\\",\\n  \\\"hook\\\": \\\"جملة الخطاف الأولى للفيديو\\\"\\n}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "id": "http-claude",
+      "name": "كلود ينتج المحتوى",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [40, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ANTHROPIC_CRED",
+          "name": "Anthropic API Key (x-api-key)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// استخراج JSON من رد كلود\nconst raw = $input.first().json.content[0].text;\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch (e) {\n  const match = raw.match(/\\{[\\s\\S]*\\}/);\n  parsed = match ? JSON.parse(match[0]) : {};\n}\nreturn [{ json: parsed }];"
+      },
+      "id": "code-parse",
+      "name": "تجهيز النصوص",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "sendAndWait",
+        "chatId": "REPLACE_TELEGRAM_CHAT_ID",
+        "message": "=📝 *مسودة منشور زاد للمراجعة*\n\n🐦 *تويتر:*\n{{ $json.twitter }}\n\n📸 *إنستقرام:*\n{{ $json.instagram }}\n\n🎬 *تيك توك/سناب:*\n{{ $json.tiktok }}\n\nهل تعتمد النشر؟",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "buttonApprovalText": "✅ انشر",
+            "buttonDisapprovalText": "❌ ألغِ"
+          }
+        },
+        "options": {}
+      },
+      "id": "telegram-approve",
+      "name": "موافقة عبر تيليجرام",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [480, 300],
+      "webhookId": "zaad-approval-webhook",
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_TELEGRAM_CRED",
+          "name": "Telegram Bot (زاد)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-approved",
+      "name": "هل تمت الموافقة؟",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ayrshare.com/api/post",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": \"{{ $('تجهيز النصوص').item.json.instagram }}\",\n  \"platforms\": [\"twitter\", \"instagram\", \"tiktok\"],\n  \"twitter\": { \"post\": \"{{ $('تجهيز النصوص').item.json.twitter }}\" }\n}",
+        "options": {}
+      },
+      "id": "http-ayrshare",
+      "name": "نشر عبر Ayrshare",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [920, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_AYRSHARE_CRED",
+          "name": "Ayrshare API Key (Bearer)"
+        }
+      },
+      "notes": "ملاحظة: إنستقرام وتيك توك يتطلبان صورة/فيديو. أضف حقل mediaUrls في الـ body برابط الوسائط."
+    },
+    {
+      "parameters": {
+        "chatId": "REPLACE_TELEGRAM_CHAT_ID",
+        "text": "=✅ تم النشر بنجاح على المنصات.\nمعرّف المنشور: {{ $json.id || 'تم' }}",
+        "additionalFields": {}
+      },
+      "id": "telegram-done",
+      "name": "تأكيد النشر",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1140, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_TELEGRAM_CRED",
+          "name": "Telegram Bot (زاد)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "REPLACE_TELEGRAM_CHAT_ID",
+        "text": "❌ تم إلغاء المنشور. لن يُنشر شيء.",
+        "additionalFields": {}
+      },
+      "id": "telegram-rejected",
+      "name": "تم الإلغاء",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [920, 420],
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_TELEGRAM_CRED",
+          "name": "Telegram Bot (زاد)"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "جدولة يومية 9 صباحاً": {
+      "main": [[{ "node": "فكرة المحتوى", "type": "main", "index": 0 }]]
+    },
+    "فكرة المحتوى": {
+      "main": [[{ "node": "كلود ينتج المحتوى", "type": "main", "index": 0 }]]
+    },
+    "كلود ينتج المحتوى": {
+      "main": [[{ "node": "تجهيز النصوص", "type": "main", "index": 0 }]]
+    },
+    "تجهيز النصوص": {
+      "main": [[{ "node": "موافقة عبر تيليجرام", "type": "main", "index": 0 }]]
+    },
+    "موافقة عبر تيليجرام": {
+      "main": [[{ "node": "هل تمت الموافقة؟", "type": "main", "index": 0 }]]
+    },
+    "هل تمت الموافقة؟": {
+      "main": [
+        [{ "node": "نشر عبر Ayrshare", "type": "main", "index": 0 }],
+        [{ "node": "تم الإلغاء", "type": "main", "index": 0 }]
+      ]
+    },
+    "نشر عبر Ayrshare": {
+      "main": [[{ "node": "تأكيد النشر", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "pinData": {}
+}

@@ -1,0 +1,42 @@
+[     425ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[     706ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Light.60d4098572d12455d6e88439104108b7.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[     706ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[     731ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Medium.2fcc0ac7844419c41e7c39d60689a1b3.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[     731ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[     735ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Regular.9571a840c9a1c95e150dff3f04d8aafd.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[     735ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[     736ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-SemiBold.d1ec36b82c3cad8aa36d38bdd82aefaa.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[     736ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1067ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Light.60d4098572d12455d6e88439104108b7.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1067ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1067ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Regular.9571a840c9a1c95e150dff3f04d8aafd.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1067ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1067ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Medium.2fcc0ac7844419c41e7c39d60689a1b3.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1067ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1067ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-SemiBold.d1ec36b82c3cad8aa36d38bdd82aefaa.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1067ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1068ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Bold.b0dfca785a6285536a9ca18e549c6bca.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1068ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1068ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Bold.b0dfca785a6285536a9ca18e549c6bca.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1068ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1198ms] Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at xl (https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:37617)
+    at ki (https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:88414)
+    at Pc (https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:122027)
+    at xc (https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:121079)
+    at Ec (https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:120921)
+    at fc (https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:117427)
+    at lf (https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:129516)
+    at Jc (https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:128082)
+    at nf (https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:128357)
+    at https://legend-h-99.github.io/_expo/static/js/web/index-69c1b6e7e2acf59cb852474cec083bab.js:170:127712
+[    1238ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Regular.9571a840c9a1c95e150dff3f04d8aafd.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1238ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1239ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Medium.2fcc0ac7844419c41e7c39d60689a1b3.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1239ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1239ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-Bold.b0dfca785a6285536a9ca18e549c6bca.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1239ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1239ms] [WARNING] Failed to decode downloaded font: https://legend-h-99.github.io/assets/assets/fonts/IBMPlexArabic-SemiBold.d1ec36b82c3cad8aa36d38bdd82aefaa.ttf @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1239ms] [WARNING] OTS parsing error: invalid sfntVersion: 168430090 @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[    1313ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://legend-h-99.github.io/login/?v=df97c4b:0
+[ 5634952ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://legend-h-99.github.io/login/?v=df97c4b:0

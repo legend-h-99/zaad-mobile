@@ -68,10 +68,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   setSession: (session) =>
     set({ session, user: session?.user ?? null, isLoading: false }),
 
-  enterDemoMode: (demoUserId = DEFAULT_DEMO_USER_ID) => {
-    demoStorage.setItem(DEMO_KEY, '1').catch(() => {})
-    demoStorage.setItem(DEMO_USER_KEY, demoUserId).catch(() => {})
-    set({ isDemoMode: true, demoUserId, isLoading: false })
+  enterDemoMode: () => {
+    demoStorage.removeItem(DEMO_KEY).catch(() => {})
+    demoStorage.removeItem(DEMO_USER_KEY).catch(() => {})
+    set({ isDemoMode: false, demoUserId: DEFAULT_DEMO_USER_ID, isLoading: false })
   },
 
   clearDemoMode: async () => {
@@ -91,19 +91,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     if (_initialized) return () => {}
     _initialized = true
 
-    // Restore demo mode first so the guard doesn't flicker to login
-    Promise.all([
-      demoStorage.getItem(DEMO_KEY),
-      demoStorage.getItem(DEMO_USER_KEY),
-    ]).then(([demoMode, demoUserId]) => {
-      if (demoMode === '1') {
-        set({
-          isDemoMode: true,
-          demoUserId: demoUserId ?? DEFAULT_DEMO_USER_ID,
-          isLoading: false,
-        })
-      }
-    }).catch(() => {})
+    useAuthStore.getState().clearDemoMode().catch(() => {})
 
     // Get existing session
     supabase.auth.getSession().then(({ data: { session } }) => {

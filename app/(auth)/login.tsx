@@ -20,29 +20,16 @@ import { supabase } from '../../src/lib/supabase/client'
 import { Colors, Radius, Spacing, Typography } from '../../src/constants/theme'
 import { useAuthStore } from '../../src/store/auth'
 
-const DEMO_ACCOUNTS = [
-  { id: 'demo-hussam-2026', name: 'حسام', goal: 'صحة القلب' },
-  { id: 'demo-noura-2026', name: 'نورة', goal: 'توازن السكر' },
-  { id: 'demo-fahad-2026', name: 'فهد', goal: 'بناء العضلات' },
-  { id: 'demo-layla-2026', name: 'ليلى', goal: 'نمط صحي' },
-] as const
-
 export default function LoginScreen() {
   const router = useRouter()
   const insets = useSafeAreaInsets()
   const setSession = useAuthStore(state => state.setSession)
-  const enterDemoMode = useAuthStore(state => state.enterDemoMode)
   const clearDemoMode = useAuthStore(state => state.clearDemoMode)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  function startDemo(demoUserId: string) {
-    enterDemoMode(demoUserId)
-    router.replace('/(tabs)')
-  }
 
   async function handleLogin() {
     if (!email.trim() || !password) {
@@ -175,45 +162,6 @@ export default function LoginScreen() {
           <GoogleSignInButton onError={message => setError(message || null)} />
 
           <AppleSignInButton onError={message => setError(message || null)} />
-        </View>
-
-        <View style={styles.demoSection}>
-          <View style={styles.demoHeader}>
-            <View style={styles.demoIcon}>
-              <Feather name="users" size={18} color={Colors.primary} />
-            </View>
-            <View style={styles.demoHeaderCopy}>
-              <Text style={styles.demoTitle}>جرّب التطبيق</Text>
-              <Text style={styles.demoSubtitle}>اختر ملفاً تجريبياً للدخول مباشرة</Text>
-            </View>
-          </View>
-
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.demoList}
-          >
-            {DEMO_ACCOUNTS.map(({ id, name, goal }, index) => {
-              return (
-                <Pressable
-                  key={id}
-                  style={styles.demoCard}
-                  onPress={() => startDemo(id)}
-                  accessibilityRole="button"
-                  accessibilityLabel={`اختيار حساب ${name}`}
-                >
-                  <View style={styles.avatar}>
-                    <Text style={styles.avatarText}>
-                      {name[0]}
-                    </Text>
-                  </View>
-                  <Text style={styles.demoName}>{name}</Text>
-                  <Text style={styles.demoGoal}>{goal}</Text>
-                  <Text style={styles.demoNumber}>{(index + 1).toLocaleString('ar-SA')}</Text>
-                </Pressable>
-              )
-            })}
-          </ScrollView>
         </View>
 
         <Pressable

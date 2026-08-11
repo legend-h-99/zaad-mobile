@@ -14,7 +14,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AppHeader } from '../src/components/ui/AppHeader'
 import { ZaadButton } from '../src/components/ui/ZaadButton'
 import { ZaadCard } from '../src/components/ui/ZaadCard'
-import { getDemoProfile } from '../src/constants/demoData'
 import { Colors, Radius, Spacing, Typography } from '../src/constants/theme'
 import { useSession } from '../src/hooks/useSession'
 import { calculateDailyTargets, targetsFromCalories } from '../src/lib/nutrition/targets'
@@ -42,10 +41,9 @@ export default function GoalsScreen() {
   const insets = useSafeAreaInsets()
   const { user } = useSession()
   const isDemoMode = useAuthStore(s => s.isDemoMode)
-  const demoUserId = useAuthStore(s => s.demoUserId)
   const liveProfile = useProfileStore(s => s.profile)
   const loadProfile = useProfileStore(s => s.loadProfile)
-  const profile = isDemoMode ? getDemoProfile(demoUserId) : liveProfile
+  const profile = isDemoMode ? null : liveProfile
 
   const [selectedGoal, setSelectedGoal] = useState<HealthGoal>(profile?.goal ?? 'energy')
   const calculated = useMemo(
@@ -69,8 +67,7 @@ export default function GoalsScreen() {
 
   async function saveGoal() {
     if (isDemoMode) {
-      Alert.alert('تم تحديث الهدف', 'سيظهر الهدف الجديد خلال هذه الجلسة التجريبية.')
-      router.back()
+      Alert.alert('يرجى تسجيل الدخول', 'سجّل الدخول لتحديث هدفك اليومي.')
       return
     }
     if (!user?.id) return

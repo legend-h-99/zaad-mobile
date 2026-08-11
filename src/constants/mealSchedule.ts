@@ -1,11 +1,11 @@
 /**
  * زاد — Weekly & Monthly Meal Schedule
  * Built for HFrEF / cardiac patients: low-sodium, heart-friendly.
- * Pulls recipe IDs from DEMO_RECIPES (r1–r15).
+ * Pulls recipe IDs from REFERENCE_RECIPES (r1–r15).
  * Index 0 = Sunday, 6 = Saturday.
  */
 
-import { DEMO_RECIPES } from './demoData'
+import { REFERENCE_RECIPES } from './recipeData'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -26,7 +26,7 @@ export interface DayPlan {
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function getRecipe(id: string) {
-  return DEMO_RECIPES.find(r => r.id === id)!
+  return REFERENCE_RECIPES.find(r => r.id === id)!
 }
 
 function buildDay(
@@ -123,9 +123,9 @@ const WEEK2: DayPlan[] = [
 const WEEK3: DayPlan[] = [
   buildDay('الأحد',    'r2', 'r6',  'r8',  'r11', 'فطور البيض يمنحك بروتيناً كاملاً — أساس مهم لعضلة القلب المتعافية.'),
   buildDay('الاثنين',  'r3', 'r4',  'r9',  'r12', 'الزبادي والتونة مصدران ممتازان للبروتين قليل الدهون. راقب الصوديوم يومياً.'),
-  buildDay('الثلاثاء', 'r1', 'r7',  'r10', 'r15', 'الكركم في مرق الدجاج مضاد التهاب طبيعي — يفيد مرضى ESR المرتفع مثلك.'),
+  buildDay('الثلاثاء', 'r1', 'r7',  'r10', 'r15', 'الكركم في مرق الدجاج مضاد التهاب طبيعي ضمن نمط غذائي متوازن.'),
   buildDay('الأربعاء', 'r2', 'r5',  'r8',  'r13', 'السمك المشوي + شوربة الخضار = يوم خفيف على القلب. لا تضف ملحاً للطعام.'),
-  buildDay('الخميس',  'r3', 'r6',  'r9',  'r11', 'ابتعد عن الملح الزائد اليوم — ضغط الشريان الرئوي حساس للصوديوم. قيّم CardioMEMS إذا كانت القراءة متاحة.'),
+  buildDay('الخميس',  'r3', 'r6',  'r9',  'r11', 'ابتعد عن الملح الزائد اليوم، وراجع قياساتك الصحية الدورية إذا كانت متاحة.'),
   buildDay('الجمعة',  'r1', 'r4',  'r10', 'r12', 'يوم الجمعة: استمتع بوجباتك الصحية — المطبخ المنزلي دائماً أخف في الصوديوم من المطاعم.'),
   buildDay('السبت',   'r2', 'r7',  'r8',  'r14', 'زيت الزيتون في الدجاج المشوي يقلل LDL — الدهون الجيدة للقلب.'),
 ]

@@ -1,4 +1,4 @@
-import { DEMO_RECIPES } from '../../constants/demoData'
+import { REFERENCE_RECIPES } from '../../constants/recipeData'
 import { getPlanForDate } from '../../constants/mealSchedule'
 import { DIET_TYPES, type DietType } from '../../constants/diets'
 import { buildReferenceMealPlanMeals, loadReferenceFoodItems } from '../nutrition/referenceFoods'
@@ -61,7 +61,7 @@ function parseDate(date: string) {
 }
 
 function recipeById(id: string): Recipe {
-  return DEMO_RECIPES.find(recipe => recipe.id === id) ?? DEMO_RECIPES[0]
+  return REFERENCE_RECIPES.find(recipe => recipe.id === id) ?? REFERENCE_RECIPES[0]
 }
 
 function mealFromRecipe(recipe: Recipe): MealItem {

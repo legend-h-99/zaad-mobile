@@ -4,7 +4,7 @@
  */
 
 import { getPlanForDate, WEEK_PLAN, MONTH_WEEKS } from '../src/constants/mealSchedule'
-import { DEMO_RECIPES } from '../src/constants/demoData'
+import { REFERENCE_RECIPES } from '../src/constants/recipeData'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -12,7 +12,7 @@ function makeDate(year: number, month: number, day: number) {
   return new Date(year, month - 1, day)
 }
 
-const KNOWN_RECIPE_IDS = new Set(DEMO_RECIPES.map(r => r.id))
+const KNOWN_RECIPE_IDS = new Set(REFERENCE_RECIPES.map(r => r.id))
 
 // ── getPlanForDate ────────────────────────────────────────────────────────────
 
@@ -25,7 +25,7 @@ describe('getPlanForDate', () => {
     expect(plan.snack).toBeTruthy()
   })
 
-  it('returns recipe IDs that exist in DEMO_RECIPES', () => {
+  it('returns recipe IDs that exist in REFERENCE_RECIPES', () => {
     const dates = [
       makeDate(2026, 7, 1),   // week 1
       makeDate(2026, 7, 8),   // week 2
@@ -88,7 +88,7 @@ describe('DayPlan nutrition totals', () => {
     const plan = getPlanForDate(makeDate(2026, 7, 16))
     const meals = [plan.breakfast, plan.lunch, plan.dinner, plan.snack]
     const expected = meals.reduce((sum, id) => {
-      const r = DEMO_RECIPES.find(r => r.id === id)!
+      const r = REFERENCE_RECIPES.find(r => r.id === id)!
       return sum + r.calories
     }, 0)
     expect(plan.totalCalories).toBe(expected)
@@ -98,7 +98,7 @@ describe('DayPlan nutrition totals', () => {
     const plan = getPlanForDate(makeDate(2026, 7, 8)) // week 2
     const meals = [plan.breakfast, plan.lunch, plan.dinner, plan.snack]
     const expected = meals.reduce((sum, id) => {
-      const r = DEMO_RECIPES.find(r => r.id === id)!
+      const r = REFERENCE_RECIPES.find(r => r.id === id)!
       return sum + (r.sodiumMg ?? 0)
     }, 0)
     expect(plan.sodiumMg).toBe(expected)
@@ -171,32 +171,32 @@ describe('MONTH_WEEKS', () => {
   })
 })
 
-// ── DEMO_RECIPES integrity ────────────────────────────────────────────────────
+// ── REFERENCE_RECIPES integrity ────────────────────────────────────────────────────
 
-describe('DEMO_RECIPES data integrity', () => {
+describe('REFERENCE_RECIPES data integrity', () => {
   it('contains at least 15 recipes', () => {
-    expect(DEMO_RECIPES.length).toBeGreaterThanOrEqual(15)
+    expect(REFERENCE_RECIPES.length).toBeGreaterThanOrEqual(15)
   })
 
   it('every recipe has a unique id', () => {
-    const ids = DEMO_RECIPES.map(r => r.id)
+    const ids = REFERENCE_RECIPES.map(r => r.id)
     expect(new Set(ids).size).toBe(ids.length)
   })
 
   it('every recipe has a positive calorie count', () => {
-    for (const r of DEMO_RECIPES) {
+    for (const r of REFERENCE_RECIPES) {
       expect(r.calories).toBeGreaterThan(0)
     }
   })
 
   it('every recipe has a non-empty Arabic name', () => {
-    for (const r of DEMO_RECIPES) {
+    for (const r of REFERENCE_RECIPES) {
       expect(r.nameAr.trim().length).toBeGreaterThan(0)
     }
   })
 
   it('every recipe has non-negative macro values', () => {
-    for (const r of DEMO_RECIPES) {
+    for (const r of REFERENCE_RECIPES) {
       expect(r.proteinG).toBeGreaterThanOrEqual(0)
       expect(r.carbsG).toBeGreaterThanOrEqual(0)
       expect(r.fatG).toBeGreaterThanOrEqual(0)
@@ -204,11 +204,11 @@ describe('DEMO_RECIPES data integrity', () => {
   })
 
   it('heart-friendly: no recipe exceeds 700mg sodium', () => {
-    const highSodium = DEMO_RECIPES.filter(r => (r.sodiumMg ?? 0) > 700)
+    const highSodium = REFERENCE_RECIPES.filter(r => (r.sodiumMg ?? 0) > 700)
     expect(highSodium.map(r => r.nameAr)).toEqual([])
   })
 
-  it('every recipe referenced by WEEK_PLAN exists in DEMO_RECIPES', () => {
+  it('every recipe referenced by WEEK_PLAN exists in REFERENCE_RECIPES', () => {
     const missing: string[] = []
     for (const plan of WEEK_PLAN) {
       for (const id of [plan.breakfast, plan.lunch, plan.dinner, plan.snack]) {

@@ -20,7 +20,6 @@ import { ZaadCard } from '../../src/components/ui/ZaadCard'
 import { ZaadButton } from '../../src/components/ui/ZaadButton'
 import { AppHeader } from '../../src/components/ui/AppHeader'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
-import { getDemoProgress } from '../../src/constants/demoData'
 import type { ProgressLog } from '../../src/types'
 
 type MetricKey = 'meal' | 'weight' | 'glucose' | 'pressure'
@@ -43,7 +42,6 @@ export default function TrackScreen() {
   const { user } = useSession()
   const queryClient = useQueryClient()
   const isDemoMode = useAuthStore(s => s.isDemoMode)
-  const demoUserId = useAuthStore(s => s.demoUserId)
   const today = useMemo(() => new Date().toISOString().split('T')[0], [])
 
   const [activeMetric, setActiveMetric] = useState<MetricKey>('meal')
@@ -65,9 +63,9 @@ export default function TrackScreen() {
   }, [entrance])
 
   const { data: logs = [], isLoading } = useQuery({
-    queryKey: ['progress-logs', isDemoMode, demoUserId],
+    queryKey: ['progress-logs', isDemoMode],
     queryFn: async () => {
-      if (isDemoMode) return getDemoProgress(demoUserId)
+      if (isDemoMode) return []
       if (!user?.id) return []
       const sevenDaysAgo = new Date()
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
@@ -310,10 +308,6 @@ export default function TrackScreen() {
               icon={<Feather name="check" size={18} color={Colors.surface} />}
             />
           </ZaadCard>
-
-          {isDemoMode && (
-            <Text style={styles.demoText}>الوضع التجريبي: يمكنك تجربة الحفظ بأمان</Text>
-          )}
 
           <View style={styles.sectionHeading}>
             <Text style={styles.sectionTitle}>آخر 7 أيام</Text>

@@ -20,7 +20,7 @@ import Svg, { Circle } from 'react-native-svg'
 import { useRouter, type Href } from 'expo-router'
 
 import { AppHeader } from '../../src/components/ui/AppHeader'
-import { DEMO_RECIPES, getDemoProfile, getDemoUser } from '../../src/constants/demoData'
+import { REFERENCE_RECIPES } from '../../src/constants/recipeData'
 import { getPlanForDate, type DayPlan } from '../../src/constants/mealSchedule'
 import { Colors, Radius, Spacing, Typography } from '../../src/constants/theme'
 import { calculateDailyTargets } from '../../src/lib/nutrition/targets'
@@ -130,7 +130,7 @@ function MealRow({
   expanded: boolean
   onPress: () => void
 }) {
-  const recipe = DEMO_RECIPES.find(item => item.id === plan[slot]) ?? DEMO_RECIPES[0]
+  const recipe = REFERENCE_RECIPES.find(item => item.id === plan[slot]) ?? REFERENCE_RECIPES[0]
   const nameAr = liveMeal?.nameAr ?? recipe.nameAr
   const calories = liveMeal?.calories ?? recipe.calories
   const proteinG = liveMeal?.proteinG ?? recipe.proteinG
@@ -178,7 +178,6 @@ function MealRow({
 export default function HomeScreen() {
   const insets = useSafeAreaInsets()
   const router = useRouter()
-  const demoUserId = useAuthStore(state => state.demoUserId)
   const isDemoMode = useAuthStore(state => state.isDemoMode)
   const user = useAuthStore(state => state.user)
   const profile = useProfileStore(state => state.profile)
@@ -208,9 +207,8 @@ export default function HomeScreen() {
     () => Array.from({ length: 7 }, (_, index) => addDays(weekStart, index)),
     [weekStart],
   )
-  const demoUser = getDemoUser(demoUserId)
-  const activeProfile = isDemoMode ? getDemoProfile(demoUserId) : profile
-  const firstName = activeProfile?.fullName?.split(' ')[0] ?? demoUser.nameAr
+  const activeProfile = isDemoMode ? null : profile
+  const firstName = activeProfile?.fullName?.split(' ')[0] ?? 'المستخدم'
   const dailyTargets = calculateDailyTargets(activeProfile ?? {})
   const displayTotals = {
     calories: livePlan?.calories_target ?? plan.totalCalories,
@@ -257,7 +255,7 @@ export default function HomeScreen() {
 
   async function sharePlan() {
     const lines = MEAL_SLOTS.map(slot => {
-      const recipe = DEMO_RECIPES.find(item => item.id === plan[slot])
+      const recipe = REFERENCE_RECIPES.find(item => item.id === plan[slot])
       return `${MEAL_LABELS[slot]}: ${recipe?.nameAr ?? ''}`
     })
     const message = `خطة زاد ليوم ${format(selectedDate, 'EEEE d MMMM', { locale: arSA })}\n\n${lines.join('\n')}`

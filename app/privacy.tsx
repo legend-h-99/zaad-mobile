@@ -114,7 +114,7 @@ export default function PrivacyScreen() {
         <ZaadCard style={styles.accountCard}>
           <Text style={styles.sectionTitle}>بيانات الحساب</Text>
           <View style={styles.accountRow}>
-            <Text style={styles.accountValue}>{user?.email ?? 'حساب تجريبي'}</Text>
+            <Text style={styles.accountValue}>{user?.email ?? 'غير مسجل'}</Text>
             <Text style={styles.accountLabel}>البريد</Text>
           </View>
           <View style={styles.accountRow}>

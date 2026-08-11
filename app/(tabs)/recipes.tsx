@@ -32,7 +32,7 @@ import { GuidanceCard, PageIntroCard } from '../../src/components/zaad/ContentBl
 import { ZAAD_PAGE_CONTENT } from '../../src/constants/zaadContent'
 import { DIET_TYPES } from '../../src/constants/diets'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
-import { DEMO_RECIPES, getDemoConditions } from '../../src/constants/demoData'
+import { REFERENCE_RECIPES } from '../../src/constants/recipeData'
 import type { Recipe } from '../../src/types'
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -95,7 +95,6 @@ export default function RecipesScreen() {
   const insets = useSafeAreaInsets()
   const { conditions, preferences } = useProfileStore()
   const isDemoMode = useAuthStore(s => s.isDemoMode)
-  const demoUserId = useAuthStore(s => s.demoUserId)
   const [search, setSearch]         = useState('')
   const [category, setCategory]     = useState('all')
   const [dietFilter, setDietFilter] = useState(preferences?.dietType ?? 'all')
@@ -126,17 +125,17 @@ export default function RecipesScreen() {
     }
   }
 
-  const activeConditions = isDemoMode ? getDemoConditions(demoUserId) : conditions
+  const activeConditions = isDemoMode ? [] : conditions
   const conditionKeys = activeConditions.map(c => c.condition)
 
   const { data: recipes = [], isLoading, isError, refetch } = useQuery({
-    queryKey: ['recipes', conditionKeys, isDemoMode, demoUserId],
+    queryKey: ['recipes', conditionKeys, isDemoMode],
     queryFn: async () => {
-      if (isDemoMode) return DEMO_RECIPES
+      if (isDemoMode) return REFERENCE_RECIPES
       const q = supabase.from('recipes').select('*').order('name_ar')
       const { data } = await q.limit(100)
       const databaseRecipes = (data ?? []).map(row => mapDatabaseRecipe(row as Record<string, unknown>))
-      return databaseRecipes.length > 0 ? databaseRecipes : DEMO_RECIPES
+      return databaseRecipes.length > 0 ? databaseRecipes : REFERENCE_RECIPES
     },
     staleTime: 1000 * 60 * 30,
   })

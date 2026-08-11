@@ -1,6 +1,5 @@
 /**
  * زاد — Lab Reports screen (tab: التحاليل)
- * In demo mode: shows real lab data from KFSH with PDF-page images.
  * In live mode: camera / file picker → upload → Claude AI analysis.
  */
 import { useState } from 'react'
@@ -31,7 +30,6 @@ import { uploadAndAnalyzeReport } from '../../src/lib/api/reports'
 import { ZaadCard } from '../../src/components/ui/ZaadCard'
 import { AppHeader } from '../../src/components/ui/AppHeader'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
-import { DEMO_LAB_REPORTS, DEMO_REPORT_IMAGES } from '../../src/constants/demoData'
 import type { LabReport, LabFlag } from '../../src/types'
 
 const { width: SCREEN_W } = Dimensions.get('window')
@@ -271,11 +269,10 @@ export default function ReportsScreen() {
     uri: string; name: string; type: string
   } | null>(null)
 
-  // In demo mode use bundled data; in live mode query Supabase
   const { data: reports = [], isLoading } = useQuery({
     queryKey: ['lab-reports', isDemoMode],
     queryFn: async () => {
-      if (isDemoMode) return DEMO_LAB_REPORTS
+      if (isDemoMode) return []
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return []
       const { data } = await supabase
@@ -339,15 +336,8 @@ export default function ReportsScreen() {
     }
   }
 
-  // Map report id → images array for demo mode
   function imagesForReport(report: LabReport) {
-    if (!isDemoMode) return undefined
-    if (report.id === 'report-tahaleel-jul26' || report.id === 'report-tahaleel-apr26')
-      return DEMO_REPORT_IMAGES.tahaleel as unknown as ImageSourcePropType[]
-    if (report.id === 'report-cath-nov22')
-      return DEMO_REPORT_IMAGES.taqreer1 as unknown as ImageSourcePropType[]
-    if (report.id === 'report-cardiac-eval-feb26')
-      return DEMO_REPORT_IMAGES.taqreer2 as unknown as ImageSourcePropType[]
+    void report
     return undefined
   }
 
@@ -408,18 +398,7 @@ export default function ReportsScreen() {
 
       {/* Upload card */}
       <ZaadCard style={styles.uploadCard}>
-        <Text style={styles.uploadTitle}>
-          {isDemoMode ? 'إضافة تقرير' : 'إضافة تقرير جديد'}
-        </Text>
-
-        {isDemoMode && (
-          <View style={styles.demoBanner}>
-            <Feather name="info" size={14} color={Colors.primary} />
-            <Text style={styles.demoBannerText}>
-              وضع تجريبي — التحاليل التالية من ملف حقيقي. سجّل لرفع تقاريرك.
-            </Text>
-          </View>
-        )}
+        <Text style={styles.uploadTitle}>إضافة تقرير جديد</Text>
 
         <View style={styles.uploadOptions}>
           <TouchableOpacity style={styles.uploadOption} onPress={pickFromCamera}>

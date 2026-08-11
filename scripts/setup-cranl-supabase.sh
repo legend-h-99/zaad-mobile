@@ -23,5 +23,3 @@ else
   echo "SUPABASE_DB_URL is empty, skipping schema setup."
   echo "Run /Users/hossam/Documents/zaad/app/src/lib/supabase/schema.sql in Cranl/Supabase SQL editor, or add the connection string."
 fi
-
-node scripts/seed-demo-users.mjs

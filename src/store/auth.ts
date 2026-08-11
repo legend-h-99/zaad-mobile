@@ -1,7 +1,6 @@
 /**
  * زاد — Auth store (Zustand)
  * Wraps Supabase auth session with a simple reactive store.
- * isDemoMode is persisted in SecureStore so it survives hot reloads.
  */
 import { create } from 'zustand'
 import { Session, User } from '@supabase/supabase-js'
@@ -11,7 +10,7 @@ import { supabase } from '../lib/supabase/client'
 
 const DEMO_KEY = 'zaad_demo_mode'
 const DEMO_USER_KEY = 'zaad_demo_user_id'
-const DEFAULT_DEMO_USER_ID = 'demo-hussam-2026'
+const DEFAULT_DEMO_USER_ID = ''
 
 // Module-level guard: the store is a singleton, so this flag is shared across
 // all callers. Prevents duplicate supabase.auth.onAuthStateChange subscriptions

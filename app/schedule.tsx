@@ -24,7 +24,7 @@ import { arSA } from 'date-fns/locale'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { AppHeader } from '../src/components/ui/AppHeader'
-import { DEMO_RECIPES } from '../src/constants/demoData'
+import { REFERENCE_RECIPES } from '../src/constants/recipeData'
 import { getPlanForDate, type DayPlan } from '../src/constants/mealSchedule'
 import { Colors, Radius, Spacing, Typography } from '../src/constants/theme'
 import { supabase } from '../src/lib/supabase/client'
@@ -58,7 +58,7 @@ const MEAL_LABELS: Record<MealSlot, string> = {
 }
 
 function recipeName(plan: DayPlan, slot: MealSlot) {
-  return DEMO_RECIPES.find(recipe => recipe.id === plan[slot])?.nameAr ?? 'وجبة زاد'
+  return REFERENCE_RECIPES.find(recipe => recipe.id === plan[slot])?.nameAr ?? 'وجبة زاد'
 }
 
 function dateKey(date: Date) {

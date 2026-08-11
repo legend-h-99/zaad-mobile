@@ -27,7 +27,6 @@ import { GuidanceCard } from '../../src/components/zaad/ContentBlocks'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
 import { CONDITIONS_AR } from '../../src/constants/data'
 import { calcBMI, bmiCategory } from '../../src/constants/data'
-import { DEMO_USERS, getDemoConditions, getDemoProfile, getDemoProgress, getDemoUser } from '../../src/constants/demoData'
 
 interface SettingsRowProps {
   icon: React.ComponentProps<typeof Feather>['name']
@@ -95,25 +94,18 @@ export default function ProfileScreen() {
   const insets = useSafeAreaInsets()
   const { user, signOut } = useSession()
   const isDemoMode = useAuthStore(s => s.isDemoMode)
-  const demoUserId = useAuthStore(s => s.demoUserId)
-  const enterDemoMode = useAuthStore(s => s.enterDemoMode)
   const themeMode = useThemeStore(s => s.mode)
   const setThemeMode = useThemeStore(s => s.setMode)
   const { profile: liveProfile, conditions: liveConditions, medications } = useProfileStore()
   const router = useRouter()
 
-  // In demo mode use Hussam's real data
-  const demoUser   = getDemoUser(demoUserId)
-  const profile    = isDemoMode ? getDemoProfile(demoUserId) : liveProfile
-  const conditions = isDemoMode ? getDemoConditions(demoUserId) : liveConditions
+  const profile    = isDemoMode ? null : liveProfile
+  const conditions = isDemoMode ? [] : liveConditions
 
   const bmi = profile?.weightKg && profile?.heightCm
     ? calcBMI(profile.weightKg, profile.heightCm)
     : null
   const bmiInfo = bmi ? bmiCategory(bmi) : null
-
-  // Last CardioMEMS reading from progress logs
-  const lastProgress = isDemoMode ? getDemoProgress(demoUserId)[0] : null
 
   async function handleSignOut() {
     if (Platform.OS === 'web') {
@@ -162,10 +154,7 @@ export default function ProfileScreen() {
             <Text style={styles.profileName}>
               {profile?.fullName ?? 'المستخدم'}
             </Text>
-            {isDemoMode
-              ? <Text style={styles.demoTag}>حساب تجريبي · {demoUser.labelAr}</Text>
-              : <Text style={styles.profileEmail}>{user?.email}</Text>
-            }
+            <Text style={styles.profileEmail}>{user?.email}</Text>
             {profile?.city && (
               <Text style={styles.profileCity}>{profile.city}</Text>
             )}
@@ -227,79 +216,6 @@ export default function ProfileScreen() {
         <Text style={styles.sectionTitle}>ملخصك الصحي</Text>
         <Text style={styles.sectionHint}>يتحدّث مع بياناتك</Text>
       </View>
-
-      {isDemoMode && (
-        <ZaadCard style={styles.section}>
-          <Text style={styles.sectionTitle}>تبديل المستخدم التجريبي</Text>
-          <View style={styles.demoUserList}>
-            {DEMO_USERS.map(option => {
-              const selected = option.id === demoUserId
-              return (
-                <TouchableOpacity
-                  key={option.id}
-                  style={[styles.demoUserRow, selected && styles.demoUserRowSelected]}
-                  onPress={() => enterDemoMode(option.id)}
-                >
-                  <View style={[styles.demoUserBadge, selected && styles.demoUserBadgeSelected]}>
-                    <Text style={[styles.demoUserBadgeText, selected && styles.demoUserBadgeTextSelected]}>
-                      {option.icon}
-                    </Text>
-                  </View>
-                  <View style={styles.demoUserInfo}>
-                    <Text style={styles.demoUserName}>{option.nameAr}</Text>
-                    <Text style={styles.demoUserSummary}>{option.labelAr} · {option.summaryAr}</Text>
-                  </View>
-                  {selected && <Feather name="check" size={16} color={Colors.primary} />}
-                </TouchableOpacity>
-              )
-            })}
-          </View>
-        </ZaadCard>
-      )}
-
-      {/* ── Cardiac devices (demo) ── */}
-      {isDemoMode && demoUserId === 'demo-hussam-2026' && (
-        <ZaadCard style={styles.cardiacCard}>
-          <Text style={styles.sectionTitle}>الأجهزة الطبية المزروعة</Text>
-
-          <View style={styles.deviceRow}>
-            <View style={styles.deviceBadge}>
-              <Feather name="zap" size={14} color={Colors.risk.text} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.deviceName}>ICD — جهاز إنهاء الرجفان</Text>
-              <Text style={styles.deviceDate}>تركيب: يونيو ٢٠٢٣</Text>
-            </View>
-          </View>
-
-          <View style={styles.deviceRow}>
-            <View style={[styles.deviceBadge, { backgroundColor: Colors.primaryLight }]}>
-              <Feather name="activity" size={14} color={Colors.primary} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.deviceName}>CardioMEMS — مستشعر ضغط الشريان الرئوي</Text>
-              <Text style={styles.deviceDate}>تركيب: نوفمبر ٢٠٢٢</Text>
-            </View>
-            {lastProgress?.notes && (
-              <View style={styles.cardioMsReading}>
-                <Text style={styles.cardioMsValue}>٢١</Text>
-                <Text style={styles.cardioMsUnit}>mmHg</Text>
-              </View>
-            )}
-          </View>
-
-          <View style={styles.efRow}>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.efLabel}>كسر القذف EF</Text>
-              <Text style={styles.efSub}>إيكو مارس ٢٠٢٥</Text>
-            </View>
-            <Text style={styles.efValue}>٤٠–٤٥٪</Text>
-          </View>
-          <Text style={styles.efNote}>
-            ارتفع من ١٥٪ (نوفمبر ٢٠٢٢) — تحسّن ملحوظ ✓
-          </Text>
-        </ZaadCard>
-      )}
 
       {/* ── Conditions ── */}
       {conditions.length > 0 && (
@@ -414,30 +330,12 @@ export default function ProfileScreen() {
           onPress={() => router.push('/privacy')}
         />
         <View style={styles.rowDivider} />
-        {isDemoMode ? (
-          <>
-            <SettingsRow
-              icon="user-plus"
-              labelAr="إنشاء حساب مجاني"
-              subtitle="احفظ بياناتك وخصّص خطتك"
-              onPress={signOut}
-            />
-            <View style={styles.rowDivider} />
-            <SettingsRow
-              icon="log-out"
-              labelAr="الخروج من الوضع التجريبي"
-              onPress={signOut}
-              danger
-            />
-          </>
-        ) : (
-          <SettingsRow
-            icon="log-out"
-            labelAr="تسجيل الخروج"
-            onPress={handleSignOut}
-            danger
-          />
-        )}
+        <SettingsRow
+          icon="log-out"
+          labelAr="تسجيل الخروج"
+          onPress={handleSignOut}
+          danger
+        />
       </ZaadCard>
 
       {/* App version */}

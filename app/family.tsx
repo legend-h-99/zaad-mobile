@@ -16,7 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AppHeader } from '../src/components/ui/AppHeader'
 import { ZaadButton } from '../src/components/ui/ZaadButton'
 import { ZaadCard } from '../src/components/ui/ZaadCard'
-import { DEMO_RECIPES } from '../src/constants/demoData'
+import { REFERENCE_RECIPES } from '../src/constants/recipeData'
 import { getPlanForDate } from '../src/constants/mealSchedule'
 import { Colors, Radius, Spacing, Typography } from '../src/constants/theme'
 import { useProfileStore } from '../src/store/profile'
@@ -39,7 +39,7 @@ export default function FamilyShareScreen() {
     const lines = MEALS
       .filter(meal => selected.includes(meal.key))
       .map(meal => {
-        const recipe = DEMO_RECIPES.find(item => item.id === todayPlan[meal.key])
+        const recipe = REFERENCE_RECIPES.find(item => item.id === todayPlan[meal.key])
         return `${meal.label}: ${recipe?.nameAr ?? ''}`
       })
     return [

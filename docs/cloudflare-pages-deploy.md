@@ -12,7 +12,13 @@ Build command: npm run build:prod
 Build output directory: dist
 Root directory: /
 Node version: 22.13.0
+Deploy command: npx wrangler pages deploy dist --project-name=zaad-mobile --branch=main
 ```
+
+Cloudflare Pages deploys the `dist` directory. If the dashboard makes deploy
+command required, use `wrangler pages deploy`, not `wrangler deploy`. The plain
+`wrangler deploy` command is for Workers and will fail for this static Pages
+project.
 
 Add these environment variables in Cloudflare Pages:
 

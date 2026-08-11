@@ -3,11 +3,29 @@
 This is the recommended production structure for Zaad on Cloudflare Pages and
 Supabase.
 
+```mermaid
+flowchart TD
+  user["User Browser / Mobile App"] --> cloudflare["Cloudflare DNS / Security / CDN"]
+  cloudflare --> pages["Cloudflare Pages"]
+  pages --> app["Expo Web Static App"]
+
+  app --> auth["Supabase Auth"]
+  app --> data["Supabase Postgres via anon key + JWT"]
+  app --> edge["Supabase Edge Functions"]
+
+  edge --> secrets["Supabase Secrets / Vault"]
+  edge --> data
+
+  data --> rls["Supabase RLS Policies"]
+  rls --> isolated["User-isolated Health Data"]
+```
+
 ## Tier 1: Presentation
 
 | Item | Choice |
 |---|---|
 | Hosting | Cloudflare Pages |
+| DNS / CDN / Security | Cloudflare |
 | App | Expo Web static export |
 | Build command | `npm run build` |
 | Output directory | `dist` |
@@ -29,9 +47,9 @@ Responsibilities:
 | Item | Choice |
 |---|---|
 | Auth provider | Supabase Auth |
-| Server logic | Supabase Edge Functions or Cloudflare Workers |
-| Sensitive operations | Server-only functions |
-| Secrets location | Supabase Vault, Supabase secrets, or Cloudflare secrets |
+| Server logic | Supabase Edge Functions |
+| Sensitive operations | Supabase Edge Functions only |
+| Secrets location | Supabase Vault or Supabase Edge Function secrets |
 
 Responsibilities:
 
@@ -41,7 +59,7 @@ Responsibilities:
 | Password hashing | Handled by Supabase Auth using bcrypt |
 | Password reset | Supabase recovery flow |
 | OAuth | Google/Apple providers if enabled |
-| Sensitive processing | Lab report parsing, OCR cleanup, AI calls, encryption/decryption |
+| Sensitive processing | Lab report parsing, OCR cleanup, AI calls, encryption/decryption through Supabase Edge Functions |
 | Rate limiting | Cloudflare WAF/rate limiting for public endpoints |
 
 Rules:
@@ -52,6 +70,7 @@ Rules:
 | Keep service role server-only | It bypasses RLS and can expose all data |
 | Put AI/API provider keys only in server functions | Prevents browser extraction |
 | Do not hash passwords manually in the app | Supabase Auth already hashes safely |
+| Do not put sensitive app logic in Cloudflare Pages | Pages should serve the frontend only |
 
 ## Tier 3: Data
 
@@ -93,7 +112,7 @@ Baseline RLS model:
 | 4 | Supabase returns a JWT session |
 | 5 | App reads/writes Supabase data using the anon key + JWT |
 | 6 | Postgres RLS filters rows so the user only sees their own data |
-| 7 | Sensitive server-only actions go through Edge Functions or Workers |
+| 7 | Sensitive server-only actions go through Supabase Edge Functions |
 
 ## Production Checklist
 
@@ -110,6 +129,7 @@ Baseline RLS model:
 | Supabase Database | Enable RLS on app tables |
 | Supabase Database | Apply ownership policies |
 | Secrets | Keep service role and provider keys out of the client |
+| Supabase Edge Functions | Store sensitive API keys in Supabase secrets |
 
 ## Recommended Tiers by Environment
 
@@ -162,3 +182,17 @@ users.
 | 5 | Merge to `main`. |
 | 6 | Cloudflare Production deploys with production env vars. |
 | 7 | Run a production smoke test using a real test account. |
+
+## Final Architecture Decision
+
+| Layer | Decision |
+|---|---|
+| Frontend | Cloudflare Pages |
+| Backend/Auth | Supabase |
+| Sensitive functions | Supabase Edge Functions |
+| Database isolation | Supabase RLS |
+| DNS/Security/CDN | Cloudflare |
+
+Cloudflare Workers are not part of the default application backend. Use them only
+later for edge-specific needs such as advanced routing, request filtering, or
+custom CDN behavior.

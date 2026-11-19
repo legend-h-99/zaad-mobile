@@ -22,12 +22,12 @@ import { useAuthStore } from '../src/store/auth'
 import { useProfileStore } from '../src/store/profile'
 import type { HealthGoal } from '../src/types'
 
-const GOALS: Array<{
+const GOALS: {
   value: HealthGoal
   label: string
   description: string
   icon: React.ComponentProps<typeof Feather>['name']
-}> = [
+}[] = [
   { value: 'energy', label: 'توازن وطاقة', description: 'نمط يومي متوازن بدون هدف علاجي', icon: 'sun' },
   { value: 'weight_loss', label: 'خفض الوزن', description: 'نزول تدريجي مع وجبات مشبعة', icon: 'trending-down' },
   { value: 'weight_gain', label: 'زيادة الوزن', description: 'رفع الطاقة والبروتين بطريقة منظمة', icon: 'trending-up' },
@@ -58,6 +58,8 @@ export default function GoalsScreen() {
   )
 
   useEffect(() => {
+    // Reset editable calories when the external profile or goal changes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCalories(calculated.calories)
   }, [calculated.calories])
 

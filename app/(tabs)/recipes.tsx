@@ -14,7 +14,6 @@ import {
   Image,
   StyleSheet,
   Modal,
-  Pressable,
   Share,
   Alert,
 } from 'react-native'
@@ -25,7 +24,6 @@ import { Feather } from '@expo/vector-icons'
 import { supabase } from '../../src/lib/supabase/client'
 import { useProfileStore } from '../../src/store/profile'
 import { useAuthStore } from '../../src/store/auth'
-import { ZaadCard } from '../../src/components/ui/ZaadCard'
 import { MacroChip } from '../../src/components/ui/MacroChip'
 import { AppHeader } from '../../src/components/ui/AppHeader'
 import { GuidanceCard, PageIntroCard } from '../../src/components/zaad/ContentBlocks'
@@ -43,15 +41,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   snack:     'سناك',
   soup:      'شوربة',
   salad:     'سلطة',
-}
-
-const CATEGORY_EMOJIS: Record<string, string> = {
-  breakfast: '🌅',
-  lunch:     '🍽️',
-  dinner:    '🌙',
-  snack:     '🍎',
-  soup:      '🥣',
-  salad:     '🥗',
 }
 
 const CATEGORY_IMAGES = {
@@ -95,12 +84,15 @@ export default function RecipesScreen() {
   const insets = useSafeAreaInsets()
   const { conditions, preferences } = useProfileStore()
   const isDemoMode = useAuthStore(s => s.isDemoMode)
+  const userId = useAuthStore(s => s.user?.id)
   const [search, setSearch]         = useState('')
   const [category, setCategory]     = useState('all')
   const [dietFilter, setDietFilter] = useState(preferences?.dietType ?? 'all')
   const [selectedRecipe, setSelected] = useState<Recipe | null>(null)
 
   useEffect(() => {
+    // Synchronize the filter when the remote profile preference arrives.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (preferences?.dietType) setDietFilter(preferences.dietType)
   }, [preferences?.dietType])
 
@@ -129,7 +121,7 @@ export default function RecipesScreen() {
   const conditionKeys = activeConditions.map(c => c.condition)
 
   const { data: recipes = [], isLoading, isError, refetch } = useQuery({
-    queryKey: ['recipes', conditionKeys, isDemoMode],
+    queryKey: ['recipes', userId, conditionKeys, isDemoMode],
     queryFn: async () => {
       if (isDemoMode) return REFERENCE_RECIPES
       const q = supabase.from('recipes').select('*').order('name_ar')
@@ -284,7 +276,7 @@ export default function RecipesScreen() {
             </Text>
             {!isLoading && (
               <Text style={styles.emptySubtitle}>
-                جرّب إزالة البحث أو اختيار تصنيف "الكل" لعرض وصفات زاد المناسبة.
+                جرّب إزالة البحث أو اختيار تصنيف «الكل» لعرض وصفات زاد المناسبة.
               </Text>
             )}
           </View>

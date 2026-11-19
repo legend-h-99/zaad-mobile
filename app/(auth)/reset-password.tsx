@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { ZaadButton } from '../../src/components/ui/ZaadButton'
 import { Colors, Radius, Spacing, Typography } from '../../src/constants/theme'
+import { useAuthStore } from '../../src/store/auth'
 import { supabase } from '../../src/lib/supabase/client'
 
 export default function ResetPasswordScreen() {
@@ -53,6 +54,7 @@ export default function ResetPasswordScreen() {
       return
     }
 
+    useAuthStore.getState().clearRecovery()
     setSaved(true)
   }
 
@@ -61,7 +63,7 @@ export default function ResetPasswordScreen() {
       style={[styles.screen, { paddingTop: insets.top + Spacing.md }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <TouchableOpacity style={styles.back} onPress={() => router.replace('/(auth)/login')}>
+      <TouchableOpacity style={styles.back} onPress={() => { useAuthStore.getState().clearRecovery(); router.replace('/(auth)/login') }}>
         <Feather name="arrow-right" size={22} color={Colors.textPrimary} />
       </TouchableOpacity>
 
@@ -117,7 +119,7 @@ export default function ResetPasswordScreen() {
               <ZaadButton labelAr="حفظ كلمة المرور" onPress={updatePassword} loading={loading} />
             </>
           ) : (
-            <ZaadButton labelAr="العودة لتسجيل الدخول" onPress={() => router.replace('/(auth)/login')} />
+            <ZaadButton labelAr="العودة لتسجيل الدخول" onPress={() => { useAuthStore.getState().clearRecovery(); router.replace('/(auth)/login') }} />
           )}
         </View>
       </View>

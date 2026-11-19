@@ -1,82 +1,60 @@
--- Merge public.consultations RLS policies to reduce Supabase performance warnings.
---
--- This preserves the current access model:
--- - SELECT/UPDATE: requester can access their consultation; dietitian can also
---   access it when the table has a dietitian_id column.
--- - INSERT: only the requester can create a row for their own user_id.
--- - DELETE: only the requester can delete their own row.
---
--- It replaces multiple permissive policies per action with one policy per action.
-
+-- Consultation ownership hardening. Verify in an isolated database before deployment.
+-- Specialist assignment requires trusted server provisioning.
 begin;
-
+alter table public.consultations enable row level security;
+alter table public.consultations force row level security;
 do $$
-declare
-  has_dietitian_id boolean;
-  participant_check text;
+declare policy_name text;
 begin
-  if to_regclass('public.consultations') is null then
-    raise notice 'public.consultations does not exist; skipping policy merge.';
-    return;
-  end if;
-
-  select exists (
-    select 1
-    from information_schema.columns
-    where table_schema = 'public'
-      and table_name = 'consultations'
-      and column_name = 'dietitian_id'
-  )
-  into has_dietitian_id;
-
-  participant_check := case
-    when has_dietitian_id then
-      '((select auth.uid()) is not null and (user_id = (select auth.uid()) or dietitian_id = (select auth.uid())))'
-    else
-      '((select auth.uid()) is not null and user_id = (select auth.uid()))'
-  end;
-
-  alter table public.consultations enable row level security;
-  alter table public.consultations force row level security;
-
-  drop policy if exists "consultations_owner_select" on public.consultations;
-  drop policy if exists "consultations_participant_select" on public.consultations;
-  drop policy if exists "consultations_owner_insert" on public.consultations;
-  drop policy if exists "consultations_requester_insert" on public.consultations;
-  drop policy if exists "consultations_owner_update" on public.consultations;
-  drop policy if exists "consultations_participant_update" on public.consultations;
-  drop policy if exists "consultations_owner_delete" on public.consultations;
-  drop policy if exists "consultations_requester_delete" on public.consultations;
-
-  execute format(
-    'create policy "consultations_select" on public.consultations for select to authenticated using (%s)',
-    participant_check
-  );
-
-  create policy "consultations_insert"
-    on public.consultations for insert to authenticated
-    with check ((select auth.uid()) is not null and user_id = (select auth.uid()));
-
-  execute format(
-    'create policy "consultations_update" on public.consultations for update to authenticated using (%s) with check (%s)',
-    participant_check,
-    participant_check
-  );
-
-  create policy "consultations_delete"
-    on public.consultations for delete to authenticated
-    using ((select auth.uid()) is not null and user_id = (select auth.uid()));
+  for policy_name in select policyname from pg_policies
+    where schemaname = 'public' and tablename = 'consultations'
+  loop
+    execute format('drop policy %I on public.consultations', policy_name);
+  end loop;
 end $$;
+-- Only trusted provisioning may assign a dietitian. Clients cannot change identity.
+create policy "consultations_select" on public.consultations for select to authenticated
+  using (user_id = (select auth.uid()) or
+    (dietitian_id = (select auth.uid()) and
+     (select auth.jwt())->'app_metadata'->>'role' = 'dietitian'));
+create policy "consultations_insert" on public.consultations for insert to authenticated
+  with check (user_id = (select auth.uid()) and dietitian_id is null and
+    (profile_id is null or exists (select 1 from public.patient_profiles p
+      where p.id = profile_id and p.owner_user_id = (select auth.uid()))));
+create policy "consultations_update" on public.consultations for update to authenticated
+  using (user_id = (select auth.uid()) or
+    (dietitian_id = (select auth.uid()) and
+     (select auth.jwt())->'app_metadata'->>'role' = 'dietitian'))
+  with check (user_id = (select auth.uid()) or
+    (dietitian_id = (select auth.uid()) and
+     (select auth.jwt())->'app_metadata'->>'role' = 'dietitian'));
+create policy "consultations_delete" on public.consultations for delete to authenticated
+  using (user_id = (select auth.uid()));
 
+create or replace function public.guard_consultation_identity()
+returns trigger language plpgsql set search_path = '' as $$
+begin
+  if coalesce(auth.role(), '') not in ('service_role', '') then
+    if TG_OP = 'INSERT' then
+      if new.user_id is distinct from auth.uid() or new.dietitian_id is not null then
+        raise exception 'Consultation requester must own the request. Assignment requires trusted provisioning.' using errcode = '42501';
+      end if;
+      if new.profile_id is not null and not exists (
+        select 1 from public.patient_profiles p
+        where p.id = new.profile_id and p.owner_user_id = auth.uid()
+      ) then
+        raise exception 'Consultation profile must belong to the requester.' using errcode = '42501';
+      end if;
+    elsif (new.id, new.user_id, new.dietitian_id, new.profile_id, new.created_at)
+       is distinct from (old.id, old.user_id, old.dietitian_id, old.profile_id, old.created_at) then
+      raise exception 'Consultation identity cannot be changed by clients.' using errcode = '42501';
+    end if;
+  end if;
+  return new;
+end;
+$$;
+revoke all on function public.guard_consultation_identity() from public;
+drop trigger if exists consultations_identity_guard on public.consultations;
+create trigger consultations_identity_guard before insert or update on public.consultations
+  for each row execute function public.guard_consultation_identity();
 commit;
-
--- Verify: should return one policy per action for public.consultations.
-select
-  tablename,
-  policyname,
-  cmd,
-  roles
-from pg_policies
-where schemaname = 'public'
-  and tablename = 'consultations'
-order by cmd, policyname;

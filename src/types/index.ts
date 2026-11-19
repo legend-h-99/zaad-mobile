@@ -118,9 +118,9 @@ export interface LabReport {
   fileUrl?: string
   fileName?: string
   rawText?: string
-  extractedValues?: LabValues
-  aiAssessment?: LabAssessment
-  nutritionFlags?: string[]
+  extractedValues?: LabValues | null
+  aiAssessment?: LabAssessment | null
+  nutritionFlags?: { restrictions: string[]; urgent: string[] } | null
   status: 'processing' | 'done' | 'error'
   createdAt: string
 }

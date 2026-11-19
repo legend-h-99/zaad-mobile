@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { ZaadButton } from '../../src/components/ui/ZaadButton'
 import { Colors, Radius, Spacing, Typography } from '../../src/constants/theme'
+import { NATIVE_RECOVERY_REDIRECT } from '../../src/lib/recovery'
 import { supabase } from '../../src/lib/supabase/client'
 
 export default function ForgotPasswordScreen() {
@@ -33,7 +34,7 @@ export default function ForgotPasswordScreen() {
     setError('')
     const redirectTo = Platform.OS === 'web'
       ? `${globalThis.location?.origin ?? ''}/reset-password`
-      : 'zaad://reset-password'
+      : NATIVE_RECOVERY_REDIRECT
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(
       email.trim().toLowerCase(),
       { redirectTo },

@@ -10,17 +10,15 @@ import {
   View,
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import {
-  addDays,
-  addMonths,
-  addWeeks,
-  eachDayOfInterval,
-  endOfMonth,
-  format,
-  startOfMonth,
-  startOfWeek,
-} from 'date-fns'
-import { arSA } from 'date-fns/locale'
+import { addDays } from 'date-fns/addDays'
+import { addMonths } from 'date-fns/addMonths'
+import { addWeeks } from 'date-fns/addWeeks'
+import { eachDayOfInterval } from 'date-fns/eachDayOfInterval'
+import { endOfMonth } from 'date-fns/endOfMonth'
+import { format } from 'date-fns/format'
+import { startOfMonth } from 'date-fns/startOfMonth'
+import { startOfWeek } from 'date-fns/startOfWeek'
+import { arSA } from 'date-fns/locale/ar-SA'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { AppHeader } from '../src/components/ui/AppHeader'
@@ -43,7 +41,7 @@ interface LivePlan {
   ai_notes?: string | null
 }
 
-const MODES: Array<{ key: ScheduleMode; label: string; icon: keyof typeof Feather.glyphMap }> = [
+const MODES: { key: ScheduleMode; label: string; icon: keyof typeof Feather.glyphMap }[] = [
   { key: 'daily', label: 'يومي', icon: 'calendar' },
   { key: 'weekly', label: 'أسبوعي', icon: 'columns' },
   { key: 'monthly', label: 'شهري', icon: 'grid' },

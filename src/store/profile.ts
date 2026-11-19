@@ -20,7 +20,15 @@ interface ProfileState {
   clearProfile: () => void
 }
 
-export const useProfileStore = create<ProfileState>((set, get) => ({
+let profileRequest = 0
+let profileIdentity: string | null = null
+
+export function setProfileIdentity(userId: string | null) {
+  profileIdentity = userId
+  useProfileStore.getState().clearProfile()
+}
+
+export const useProfileStore = create<ProfileState>((set) => ({
   profile: null,
   conditions: [],
   preferences: null,
@@ -29,6 +37,8 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
   error: null,
 
   loadProfile: async (userId: string) => {
+    if (userId !== profileIdentity) return
+    const request = ++profileRequest
     set({ isLoading: true, error: null })
     try {
       const [profileRes, conditionsRes, prefsRes, medsRes] = await Promise.all([
@@ -52,6 +62,10 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
           .eq('user_id', userId),
       ])
 
+      if (request !== profileRequest) return
+      for (const result of [profileRes, conditionsRes, prefsRes, medsRes]) {
+        if (result.error) throw result.error
+      }
       set({
         profile: profileRes.data ? mapProfile(profileRes.data) : null,
         conditions: conditionsRes.data?.map(mapCondition) ?? [],
@@ -60,6 +74,7 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
         isLoading: false,
       })
     } catch (err) {
+      if (request !== profileRequest) return
       set({
         error: err instanceof Error ? err.message : 'خطأ في تحميل الملف الشخصي',
         isLoading: false,
@@ -67,14 +82,17 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
     }
   },
 
-  clearProfile: () =>
+  clearProfile: () => {
+    profileRequest++
     set({
       profile: null,
       conditions: [],
       preferences: null,
       medications: [],
       error: null,
-    }),
+      isLoading: false,
+    })
+  },
 }))
 
 // ── Mapping from snake_case DB → camelCase TS ─────────────────────────────────

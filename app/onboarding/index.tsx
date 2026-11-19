@@ -26,6 +26,7 @@ import * as ImagePicker from 'expo-image-picker'
 import * as DocumentPicker from 'expo-document-picker'
 import { Feather } from '@expo/vector-icons'
 
+import { ReportConsent } from '../../src/components/ReportConsent'
 import { useSession } from '../../src/hooks/useSession'
 import { useAuthStore } from '../../src/store/auth'
 import { useProfileStore } from '../../src/store/profile'
@@ -92,6 +93,7 @@ export default function OnboardingScreen() {
 
   // Step 3 — lab upload
   const [labFile, setLabFile]           = useState<{ uri: string; name: string; type: string } | null>(null)
+  const [processingConsent, setProcessingConsent] = useState(false)
   const [labUploading, setLabUploading] = useState(false)
   const [labDone, setLabDone]           = useState(false)
 
@@ -115,6 +117,8 @@ export default function OnboardingScreen() {
   useEffect(() => {
     if (!user?.id || profileLoading || !profile) return
 
+    // Hydrate the editable form from the asynchronously loaded profile.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setGender(profile.gender ?? '')
     setAge(profile.age ? String(profile.age) : '')
     setHeight(profile.heightCm ? String(profile.heightCm) : '')
@@ -148,6 +152,7 @@ export default function OnboardingScreen() {
         onPress: async () => {
           const result = await ImagePicker.launchCameraAsync({ mediaTypes: 'images', quality: 0.85 })
           if (!result.canceled && result.assets[0]) {
+            setProcessingConsent(false)
             setLabFile({ uri: result.assets[0].uri, name: `lab-${Date.now()}.jpg`, type: 'image/jpeg' })
             setLabDone(false)
           }
@@ -158,6 +163,7 @@ export default function OnboardingScreen() {
         onPress: async () => {
           const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: 'images', quality: 0.85 })
           if (!result.canceled && result.assets[0]) {
+            setProcessingConsent(false)
             setLabFile({ uri: result.assets[0].uri, name: `lab-${Date.now()}.jpg`, type: 'image/jpeg' })
             setLabDone(false)
           }
@@ -168,6 +174,7 @@ export default function OnboardingScreen() {
         onPress: async () => {
           const result = await DocumentPicker.getDocumentAsync({ type: ['application/pdf', 'image/*'], copyToCacheDirectory: true })
           if (!result.canceled && result.assets[0]) {
+            setProcessingConsent(false)
             setLabFile({ uri: result.assets[0].uri, name: result.assets[0].name, type: result.assets[0].mimeType ?? 'application/pdf' })
             setLabDone(false)
           }
@@ -178,7 +185,7 @@ export default function OnboardingScreen() {
   }
 
   async function uploadLab() {
-    if (!labFile || !accessToken) return
+    if (!processingConsent || !labFile || !accessToken) return
     setLabUploading(true)
     try {
       await uploadAndAnalyzeReport({ ...labFile, fileName: labFile.name, mimeType: labFile.type, accessToken })
@@ -555,6 +562,8 @@ export default function OnboardingScreen() {
               <>
                 <TouchableOpacity
                   style={[styles.labPickerBtn, labFile && styles.labPickerBtnSelected]}
+                  accessibilityRole="button"
+                  accessibilityLabel={labFile ? 'تغيير التقرير المحدد' : 'التقط صورة أو اختر ملف تقرير'}
                   onPress={pickLabFile}
                 >
                   <Feather name="camera" size={24} color={labFile ? Colors.primary : Colors.textMuted} />
@@ -567,11 +576,15 @@ export default function OnboardingScreen() {
                   {labFile && <Text style={styles.changeText}>تغيير</Text>}
                 </TouchableOpacity>
 
+                <ReportConsent value={processingConsent} onChange={setProcessingConsent} />
                 {labFile && (
                   <TouchableOpacity
                     style={styles.analyzeBtn}
                     onPress={uploadLab}
-                    disabled={labUploading}
+                    disabled={labUploading || !processingConsent}
+                    accessibilityRole="button"
+                    accessibilityLabel="تحليل التقرير"
+                    accessibilityState={{ disabled: labUploading || !processingConsent, busy: labUploading }}
                   >
                     {labUploading ? (
                       <ActivityIndicator color="#fff" size="small" />

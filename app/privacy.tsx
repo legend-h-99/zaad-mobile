@@ -21,6 +21,7 @@ import { useSession } from '../src/hooks/useSession'
 import { useProfileStore } from '../src/store/profile'
 
 const PRIVACY_ROWS = [
+  { icon: 'file-text' as const, title: 'تحليل التقارير عبر Anthropic', body: 'عند موافقتك على التحليل، نرسل الصورة أو PDF كاملًا إلى Anthropic، بما فيه البيانات الشخصية الظاهرة. تُحفظ القيم والنتائج في Supabase. يمكنك إخفاء بياناتك التعريفية قبل الرفع.' },
   { icon: 'lock' as const, title: 'تشفير الاتصال', body: 'تُنقل البيانات عبر اتصال مشفر إلى Supabase.' },
   { icon: 'eye-off' as const, title: 'وصول خاص', body: 'كل حساب يقرأ بياناته الصحية فقط عبر سياسات RLS.' },
   { icon: 'smartphone' as const, title: 'إعدادات الجهاز', body: 'تفضيلات التنبيهات تبقى على جهازك.' },

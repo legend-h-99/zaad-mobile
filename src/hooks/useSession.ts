@@ -14,7 +14,7 @@ export function useSession() {
   useEffect(() => {
     const unsubscribe = initialize()
     return unsubscribe
-  }, [])
+  }, [initialize])
 
   // Load profile whenever user changes
   useEffect(() => {
@@ -23,7 +23,7 @@ export function useSession() {
     } else {
       clearProfile()
     }
-  }, [user?.id])
+  }, [user?.id, loadProfile, clearProfile])
 
   return {
     session,

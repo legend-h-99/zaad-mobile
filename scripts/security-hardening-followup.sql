@@ -27,22 +27,22 @@ begin
   end loop;
 end $$;
 
--- Care-link public policies are not used by the current mobile app. Keep owner
--- access policies, but remove public access until the sharing flow is reviewed.
+-- Care links: remove public access, keep the owner policies. The web app's
+-- POST /api/care/share needs "patient_manage_own_link" and
+-- "patient_write_own_snapshot", and caregivers read through
+-- get_care_snapshot(p_token) from app/src/lib/supabase/care-link-token-rpc-migration.sql.
+-- RLS is not forced here: that security definer function runs as the table
+-- owner and would find no rows under forced RLS.
 do $$
 begin
   if to_regclass('public.care_links') is not null then
-    drop policy if exists "patient_manage_own_link" on public.care_links;
     drop policy if exists "public_read_by_token" on public.care_links;
     revoke all on public.care_links from anon;
-    alter table public.care_links force row level security;
   end if;
 
   if to_regclass('public.care_snapshots') is not null then
-    drop policy if exists "patient_write_own_snapshot" on public.care_snapshots;
     drop policy if exists "public_read_snapshot_via_link" on public.care_snapshots;
     revoke all on public.care_snapshots from anon;
-    alter table public.care_snapshots force row level security;
   end if;
 end $$;
 

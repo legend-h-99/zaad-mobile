@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   Animated,
   Image,
@@ -13,8 +13,11 @@ import {
   View,
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import { addDays, format, isSameDay, startOfWeek } from 'date-fns'
-import { arSA } from 'date-fns/locale'
+import { addDays } from 'date-fns/addDays'
+import { format } from 'date-fns/format'
+import { isSameDay } from 'date-fns/isSameDay'
+import { startOfWeek } from 'date-fns/startOfWeek'
+import { arSA } from 'date-fns/locale/ar-SA'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Svg, { Circle } from 'react-native-svg'
 import { useRouter, type Href } from 'expo-router'
@@ -184,7 +187,7 @@ export default function HomeScreen() {
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [expandedMeal, setExpandedMeal] = useState<MealSlot | null>(null)
   const [livePlan, setLivePlan] = useState<LiveMealPlan | null>(null)
-  const enter = useRef(new Animated.Value(0)).current
+  const enter = useState(() => new Animated.Value(0))[0]
 
   useEffect(() => {
     Animated.timing(enter, {
@@ -221,7 +224,6 @@ export default function HomeScreen() {
   useEffect(() => {
     let active = true
     if (!user?.id || isDemoMode) {
-      setLivePlan(null)
       return
     }
     const userId = user.id

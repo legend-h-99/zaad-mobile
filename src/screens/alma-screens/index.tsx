@@ -59,7 +59,7 @@ function ReferenceRow({ item }: { item: AlmaReferenceLink }) {
 export function AlmaScreensGallery() {
   const insets = useSafeAreaInsets()
   const [selectedScreen, setSelectedScreen] = useState<AlmaScreenReference | null>(null)
-  const tileWidth = useMemo(getTileWidth, [])
+  const tileWidth = useMemo(() => getTileWidth(), [])
 
   return (
     <>

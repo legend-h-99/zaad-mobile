@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Alert,
   Animated,
@@ -20,17 +20,18 @@ import { ZaadCard } from '../../src/components/ui/ZaadCard'
 import { ZaadButton } from '../../src/components/ui/ZaadButton'
 import { AppHeader } from '../../src/components/ui/AppHeader'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
+import { saudiDateKey, saudiDaysAgo } from '../../src/lib/calendar'
 import type { ProgressLog } from '../../src/types'
 
 type MetricKey = 'meal' | 'weight' | 'glucose' | 'pressure'
 type FeatherName = React.ComponentProps<typeof Feather>['name']
 
-const METRICS: Array<{
+const METRICS: {
   key: MetricKey
   icon: FeatherName
   label: string
   color: string
-}> = [
+}[] = [
   { key: 'meal', icon: 'coffee', label: 'الوجبات', color: Colors.coral },
   { key: 'weight', icon: 'trending-up', label: 'الوزن', color: Colors.lime },
   { key: 'glucose', icon: 'droplet', label: 'السكر', color: Colors.amber },
@@ -42,7 +43,11 @@ export default function TrackScreen() {
   const { user } = useSession()
   const queryClient = useQueryClient()
   const isDemoMode = useAuthStore(s => s.isDemoMode)
-  const today = useMemo(() => new Date().toISOString().split('T')[0], [])
+  const [today, setToday] = useState(() => saudiDateKey())
+  useEffect(() => {
+    const timer = setInterval(() => setToday(saudiDateKey()), 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   const [activeMetric, setActiveMetric] = useState<MetricKey>('meal')
   const [weight, setWeight] = useState('')
@@ -51,7 +56,7 @@ export default function TrackScreen() {
   const [bpDia, setBpDia] = useState('')
   const [mealsFollowed, setMealsFollowed] = useState<boolean | null>(null)
   const [notes, setNotes] = useState('')
-  const entrance = useRef(new Animated.Value(0)).current
+  const entrance = useState(() => new Animated.Value(0))[0]
 
   useEffect(() => {
     Animated.spring(entrance, {
@@ -63,18 +68,18 @@ export default function TrackScreen() {
   }, [entrance])
 
   const { data: logs = [], isLoading } = useQuery({
-    queryKey: ['progress-logs', isDemoMode],
-    queryFn: async () => {
+    queryKey: ['progress-logs', user?.id, isDemoMode, today],
+    queryFn: async ({ signal }) => {
       if (isDemoMode) return []
       if (!user?.id) return []
-      const sevenDaysAgo = new Date()
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('progress_logs')
         .select('*')
         .eq('user_id', user.id)
-        .gte('log_date', sevenDaysAgo.toISOString().split('T')[0])
+        .gte('log_date', saudiDaysAgo(7))
         .order('log_date', { ascending: false })
+        .abortSignal(signal)
+      if (error) throw error
       return (data ?? []).map(row => ({
         id: row.id,
         userId: row.user_id,
@@ -99,7 +104,7 @@ export default function TrackScreen() {
       if (!user?.id) throw new Error('يرجى تسجيل الدخول')
       const { error } = await supabase.from('progress_logs').upsert({
         user_id: user.id,
-        log_date: today,
+        log_date: saudiDateKey(),
         weight_kg: weight ? parseFloat(weight) : null,
         glucose_mg: glucose ? parseFloat(glucose) : null,
         blood_pressure_sys: bpSys ? parseInt(bpSys, 10) : null,
@@ -110,8 +115,9 @@ export default function TrackScreen() {
       if (error) throw error
     },
     onSuccess: () => {
+      if (useAuthStore.getState().user?.id !== user?.id) return
       if (!isDemoMode) {
-        queryClient.invalidateQueries({ queryKey: ['progress-logs'] })
+        queryClient.invalidateQueries({ queryKey: ['progress-logs', user?.id] })
       }
       Alert.alert('تم الحفظ', 'أضيف سجل اليوم إلى تقدمك')
       setWeight('')
@@ -122,12 +128,12 @@ export default function TrackScreen() {
       setNotes('')
     },
     onError: error => {
+      if (useAuthStore.getState().user?.id !== user?.id) return
       Alert.alert('تعذر الحفظ', error instanceof Error ? error.message : 'حاول مجددًا')
     },
   })
 
-  function YesNoToggle() {
-    return (
+  const yesNoToggle = (
       <View style={styles.yesNoRow}>
         <TouchableOpacity
           style={[styles.yesNoButton, mealsFollowed === true && styles.yesSelected]}
@@ -142,12 +148,12 @@ export default function TrackScreen() {
           <Text style={styles.yesNoText}>ليس بالكامل</Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+  )
 
   return (
     <>
       <AppHeader titleAr="أضف إلى يومك" />
+      <Text style={{ textAlign: 'center' }}>التسجيل اليومي بتوقيت السعودية</Text>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[
@@ -223,7 +229,7 @@ export default function TrackScreen() {
               <View style={styles.fieldGroup}>
                 <Text style={styles.logCardTitle}>التزام الوجبات</Text>
                 <Text style={styles.fieldHint}>هل اتبعت خطة زاد اليوم؟</Text>
-                <YesNoToggle />
+                {yesNoToggle}
               </View>
             )}
 

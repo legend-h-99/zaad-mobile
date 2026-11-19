@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-19",
+  "scope": "Local production web artifacts. Supabase network mocked with synthetic fixtures; no provider upload.",
+  "webUpdatePassword": {
+    "viewportWidths": [
+      390,
+      1280
+    ],
+    "lang": "ar",
+    "dir": "rtl",
+    "horizontalOverflow": false,
+    "mismatchErrorShown": true,
+    "keyboardFocusReachedRecoveryLink": true
+  },
+  "mobileWebReports": {
+    "reportSource": "Fixture matching actual backend persisted schema",
+    "storedFilenameVisible": true,
+    "assessmentVisible": true,
+    "urgentRoleAlertText": "تنبيه اختبار من قاعدة البيانات",
+    "oldReportScoreRemoved": true,
+    "lang": "ar",
+    "dir": "rtl",
+    "horizontalOverflow": false,
+    "analysisButtonAccessibleName": "تحليل التقرير",
+    "analysisButtonDisabledWithoutConsent": true,
+    "analysisButtonEnabledWithConsent": true,
+    "providerUploadPerformed": false
+  },
+  "limits": [
+    "Not a live staging journey",
+    "No real auth or database isolation evidence",
+    "No screen reader or full WCAG audit",
+    "No native iOS/Android devices available"
+  ]
+}

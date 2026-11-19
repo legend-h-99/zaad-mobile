@@ -12,10 +12,15 @@ Build command: npm run build:prod
 Build output directory: dist
 Root directory: /
 Node version: 22.13.0
-Deploy command: npx wrangler pages deploy dist --project-name=zaad-mobile --branch=main
+Deploy command: npx wrangler pages deploy dist --project-name=zaad-mobile-git --branch=main
 ```
 
-Cloudflare Pages deploys the `dist` directory. If the dashboard makes deploy
+Cloudflare Pages deploys the `dist` directory. The custom domains `zaadk.app`
+and `www.zaadk.app` are attached to the `zaad-mobile-git` Pages project.
+There is also a `zaad-mobile` Pages project for manual preview deploys; do not
+use it for production custom-domain fixes.
+
+If the dashboard makes deploy
 command required, use `wrangler pages deploy`, not `wrangler deploy`. The plain
 `wrangler deploy` command is for Workers and will fail for this static Pages
 project.
@@ -91,3 +96,11 @@ Keep the `service_role` key server-only. Only `EXPO_PUBLIC_SUPABASE_URL` and
 
 Use separate Supabase projects for staging and production before storing real
 health data.
+
+## Build configuration validation
+
+Production and staging builds use `scripts/run-expo-env.js`. Hosting environment values override local files. Example files are documentation only and are never loaded automatically. CI may provide all values without an environment file. Set `EXPO_PUBLIC_API_URL`, `EXPO_PUBLIC_SUPABASE_URL`, and `EXPO_PUBLIC_SUPABASE_ANON_KEY` explicitly. Both endpoints must use remote HTTPS URLs. Localhost, local domains, IP literals, URL credentials and example domains are rejected. No credentials belong in this document.
+
+Recovery links on installed native builds use `zaad://reset-password`; allow this exact redirect in Supabase. Only recovery fragments with both session tokens are accepted. Native-device callback verification is still required.
+
+Consultation options and notification preferences remain local only; no external booking or notification service is configured. Daily progress records use the Saudi calendar (`Asia/Riyadh`) and the tracking screen labels this policy.

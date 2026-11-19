@@ -11,7 +11,8 @@ import { useEffect } from 'react'
 import { Stack, useRouter, useSegments } from 'expo-router'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '../src/lib/query-client'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { I18nManager, Platform, StyleSheet, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -19,6 +20,10 @@ import { StatusBar } from 'expo-status-bar'
 
 import { useSession } from '../src/hooks/useSession'
 import { Colors } from '../src/constants/theme'
+import * as Linking from 'expo-linking'
+import { recoveryTokens } from '../src/lib/recovery'
+import { supabase } from '../src/lib/supabase/client'
+import { useAuthStore } from '../src/store/auth'
 import { useThemeStore } from '../src/store/theme'
 
 // Force RTL at the OS level for Arabic layout
@@ -30,38 +35,53 @@ if (!I18nManager.isRTL) {
 // Keep splash screen visible while fonts load
 SplashScreen.preventAutoHideAsync()
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5,  // 5 min — data freshness window
-      retry: 2,
-      retryDelay: 1000,
-    },
-  },
-})
-
 function RootLayoutNav() {
   const { session, isAuthenticated, isDemoMode, isLoading } = useSession()
+  const recovering = useAuthStore(state => state.isRecovering)
   const segments = useSegments()
   const router = useRouter()
+
+  useEffect(() => {
+    if (Platform.OS === 'web') return
+    let active = true
+    let handling = false
+    const handle = async (input: string | null) => {
+      if (!active || !input || handling) return
+      const tokens = recoveryTokens(input)
+      if (!tokens) return
+      handling = true
+      try {
+        const { error } = await supabase.auth.setSession(tokens)
+        if (!error && active) {
+          useAuthStore.setState({ isRecovering: true })
+          Linking.clearInitialURL()
+          router.replace('/(auth)/reset-password')
+        }
+      } finally { handling = false }
+    }
+    Linking.getInitialURL().then(handle).catch(() => {})
+    const subscription = Linking.addEventListener('url', event => { handle(event.url).catch(() => {}) })
+    return () => { active = false; subscription.remove() }
+  }, [router])
 
   useEffect(() => {
     if (isLoading) return
 
     const inAuthGroup    = segments[0] === '(auth)'
-    const inOnboarding   = segments[0] === 'onboarding'
+    const inRecovery = inAuthGroup && segments.join('/') === '(auth)/reset-password'
+    if (recovering && !inRecovery) { router.replace('/(auth)/reset-password'); return }
 
     if (!isAuthenticated && !inAuthGroup) {
       // Not signed in — redirect to login
       router.replace('/(auth)/login')
-    } else if (session && !isDemoMode && isAuthenticated && inAuthGroup) {
+    } else if (session && !isDemoMode && isAuthenticated && inAuthGroup && !inRecovery) {
       // Signed in but on auth screen — redirect to app
       router.replace('/(tabs)')
     }
-  }, [session, isAuthenticated, isDemoMode, isLoading, segments])
+  }, [session, isAuthenticated, isDemoMode, isLoading, segments, router, recovering])
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack key={session?.user.id ?? 'anonymous'} screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(auth)"      options={{ animation: 'fade' }} />
       <Stack.Screen name="onboarding"  options={{ animation: 'slide_from_right' }} />
       <Stack.Screen name="(tabs)"      options={{ animation: 'fade' }} />

@@ -25,8 +25,7 @@ import { useThemeStore } from '../../src/store/theme'
 import { ZaadCard } from '../../src/components/ui/ZaadCard'
 import { GuidanceCard } from '../../src/components/zaad/ContentBlocks'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
-import { CONDITIONS_AR } from '../../src/constants/data'
-import { calcBMI, bmiCategory } from '../../src/constants/data'
+import { CONDITIONS_AR , calcBMI, bmiCategory } from '../../src/constants/data'
 
 interface SettingsRowProps {
   icon: React.ComponentProps<typeof Feather>['name']

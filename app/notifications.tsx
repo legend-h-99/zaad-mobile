@@ -39,12 +39,12 @@ const DEFAULTS: NotificationPreferences = {
   reminderTime: 'morning',
 }
 
-const OPTIONS: Array<{
+const OPTIONS: {
   key: keyof Pick<NotificationPreferences, 'meals' | 'measurements' | 'water' | 'reports' | 'weeklyDigest'>
   icon: React.ComponentProps<typeof Feather>['name']
   label: string
   subtitle: string
-}> = [
+}[] = [
   { key: 'meals', icon: 'coffee', label: 'تذكير الوجبات', subtitle: 'قبل أوقات الوجبات الأساسية' },
   { key: 'measurements', icon: 'activity', label: 'القياسات اليومية', subtitle: 'الوزن والسكر والضغط حسب ملفك' },
   { key: 'water', icon: 'droplet', label: 'شرب الماء', subtitle: 'تذكير هادئ خلال اليوم' },
@@ -52,7 +52,7 @@ const OPTIONS: Array<{
   { key: 'weeklyDigest', icon: 'bar-chart-2', label: 'الملخص الأسبوعي', subtitle: 'ملخص التزامك وتقدمك كل أسبوع' },
 ]
 
-const TIMES: Array<{ value: NotificationPreferences['reminderTime']; label: string; time: string }> = [
+const TIMES: { value: NotificationPreferences['reminderTime']; label: string; time: string }[] = [
   { value: 'morning', label: 'صباحًا', time: '٨:٠٠' },
   { value: 'afternoon', label: 'ظهرًا', time: '١:٠٠' },
   { value: 'evening', label: 'مساءً', time: '٧:٠٠' },
@@ -97,7 +97,7 @@ export default function NotificationsScreen() {
     setSaving(true)
     try {
       await writePreferences(preferences)
-      Alert.alert('تم حفظ التنبيهات', 'سيستخدم زاد هذه الخيارات على هذا الجهاز.')
+      Alert.alert('تم حفظ التفضيلات محليًا', 'حُفظت تفضيلاتك على هذا الجهاز فقط. إرسال التنبيهات غير متاح حاليًا.')
       router.back()
     } catch {
       Alert.alert('تعذر الحفظ', 'حاول مرة أخرى.')
@@ -122,7 +122,7 @@ export default function NotificationsScreen() {
             <Feather name="bell" size={25} color={Colors.burgundy} />
           </View>
           <Text style={styles.title}>تنبيهات تساعدك بدون إزعاج</Text>
-          <Text style={styles.subtitle}>اختر فقط ما تحتاجه في روتينك اليومي.</Text>
+          <Text style={styles.subtitle}>هذه تفضيلات محلية فقط. إرسال التنبيهات غير متاح حاليًا.</Text>
         </View>
 
         <ZaadCard style={styles.optionsCard} padding="none">

@@ -30,6 +30,9 @@ import { uploadAndAnalyzeReport } from '../../src/lib/api/reports'
 import { ZaadCard } from '../../src/components/ui/ZaadCard'
 import { AppHeader } from '../../src/components/ui/AppHeader'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants/theme'
+import { ReportUrgentFlags } from '../../src/components/ReportUrgentFlags'
+import { ReportConsent } from '../../src/components/ReportConsent'
+import { mapReportRow } from '../../src/lib/report-row'
 import type { LabReport, LabFlag } from '../../src/types'
 
 const { width: SCREEN_W } = Dimensions.get('window')
@@ -180,20 +183,13 @@ function ReportCard({
           <Text style={[styles.statusText,
             { color: report.status === 'done' ? Colors.safe.text : Colors.watch.text }
           ]}>
-            {report.status === 'done' ? 'تم التحليل' : 'جاري...'}
+            {report.status === 'done' ? 'تم التحليل' : report.status === 'error' ? 'تعذر التحليل' : 'جاري...'}
           </Text>
         </View>
       </TouchableOpacity>
 
       {/* Urgent banner */}
-      {report.aiAssessment?.urgentFlags && report.aiAssessment.urgentFlags.length > 0 && (
-        <View style={styles.urgentBanner}>
-          <Feather name="alert-triangle" size={13} color={Colors.risk.text} />
-          <Text style={styles.urgentText}>
-            {report.aiAssessment.urgentFlags.join(' · ')}
-          </Text>
-        </View>
-      )}
+      <ReportUrgentFlags report={report} />
 
       {/* Summary */}
       {report.aiAssessment?.summaryAr && (
@@ -261,44 +257,52 @@ function ReportCard({
 
 export default function ReportsScreen() {
   const insets = useSafeAreaInsets()
-  const { accessToken } = useSession()
+  const { accessToken, user } = useSession()
   const isDemoMode = useAuthStore(s => s.isDemoMode)
   const queryClient = useQueryClient()
+  const [processingConsent, setProcessingConsent] = useState(false)
 
   const [selectedFile, setSelectedFile] = useState<{
     uri: string; name: string; type: string
   } | null>(null)
 
-  const { data: reports = [], isLoading } = useQuery({
-    queryKey: ['lab-reports', isDemoMode],
-    queryFn: async () => {
+  const { data: reports = [], isLoading, isError } = useQuery({
+    queryKey: ['lab-reports', user?.id, isDemoMode],
+    enabled: !!user?.id && !isDemoMode,
+    queryFn: async ({ signal }) => {
       if (isDemoMode) return []
-      const { data: { user } } = await supabase.auth.getUser()
       if (!user) return []
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('lab_reports')
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(10)
-      return (data ?? []) as unknown as LabReport[]
+        .abortSignal(signal)
+      if (error) throw error
+      return (data ?? []).map(mapReportRow)
     },
   })
 
   const uploadMutation = useMutation({
-    mutationFn: () =>
-      uploadAndAnalyzeReport({
+    mutationFn: () => {
+      if (!processingConsent || !selectedFile || !accessToken) throw new Error('وافق على معالجة التقرير قبل التحليل')
+      return uploadAndAnalyzeReport({
         uri: selectedFile!.uri,
         fileName: selectedFile!.name,
         mimeType: selectedFile!.type,
         accessToken: accessToken!,
-      }),
+      })
+    },
     onSuccess: () => {
+      if (useAuthStore.getState().user?.id !== user?.id) return
+      setProcessingConsent(false)
       setSelectedFile(null)
-      queryClient.invalidateQueries({ queryKey: ['lab-reports'] })
+      queryClient.invalidateQueries({ queryKey: ['lab-reports', user?.id] })
       Alert.alert('تم التحليل', 'تم تحليل تقريرك المخبري وتحديث خطتك الغذائية')
     },
     onError: err => {
+      if (useAuthStore.getState().user?.id !== user?.id) return
       Alert.alert('خطأ في التحليل', err instanceof Error ? err.message : 'تعذر تحليل التقرير')
     },
   })
@@ -310,6 +314,7 @@ export default function ReportsScreen() {
     const result = await ImagePicker.launchCameraAsync({ mediaTypes: 'images', quality: 0.85 })
     if (!result.canceled && result.assets[0]) {
       const a = result.assets[0]
+      setProcessingConsent(false)
       setSelectedFile({ uri: a.uri, name: `report-${Date.now()}.jpg`, type: 'image/jpeg' })
     }
   }
@@ -321,6 +326,7 @@ export default function ReportsScreen() {
     const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: 'images', quality: 0.85 })
     if (!result.canceled && result.assets[0]) {
       const a = result.assets[0]
+      setProcessingConsent(false)
       setSelectedFile({ uri: a.uri, name: `report-${Date.now()}.jpg`, type: 'image/jpeg' })
     }
   }
@@ -332,6 +338,7 @@ export default function ReportsScreen() {
     })
     if (!result.canceled && result.assets[0]) {
       const a = result.assets[0]
+      setProcessingConsent(false)
       setSelectedFile({ uri: a.uri, name: a.name, type: a.mimeType ?? 'application/pdf' })
     }
   }
@@ -351,20 +358,21 @@ export default function ReportsScreen() {
         { paddingTop: Spacing.md, paddingBottom: insets.bottom + Spacing['2xl'] },
       ]}
     >
+      {isError && <Text accessibilityRole="alert">تعذر تحميل التقارير. حاول مرة أخرى لاحقًا.</Text>}
       <ZaadCard style={styles.healthHero} padding="lg">
         <View style={styles.healthHeroTop}>
           <View style={styles.healthScore}>
             <Text style={styles.healthScoreValue}>
-              {reports.length ? Math.max(62, 92 - reports.length * 3) : 78}
+              {reports.some(report => report.aiAssessment) ? 'متاح' : 'غير متاح'}
             </Text>
-            <Text style={styles.healthScoreUnit}>/ 100</Text>
+
           </View>
           <View style={styles.healthHeroCopy}>
             <Text style={styles.healthEyebrow}>ملخص صحتك</Text>
             <Text style={styles.healthTitle}>مؤشراتك الغذائية</Text>
             <Text style={styles.healthSubtitle}>
               {reports.length
-                ? `تمت قراءة ${reports.length} تقارير وربطها بخطتك`
+                ? `لديك ${reports.length} تقارير محفوظة`
                 : 'أضف أول تحليل لبناء ملخصك الصحي'}
             </Text>
           </View>
@@ -399,19 +407,20 @@ export default function ReportsScreen() {
       {/* Upload card */}
       <ZaadCard style={styles.uploadCard}>
         <Text style={styles.uploadTitle}>إضافة تقرير جديد</Text>
+        <ReportConsent value={processingConsent} onChange={setProcessingConsent} />
 
         <View style={styles.uploadOptions}>
-          <TouchableOpacity style={styles.uploadOption} onPress={pickFromCamera}>
+          <TouchableOpacity accessibilityRole="button" accessibilityLabel="تصوير تقرير" style={styles.uploadOption} onPress={pickFromCamera}>
             <Feather name="camera" size={24} color={Colors.primary} />
             <Text style={styles.uploadOptionText}>تصوير</Text>
           </TouchableOpacity>
           <View style={styles.optionDivider} />
-          <TouchableOpacity style={styles.uploadOption} onPress={pickFromGallery}>
+          <TouchableOpacity accessibilityRole="button" accessibilityLabel="اختيار صورة تقرير" style={styles.uploadOption} onPress={pickFromGallery}>
             <Feather name="image" size={24} color={Colors.primary} />
             <Text style={styles.uploadOptionText}>الصور</Text>
           </TouchableOpacity>
           <View style={styles.optionDivider} />
-          <TouchableOpacity style={styles.uploadOption} onPress={pickDocument}>
+          <TouchableOpacity accessibilityRole="button" accessibilityLabel="اختيار ملف تقرير PDF" style={styles.uploadOption} onPress={pickDocument}>
             <Feather name="file-text" size={24} color={Colors.primary} />
             <Text style={styles.uploadOptionText}>PDF</Text>
           </TouchableOpacity>
@@ -421,7 +430,7 @@ export default function ReportsScreen() {
           <View style={styles.selectedFile}>
             <Feather name="check-circle" size={16} color={Colors.primary} />
             <Text style={styles.selectedFileName} numberOfLines={1}>{selectedFile.name}</Text>
-            <TouchableOpacity onPress={() => setSelectedFile(null)}>
+            <TouchableOpacity accessibilityRole="button" accessibilityLabel="إزالة التقرير المحدد" onPress={() => { setProcessingConsent(false); setSelectedFile(null) }}>
               <Feather name="x" size={16} color={Colors.textMuted} />
             </TouchableOpacity>
           </View>
@@ -431,7 +440,10 @@ export default function ReportsScreen() {
           <TouchableOpacity
             style={[styles.analyzeBtn, uploadMutation.isPending && styles.analyzeBtnDisabled]}
             onPress={() => uploadMutation.mutate()}
-            disabled={uploadMutation.isPending}
+            disabled={uploadMutation.isPending || !processingConsent}
+            accessibilityRole="button"
+            accessibilityLabel="تحليل التقرير"
+            accessibilityState={{ disabled: uploadMutation.isPending || !processingConsent, busy: uploadMutation.isPending }}
           >
             {uploadMutation.isPending
               ? <ActivityIndicator color="#fff" size="small" />

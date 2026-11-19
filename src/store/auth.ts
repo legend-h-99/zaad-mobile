@@ -7,6 +7,8 @@ import { Session, User } from '@supabase/supabase-js'
 import * as SecureStore from 'expo-secure-store'
 import { Platform } from 'react-native'
 import { supabase } from '../lib/supabase/client'
+import { clearAccountQueries } from '../lib/query-client'
+import { setProfileIdentity } from './profile'
 
 const DEMO_KEY = 'zaad_demo_mode'
 const DEMO_USER_KEY = 'zaad_demo_user_id'
@@ -16,23 +18,9 @@ const DEFAULT_DEMO_USER_ID = ''
 // all callers. Prevents duplicate supabase.auth.onAuthStateChange subscriptions
 // when multiple screens call initialize() simultaneously (e.g. in tab navigation).
 let _initialized = false
+let sessionRevision = 0
 
 const demoStorage = {
-  getItem: (key: string) => {
-    if (Platform.OS === 'web') {
-      return Promise.resolve(globalThis.localStorage?.getItem(key) ?? null)
-    }
-
-    return SecureStore.getItemAsync(key)
-  },
-  setItem: (key: string, value: string) => {
-    if (Platform.OS === 'web') {
-      globalThis.localStorage?.setItem(key, value)
-      return Promise.resolve()
-    }
-
-    return SecureStore.setItemAsync(key, value)
-  },
   removeItem: (key: string) => {
     if (Platform.OS === 'web') {
       globalThis.localStorage?.removeItem(key)
@@ -45,6 +33,8 @@ const demoStorage = {
 
 interface AuthState {
   session: Session | null
+  isRecovering: boolean
+  clearRecovery: () => void
   user: User | null
   isLoading: boolean
   isDemoMode: boolean
@@ -59,13 +49,21 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   session: null,
+  isRecovering: false,
+  clearRecovery: () => set({ isRecovering: false }),
   user: null,
   isLoading: true,
   isDemoMode: false,
   demoUserId: DEFAULT_DEMO_USER_ID,
 
-  setSession: (session) =>
-    set({ session, user: session?.user ?? null, isLoading: false }),
+  setSession: (session) => {
+    sessionRevision++
+    if (useAuthStore.getState().user?.id !== session?.user.id) {
+      clearAccountQueries()
+      setProfileIdentity(session?.user.id ?? null)
+    }
+    set({ session, user: session?.user ?? null, isLoading: false, ...(!session ? { isRecovering: false } : {}) })
+  },
 
   enterDemoMode: () => {
     demoStorage.removeItem(DEMO_KEY).catch(() => {})
@@ -80,10 +78,11 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   signOut: async () => {
-    await supabase.auth.signOut().catch(() => {})
+    // Clear synchronously, even if the network sign-out subsequently fails.
+    useAuthStore.getState().setSession(null)
+    const { error } = await supabase.auth.signOut()
     await useAuthStore.getState().clearDemoMode()
-    _initialized = false
-    set({ session: null, user: null, isDemoMode: false, demoUserId: DEFAULT_DEMO_USER_ID })
+    if (error) throw error
   },
 
   initialize: () => {
@@ -93,18 +92,27 @@ export const useAuthStore = create<AuthState>((set) => ({
     useAuthStore.getState().clearDemoMode().catch(() => {})
 
     // Get existing session
+    const revision = sessionRevision
+    let disposed = false
     supabase.auth.getSession().then(({ data: { session } }) => {
-      set({ session, user: session?.user ?? null, isLoading: false })
+      if (!disposed && revision === sessionRevision) useAuthStore.getState().setSession(session)
     }).catch(() => {
-      set({ session: null, user: null, isLoading: false })
+      if (!disposed && revision === sessionRevision) useAuthStore.getState().setSession(null)
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        set({ session, user: session?.user ?? null, isLoading: false })
+      (event, session) => {
+        if (!disposed) {
+          useAuthStore.getState().setSession(session)
+          if (event === 'PASSWORD_RECOVERY') set({ isRecovering: true })
+        }
       },
     )
 
-    return () => subscription.unsubscribe()
+    return () => {
+      disposed = true
+      _initialized = false
+      subscription.unsubscribe()
+    }
   },
 }))

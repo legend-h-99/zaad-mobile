@@ -1,4 +1,4 @@
-import { MealPlan, MealPlanMeals } from '../../types'
+import { MealPlanMeals } from '../../types'
 import { API_ROUTES, apiFetch } from './config'
 
 export interface GenerateMealPlanParams {

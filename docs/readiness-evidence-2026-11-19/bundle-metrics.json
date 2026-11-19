@@ -1,0 +1,36 @@
+{
+  "web": {
+    "jsFiles": 64,
+    "allJsBytes": 1937995,
+    "allJsGzipBytes": 581713,
+    "largest": [
+      {
+        "file": "chunks/4439-c80132d740ecff34.js",
+        "bytes": 317412,
+        "gzipBytes": 95371
+      },
+      {
+        "file": "chunks/1858-31145f1a265bc143.js",
+        "bytes": 242343,
+        "gzipBytes": 67620
+      },
+      {
+        "file": "chunks/0937d497-cb7a9ff884a082ab.js",
+        "bytes": 203727,
+        "gzipBytes": 63948
+      }
+    ]
+  },
+  "mobile_web": {
+    "jsFiles": 1,
+    "allJsBytes": 3478703,
+    "allJsGzipBytes": 833923,
+    "largest": [
+      {
+        "file": "index-4f4ab2017f28fa6da431a3c78b3b074b.js",
+        "bytes": 3478703,
+        "gzipBytes": 833923
+      }
+    ]
+  }
+}

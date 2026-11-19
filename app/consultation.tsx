@@ -57,7 +57,7 @@ export default function ConsultationScreen() {
       })
       setConfirmed(true)
     } catch {
-      Alert.alert('تعذر الحجز', 'حاول مرة أخرى.')
+      Alert.alert('تعذر حفظ المسودة', 'حاول مرة أخرى.')
     } finally {
       setSaving(false)
     }
@@ -71,7 +71,7 @@ export default function ConsultationScreen() {
           <View style={styles.confirmIcon}>
             <Feather name="check" size={34} color={Colors.burgundy} />
           </View>
-          <Text style={styles.confirmTitle}>تم تثبيت الموعد</Text>
+          <Text style={styles.confirmTitle}>حُفظ تفضيلك محليًا</Text>
           <Text style={styles.confirmText}>
             {days[dayIndex].toLocaleDateString('ar-SA', {
               weekday: 'long',
@@ -80,9 +80,9 @@ export default function ConsultationScreen() {
             })} · {time}
           </Text>
           <Text style={styles.confirmHint}>
-            حُفظ الموعد على هذا الجهاز وسيظهر لك تذكير ضمن إعدادات زاد.
+            هذه مسودة على هذا الجهاز فقط. لم يُحجز موعد مع مختص ولن يصلك تذكير. خدمة الحجز غير متاحة حاليًا.
           </Text>
-          <ZaadButton labelAr="تعديل الموعد" variant="ghost" onPress={() => setConfirmed(false)} />
+          <ZaadButton labelAr="تعديل المسودة" variant="ghost" onPress={() => setConfirmed(false)} />
         </View>
       </>
     )
@@ -90,7 +90,7 @@ export default function ConsultationScreen() {
 
   return (
     <>
-      <AppHeader titleAr="حجز استشارة" showBack />
+      <AppHeader titleAr="تفضيلات الاستشارة" showBack />
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[
@@ -99,9 +99,10 @@ export default function ConsultationScreen() {
         ]}
         showsVerticalScrollIndicator={false}
       >
+        <Text>خدمة الحجز غير متاحة حاليًا. الخيارات التالية مسودة على جهازك فقط ولا ترسل إلى مختص.</Text>
         <View style={styles.intro}>
           <Text style={styles.title}>اختر الخبير والوقت المناسب</Text>
-          <Text style={styles.subtitle}>جلسة فيديو لمدة 30 دقيقة لمراجعة خطتك.</Text>
+          <Text style={styles.subtitle}>اختر تفضيلاتك لاستشارة مستقبلية عند توفر الخدمة.</Text>
         </View>
 
         <Text style={styles.sectionTitle}>نوع الاستشارة</Text>
@@ -182,7 +183,7 @@ export default function ConsultationScreen() {
         </ZaadCard>
 
         <ZaadButton
-          labelAr="تأكيد الموعد"
+          labelAr="حفظ مسودة محلية"
           onPress={confirmBooking}
           loading={saving}
           icon={<Feather name="calendar" size={18} color={Colors.surface} />}

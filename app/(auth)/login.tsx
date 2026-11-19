@@ -97,6 +97,7 @@ export default function LoginScreen() {
             <View style={styles.inputShell}>
               <Feather name="mail" size={18} color={Colors.textSubtle} />
               <TextInput
+                accessibilityLabel="البريد الإلكتروني"
                 value={email}
                 onChangeText={setEmail}
                 placeholder="name@example.com"
@@ -126,6 +127,7 @@ export default function LoginScreen() {
                 />
               </Pressable>
               <TextInput
+                accessibilityLabel="كلمة المرور"
                 value={password}
                 onChangeText={setPassword}
                 placeholder="••••••••"

@@ -1,3 +1,4 @@
+import { remoteApiEndpoint } from './endpoint'
 /**
  * زاد — API configuration
  *
@@ -11,13 +12,11 @@ function getDevApiUrl() {
   return `http://${host}:3000`
 }
 
-const DEV_API_URL = getDevApiUrl()
 const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL?.trim() ?? ''
-const isLocalApiUrl = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configuredApiUrl)
-const PROD_API_URL = isLocalApiUrl ? '' : configuredApiUrl
-
-export const API_BASE_URL =
-  process.env.NODE_ENV === 'production' ? PROD_API_URL : DEV_API_URL
+const isRemoteEnvironment = process.env.NODE_ENV === 'production'
+  || process.env.EXPO_PUBLIC_APP_ENV === 'staging' || process.env.EXPO_PUBLIC_APP_ENV === 'production'
+  || process.env.APP_ENV === 'staging' || process.env.APP_ENV === 'production'
+export const API_BASE_URL = isRemoteEnvironment ? remoteApiEndpoint(configuredApiUrl) : getDevApiUrl()
 
 export const HAS_REMOTE_API = API_BASE_URL.length > 0
 
